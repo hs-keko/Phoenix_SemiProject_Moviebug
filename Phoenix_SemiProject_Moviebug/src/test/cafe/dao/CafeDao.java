@@ -28,7 +28,7 @@ public class CafeDao {
 			//실행할 sql문 작성
 			String sql = "INSERT INTO board_qna"
 					+ " (qna_idx, qna_writer, qna_title, qna_content, qna_file, qna_regdate"
-					+ " VALUES(board_qua.seq.NEXTVAL,?,?,?,?,SYSDATE)";
+					+ " VALUES(board_qna.seq.NEXTVAL,?,?,?,?,SYSDATE)";
 			pstmt = conn.prepareStatement(sql);
 			//?에 바인딩할 내용이 있으면 여기서 바인딩
 			pstmt.setString(1, dto.getQna_writer());
@@ -68,7 +68,7 @@ public class CafeDao {
 					+ " FROM"
 					+ " SELECT result1.*, ROWNUM AS rnum"
 					+ " FROM"
-					+ " (SELECT qua_idx,qua_writer,qua_title,qua_content,qua_file,qua_regdate"
+					+ " (SELECT qna_idx,qna_writer,qna_title,qna_content,qna_file,qna_regdate"
 					+ " FROM board_qna"
 					+ " ORDER BY qna_idx DESC) result1"
 					+ " WHERE rnum BETWEEN ? AND ?";
@@ -86,7 +86,7 @@ public class CafeDao {
 				dto2.setQna_writer(rs.getString("qna_writer"));
 				dto2.setQna_title(rs.getString("qna_title"));
 				dto2.setQna_content(rs.getString("qna_content"));
-				dto2.setQna_file(rs.getString("qua_file"));
+				dto2.setQna_file(rs.getString("qna_file"));
 				dto2.setQna_regdate(rs.getString("qna_regdate"));
 			}
 		} catch (Exception e) {
@@ -114,7 +114,7 @@ public class CafeDao {
 			//Connection 객체의 참조값 얻어오기 
 			conn = new DbcpBean().getConn();
 			//실행할 sql 문 작성
-			String sql = "SELECT NVL(MAX(ROWNUM),0) AS num "
+			String sql = "SELECT NVL(MAX(ROWNUM),0) AS qun_idx"
 					+ " FROM board_qna";
 			//PreparedStatement 객체의 참조값 얻어오기
 			pstmt = conn.prepareStatement(sql);

@@ -4,11 +4,12 @@
     pageEncoding="UTF-8"%>
 <%
 	String qna_writer=(String)session.getAttribute("qna_writer");
-	String qna_title=request.getParameter("qua_title");
+	//1. 폼 전송되는 글제목과 내용을 읽어와서
+	String qna_title=request.getParameter("qna_title");
 	String qna_content=request.getParameter("qna_content");
 	String qna_file=request.getParameter("qna_file");
-	
-	CafeDto dto = new CafeDto();
+	//2. DB 에 저장하고
+	CafeDto dto=new CafeDto();
 	dto.setQna_writer(qna_writer);
 	dto.setQna_title(qna_title);
 	dto.setQna_content(qna_content);
@@ -20,7 +21,6 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/private/insert.jsp</title>
-
 </head>
 <body>
 	<%if(isSuccess){ %>
