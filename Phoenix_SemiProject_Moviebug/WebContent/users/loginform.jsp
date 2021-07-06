@@ -15,9 +15,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="/include/resource.jsp"></jsp:include>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
 </head>
 <body>
 	<div class="container">
+	    <jsp:include page="/include/navbar.jsp"> 
+    		<jsp:param value="null" name="email"/>
+    	</jsp:include>
 		<h1>로그인 폼 입니다.</h1>
 		<form action="login.jsp" method="post">
 			<input type="hidden" name="url" value="<%=url %>" />

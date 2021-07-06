@@ -28,6 +28,7 @@
 </head>
 <body>
 	<div class="container">
+	
 		<h1>알림</h1>
 		<%if(isValid) {
 			session.setAttribute("email", email);

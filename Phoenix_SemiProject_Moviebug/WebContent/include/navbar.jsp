@@ -35,11 +35,15 @@ pageEncoding="UTF-8"%>
           
           <div class="nav_header_menu02 flex_box">
           <div class="nav_w_brand">
-          	MovieBug
+          	 <a href="<%=request.getContextPath()%>/index.jsp"> MovieBug </a>
           </div>
           </div>
           
           <div class="nav_header_menu03 flex_box">
+          
+          
+          <%System.out.println("url : "+ request.getServletPath()); %>
+          <%if(request.getServletPath().equals("/users/login.jsp")) {}%>
           <div class="nav_w_right flex_box">
             <div class="nav_search flex_box">
             <!-- 검색 바 -->
@@ -55,35 +59,35 @@ pageEncoding="UTF-8"%>
             
             <!-- modal -->
             <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" id="exampleModalLabel">
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-xl">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <div class="modal-title" id="exampleModalLabel">
         
         		            	<form action="<%=request.getContextPath() %>/more.jsp" class="">
-		            		<button type="submit">
-			            		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-								  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-								</svg>
-							</button>
-		            		<input id="nav_search_input" class="form-control" type="text" id="keyword" name="keyword" />
-		            	</form>
-		            	
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <ul>
-      	<li>최근검색01</li>
-      	<li>최근검색02</li>
-      	<li>최근검색03</li>
-      	<li>최근검색04</li>
-      </ul>
-      </div>
-    </div>
-  </div>
-</div>
+				            		<button type="submit">
+					            		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+										  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+										</svg>
+									</button>
+					            		<input id="nav_search_input" class="form-control" type="text" id="keyword" name="keyword" />
+					            	</form>
+			            	
+					        </div>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+					      <ul>
+					      	<li>최근검색01</li>
+					      	<li>최근검색02</li>
+					      	<li>최근검색03</li>
+					      	<li>최근검색04</li>
+					      </ul>
+					      </div>
+					    </div>
+					  </div>
+					</div>
             
             	
             </div>
@@ -93,7 +97,7 @@ pageEncoding="UTF-8"%>
               	<a href="<%= request.getContextPath()%>/users/loginform.jsp">로그인</a>/
               	<a href="<%= request.getContextPath()%>/users/loginform.jsp">회원가입</a>
               	<%}else{ %>
-              		 <%=dto.getName() %>
+              		 <a href="<%=request.getContextPath()%>/users/private/info.jsp"><%=dto.getName() %></a>
               	<%} %>
               </div>
               <div class="profile">
@@ -131,12 +135,12 @@ pageEncoding="UTF-8"%>
 				</div>
             </div>
           </div>
+          
+          
+          
           </div>
-          
-           </div>
-          
+         </div>
         </div>
-      
     </nav>
   </div>
 </header>

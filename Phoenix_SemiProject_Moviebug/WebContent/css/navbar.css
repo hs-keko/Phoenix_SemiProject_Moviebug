@@ -1,3 +1,17 @@
+header a {
+    text-decoration: none;
+    color: rgb(109, 109, 109);
+}
+
+header a:active, header a:hover {
+    outline: 0;
+    text-decoration: none;
+    color: rgb(109, 109, 109);
+}
+
+header a:hover {
+    text-decoration: none;
+}
 
 nav{
 	height: 65px; 
