@@ -1,3 +1,4 @@
+<%@page import="moviebug.users.dao.UsersDao"%>
 <%@page import="moviebug.movieinfo.dao.MovieCommentDao"%>
 <%@page import="java.util.List"%>
 <%@page import="moviebug.movieinfo.dto.MovieCommentDto"%>
@@ -274,9 +275,11 @@
                   <%}else{ %>
                      <img class="profile-image" src="${pageContext.request.contextPath}<%=tmp.getProfile()%>"/>
                   <%} %>
-                     <span><%=tmp.getComment_writer() %></span>
+                  		<!-- 댓글 작성자의 이름을 가져와야 한다. -->
+                  		
+                     <span><%=UsersDao.getInstance().getData(tmp.getComment_writer()).getName() %></span>
                   <%if(tmp.getComment_idx() != tmp.getComment_group()){ %>
-                     @<i><%=tmp.getComment_target_id() %></i>
+                     @<i><%=UsersDao.getInstance().getData(tmp.getComment_target_id()).getName() %></i>
                   <%} %>
                      <span><%=tmp.getComment_regdate() %></span>
                      <a data-num="<%=tmp.getComment_idx() %>" href="javascript:" class="reply-link">답글</a>
