@@ -59,7 +59,12 @@
 <title>movieinfo.jsp</title>
 <jsp:include page="include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="css/footer.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 <style>
 	.genre-container{
 		text-align: center;
@@ -198,7 +203,9 @@
 </style>
 </head>
 <body>
-	
+	<jsp:include page="include/navbar.jsp"> 
+    	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+    </jsp:include>
 	<div class="container">
 		<div class="genre-container mb-3">
 			<p><%=dto.getMovie_genre() %></p>
