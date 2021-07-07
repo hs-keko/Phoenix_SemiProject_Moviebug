@@ -305,6 +305,7 @@
 <script src="${pageContext.request.contextPath}/js/gura_util.js"></script>
 <script>
 
+
 	//댓글 수정 폼의 참조값을 배열에 담아오기
 	let updateForms=document.querySelectorAll(".update-form");
 	for(let i=0; i<updateForms.length; i++){
