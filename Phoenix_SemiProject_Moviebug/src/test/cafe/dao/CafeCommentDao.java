@@ -11,9 +11,13 @@ import test.util.DbcpBean;
 
 public class CafeCommentDao {
 	private static CafeCommentDao dao;
+	/*
+	 *  [ static 초기화 블럭 ]
+	 *  이 클래스가 최초 사용될때 한번만 수행되는 블럭
+	 */
 	static {
 		dao=new CafeCommentDao();
-		}
+	}
 	private CafeCommentDao() {
 		
 	}
@@ -23,9 +27,114 @@ public class CafeCommentDao {
 		}
 		return dao;
 	}
+	//댓글 내용을 수정하는 메소드
+		public boolean update(CafeCommentDto dto) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int flag = 0;
+			try {
+				conn = new DbcpBean().getConn();
+				//실행할 sql 문 작성
+				String sql = "UPDATE board_qna_comment"
+						+ " SET qna_comment_content=?"
+						+ " WHERE qna_comment_idx=?";
+				pstmt = conn.prepareStatement(sql);
+				//? 에 바인딩할 내용이 있으면 여기서 바인딩
+				pstmt.setString(1, dto.getQna_comment_content());
+				pstmt.setInt(2, dto.getQna_comment_idx());
+				//insert or update or delete 문 수행하고 변화된 row 의 갯수 리턴 받기
+				flag = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+				}
+			}
+			if (flag > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	//댓글을 삭제하는 메소드
+		public boolean delete(int qna_comment_idx) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int flag = 0;
+			try {
+				conn = new DbcpBean().getConn();
+				//실행할 sql 문 작성
+				String sql = "UPDATE board_qna_comment"
+						+ " SET qna_comment_deleted='yes'"
+						+ " WHERE qna_comment_idx=?";
+				pstmt = conn.prepareStatement(sql);
+				//? 에 바인딩할 내용이 있으면 여기서 바인딩
+				pstmt.setInt(1, qna_comment_idx);
+				//insert or update or delete 문 수행하고 변화된 row 의 갯수 리턴 받기
+				flag = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+				}
+			}
+			if (flag > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 
+	//댓글 갯수를 리턴해주는 메소드
+	   public int getCount(int qna_comment_ref_group) {
+		    int count=0;
+		    Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				//Connection 객체의 참조값 얻어오기 
+				conn = new DbcpBean().getConn();
+				//실행할 sql 문 작성
+				String sql = "SELECT NVL(MAX(ROWNUM), 0) AS count "
+						+ " FROM board_qna_comment"
+						+ " WHERE qna_comment_ref_group=?";
+				//PreparedStatement 객체의 참조값 얻어오기
+				pstmt = conn.prepareStatement(sql);
+				//? 에 바인딩할 내용이 있으면 여기서 바인딩
+				pstmt.setInt(1, qna_comment_ref_group);
+				//select 문 수행하고 결과를 ResultSet 으로 받아오기
+				rs = pstmt.executeQuery();
+				//ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
+				if (rs.next()) {
+					count=rs.getInt("count");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+				}
+			}
+			return count;
+		   }
 	//댓글 목록을 리턴하는 메소드
-	public List<CafeCommentDto> getList(CafeCommentDto dto2){
+	   public List<CafeCommentDto> getList(CafeCommentDto dto2){
 	      List<CafeCommentDto> list=new ArrayList<>();
 	      Connection conn = null;
 	      PreparedStatement pstmt = null;
@@ -34,30 +143,37 @@ public class CafeCommentDao {
 	         //Connection 객체의 참조값 얻어오기 
 	         conn = new DbcpBean().getConn();
 	         //실행할 sql 문 작성
-	         String sql = "SELECT qna_comment_idx, qna_comment_writer, qna_comment_content, qna_comment_target_id, qna_comment_ref_group," + 
-	               "   qna_comment_group, qna_comment_deleted, board_comment.regdate, profile" + 
-	               " FROM qna_board_comment" + 
-	               " INNER JOIN users" + 
-	               " ON qna_board_comment.writer = users.name" +
-	               " WHERE qna_comment_ref_group=?" +
-	               " ORDER BY qna_comment_group ASC, qna_comment_idx ASC";
+	         String sql = "SELECT *" +
+	        	   " FROM" +
+	        	   " 	(SELECT result1.*, ROWNUM AS rnum" +
+	        	   "    FROM" +
+	        	   " 		(SELECT qna_comment_idx, qna_comment_writer, qna_comment_content, qna_comment_target_id, qna_comment_ref_group," + 
+	               " 		qna_comment_group, qna_comment_deleted, board_qna_comment.qna_comment_regdate, profile" + 
+	               " 		FROM board_qna_comment" + 
+	               " 		INNER JOIN users" + 
+	               " 		ON board_qna_comment.qna_comment_writer = users.name" +
+	               " 		WHERE qna_comment_ref_group=?" +
+	               " 		ORDER BY qna_comment_group DESC, qna_comment_idx ASC) result1)" +
+	               " WHERE rnum BETWEEN ? AND ?";
 	         //PreparedStatement 객체의 참조값 얻어오기
 	         pstmt = conn.prepareStatement(sql);
 	         //? 에 바인딩할 내용이 있으면 여기서 바인딩
 	         pstmt.setInt(1, dto2.getQna_comment_ref_group());
+	         pstmt.setInt(2, dto2.getStartRowNum());
+	         pstmt.setInt(3, dto2.getEndRowNum());
 	         //select 문 수행하고 결과를 ResultSet 으로 받아오기
 	         rs = pstmt.executeQuery();
 	         //반복문 돌면서 ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
 	         while (rs.next()) {
 	            CafeCommentDto dto=new CafeCommentDto();
-	            dto.setQna_comment_idx(rs.getInt("qna_commnet_idx"));
-	            dto.setQna_comment_writer(rs.getString("qna_commnet_writer"));
-	            dto.setQna_comment_content(rs.getString("qna_commnet_content"));
-	            dto.setQna_comment_target_id(rs.getString("qna_commnet_target_id"));
-	            dto.setQna_comment_ref_group(rs.getInt("qna_commnet_ref_group"));
+	            dto.setQna_comment_idx(rs.getInt("qna_comment_idx"));
+	            dto.setQna_comment_writer(rs.getString("qna_comment_writer"));
+	            dto.setQna_comment_content(rs.getString("qna_comment_content"));
+	            dto.setQna_comment_target_id(rs.getString("qna_comment_target_id"));
+	            dto.setQna_comment_ref_group(rs.getInt("qna_comment_ref_group"));
 	            dto.setQna_comment_group(rs.getInt("qna_comment_group"));
-	            dto.setQna_comment_deleted(rs.getString("qna_commnet_deleted"));
-	            dto.setQna_comment_regdate(rs.getString("qna_commnet_regdate"));
+	            dto.setQna_comment_deleted(rs.getString("qna_comment_deleted"));
+	            dto.setQna_comment_regdate(rs.getString("qna_comment_regdate"));
 	            dto.setProfile(rs.getString("profile"));
 	            list.add(dto);
 	         }
@@ -87,7 +203,7 @@ public class CafeCommentDao {
 	         //Connection 객체의 참조값 얻어오기 
 	         conn = new DbcpBean().getConn();
 	         //실행할 sql 문 작성
-	         String sql = "SELECT qna_board_comment_seq.NEXTVAL AS seq"
+	         String sql = "SELECT board_qna_comment_seq.NEXTVAL AS seq"
 	               + " FROM DUAL";
 	         //PreparedStatement 객체의 참조값 얻어오기
 	         pstmt = conn.prepareStatement(sql);
@@ -122,8 +238,8 @@ public class CafeCommentDao {
 	      try {
 	         conn = new DbcpBean().getConn();
 	         //실행할 sql 문 작성
-	         String sql = "INSERT INTO qna_board_comment"
-	               + " (qna_comment_idx, qna_comment_writer, qna_comment_content, qna_comment_target_id, qna_comment_ref_group, qna_comment_comment_group, qna_comment_regdate)"
+	         String sql = "INSERT INTO board_qna_comment"
+	               + " (qna_comment_idx, qna_comment_writer, qna_comment_content, qna_comment_target_id, qna_comment_ref_group, qna_comment_group, qna_comment_regdate)"
 	               + " VALUES(?, ?, ?, ?, ?, ?, SYSDATE)";
 	         pstmt = conn.prepareStatement(sql);
 	         //? 에 바인딩할 내용이 있으면 여기서 바인딩
