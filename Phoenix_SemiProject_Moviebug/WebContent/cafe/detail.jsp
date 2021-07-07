@@ -11,10 +11,8 @@
 <%
 	//자세히 보여줄 글번호 가져오기
 	int qna_idx=Integer.parseInt(request.getParameter("num"));
-
 	CafeDto dto1=new CafeDto();
 	dto1.setQna_idx(qna_idx);
-
 	CafeDto dto=CafeDao.getInstance().getData(dto1);
 	
 	String keyword=request.getParameter("keyword");
@@ -54,18 +52,13 @@
 	//한 페이지에 몇개씩 표시할 것인지
    	final int PAGE_ROW_COUNT=10;
    
-   	//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
+   	//detail.jsp 페이지에서는 항상 1페이지의 댓글 내용만 출력함
    	int pageNum=1;
    
    	//보여줄 페이지의 시작 ROWNUM
    	int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
    	//보여줄 페이지의 끝 ROWNUM
    	int endRowNum=pageNum*PAGE_ROW_COUNT;
-   	
-	// 원글의 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
-    int totalRow=CafeCommentDao.getInstance().getCount(qna_idx);
-    // 댓글 전체 페이지의 갯수
-    int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
     
     //원글의 글번호를 이용해 해당글에 달린 댓글 목록을 얻어옴
     CafeCommentDto commentDto = new CafeCommentDto();
@@ -78,7 +71,14 @@
 	//1페이지에 해당하는 댓글 목록만 select되도록 함
 	List<CafeCommentDto> commentList=
 			CafeCommentDao.getInstance().getList(commentDto);
-
+	
+	// 원글의 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
+    int totalRow=CafeCommentDao.getInstance().getCount(qna_idx);
+    // 댓글 전체 페이지의 갯수
+    int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+    
+    String email=(String)session.getAttribute("email");
+	 String name=UsersDao.getInstance().getData(email).getName();
 %>
 
 <!DOCTYPE html>
@@ -86,7 +86,16 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/detail.jsp</title>
+<jsp:include page="../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+
 <style>
 	.content{
 		border: 1px dotted red;
@@ -178,6 +187,9 @@
 </style>
 </head>
 <body>
+<jsp:include page="../include/navbar.jsp">
+	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+</jsp:include>
 <div class="container">
    <a href="detail.jsp?num=<%=dto.getPrevNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">이전글</a>
    <a href="detail.jsp?num=<%=dto.getNextNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">다음글</a>
@@ -211,9 +223,9 @@
    <ul>
       <li><a href="list.jsp">목록보기</a></li>
       <%
-      String email=(String)session.getAttribute("email");
+      
       if(email != null){
-  	  String name=UsersDao.getInstance().getData(email).getName();
+
       %>
       <%if(dto.getQna_writer().equals(name)){ %>
       <li><a href="private/updateform.jsp?num=<%=dto.getQna_idx() %>">수정</a></li>
@@ -260,7 +272,7 @@
 		                  	<span><%=tmp.getQna_comment_regdate () %></span>
 		                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
 						<%
-							String name=UsersDao.getInstance().getData(email).getName();
+						
 							if(email != null && tmp.getQna_comment_writer().equals(name)){ %>
 							<a data-num="<%=tmp.getQna_comment_idx() %>" class="update-link" href="javascript:">수정</a>
 							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link" href="javascript:">삭제</a>
@@ -304,8 +316,6 @@
    </form>
 <script src="${pageContext.request.contextPath}/js/gura_util.js"></script>
 <script>
-
-
 	//댓글 수정 폼의 참조값을 배열에 담아오기
 	let updateForms=document.querySelectorAll(".update-form");
 	for(let i=0; i<updateForms.length; i++){
@@ -395,17 +405,53 @@
 		});
 	}
 	
+	//댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
+	let currentPage=1;
+	//마지막
+	let lastPage=<%=totalPageCount%>;
+	//추가로 댓글을 요청하고 그 작업이 끝났는지 여부를 관리할 변수
+	let isLoading=false; //현재 로딩중인지 여부
 	
+	
+	/*
+	window.scrollY => 위쪽으로 스크롤된 길이
+	window.innerHeight => 웹브라우저의 창의 높이
+	document.body.offsetHeight => body 의 높이 (문서객체가 차지하는 높이)
+	*/
+	window.addEventListener("scroll", function(){
+		//바닥 까지 스크롤 했는지 여부 
+		const isBottom = 
+			window.innerHeight + window.scrollY  >= document.body.offsetHeight;
+		//현재 페이지가 마지막 페이지인지 여부
+		let isLast = currentPage == lastPage;
+		//현재 바닥까지 스크롤 했고 로딩중이 아니고 현재 페이지가 마지막이 아니라면
+		if(isBottom && !isLoading && !isLast){
+			//로딩 작업중이라고 표시
+			isLoading=true;
+			
+			//현재 댓글 페이지를 1 증가 시키고
+			currentPage++;
+			/*
+				해당 페이지의 내용을 ajax 요청을 통해서 받아온다.
+				"pageNum=xxx&num=xxx" 형식으로 get 방식 파라미터를 전달한다.
+			*/
+			ajaxPromise("ajax_comment_list.jsp","get",
+					"pageNum="+currentPage+"&qna_idx="<%=qna_idx%>)
+			.then(function(response){
+				//json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
+				return response.text();
+			})
+			.then(function(date){
+				//data는 html 형식의 문자열이다.
+				console.log(data);
+				document.queryelector(".comments ul")
+					.insertAdjacentHTML("beforeend", data);
+				//로딩이 끝났다고 표시한다.
+				isLoading=false;
+			});
+		}
+	});
 </script>
-</div>
-
-
-
-
-
-
-
-
-
-
-
+<jsp:include page="../include/footer.jsp"></jsp:include>
+</body>
+</html>

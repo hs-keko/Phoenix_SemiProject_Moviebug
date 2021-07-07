@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="moviebug.movieinfo.dao.MovieDao"%>
 <%@page import="moviebug.movieinfo.dto.MovieDto"%>
 <%@page import="java.util.List"%>
@@ -6,14 +7,15 @@ pageEncoding="UTF-8"%>
 <%
 	// 로그인 상태 확인
 	boolean isLogin = false;
-	/* String email = (String)session.getAttribute("email"); */
-	String email = request.getParameter("email");
+	String email = (String)session.getAttribute("email"); 
 	if(email != null) isLogin = true;
 	// 메인 carousel 최신 영화 3개 리스트 가져오기
 	List<MovieDto> NewMovieList = MovieDao.getInstance().getNewMovies();
 	
 	// 평점순위 4개 영화 리스트 가져오기
 	List<MovieDto> Top4List = MovieDao.getInstance().getTop4ResList();
+	
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -21,10 +23,9 @@ pageEncoding="UTF-8"%>
     <meta charset="UTF-8" />
     <title>index.jsp</title>
     <jsp:include page="include/resource.jsp"></jsp:include>
-    <link rel="stylesheet" type="text/css" href="css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/index.css" />
-    <link rel="stylesheet" type="text/css" href="css/footer.css" />
-    
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
     
     <!-- 웹폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -141,7 +142,7 @@ pageEncoding="UTF-8"%>
           </div>
         </div>
         <div class="row align-self-center justify-content-center morewrapper">
-          <a href="#" title="" class="moreanchor">더보기</a>
+          <a href="<%=request.getContextPath() %>/more.jsp?category=resent" title="" class="moreanchor">더보기</a>
         </div>
       </div>
 
@@ -180,7 +181,7 @@ pageEncoding="UTF-8"%>
           </div>
         </div>
         <div class="row align-self-center justify-content-center morewrapper">
-          <a href="#" title="" class="moreanchor">더보기</a>
+          <a href="<%=request.getContextPath() %>/more.jsp?category=classic" title="" class="moreanchor">더보기</a>
         </div>
       </div>
 

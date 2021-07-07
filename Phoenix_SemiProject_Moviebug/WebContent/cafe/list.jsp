@@ -1,3 +1,4 @@
+<%@page import="moviebug.users.dao.UsersDao"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="test.cafe.dao.CafeDao"%>
 <%@page import="test.cafe.dto.CafeDto"%>
@@ -6,9 +7,9 @@
     pageEncoding="UTF-8"%>
 <%
    //한 페이지에 몇개씩 표시할 것인지
-   final int PAGE_ROW_COUNT=5;
+   final int PAGE_ROW_COUNT=10;
    //하단 페이지를 몇개씩 표시할 것인지
-   final int PAGE_DISPLAY_COUNT=5;
+   final int PAGE_DISPLAY_COUNT=10;
    
    //보여줄 페이지의 번호를 일단 1이라고 초기값 지정
    int pageNum=1;
@@ -82,13 +83,23 @@
    if(endPageNum > totalPageCount){
       endPageNum=totalPageCount; //보정해 준다.
    }
-   
+   String email=(String)session.getAttribute("email");
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/cafe/list.jsp</title>
+<jsp:include page="../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 <style>
    .page-ui a{
       text-decoration: none;
@@ -116,6 +127,9 @@
 </style>
 </head>
 <body>
+<jsp:include page="../include/navbar.jsp">
+	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+</jsp:include>
 <div class="container">
 	<a href="private/insertform.jsp">새글 작성하기</a>
 	<h1>글 목록</h1>
@@ -125,7 +139,6 @@
 				<th>번호</th>
 				<th>작성자</th>
 				<th>제목</th>
-				<th>첨부파일</th>
 				<th>작성일</th>
 			</tr>
 		</thead>
@@ -134,10 +147,15 @@
 			<tr>
 				<td><%=tmp.getQna_idx() %></td>
 				<td><%=tmp.getQna_writer() %></td>
-				<td>
+				<td><%if(tmp.getQna_file() != null){ %>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image-fill" viewBox="0 0 16 16">
+					  <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
+					</svg>
 					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+				<%}else{ %>
+					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+				<%} %>
 				</td>
-				<td><%=tmp.getQna_file() %></td>
 				<td><%=tmp.getQna_regdate() %></td>
 			</tr>
 		<%} %>
@@ -184,5 +202,6 @@
          	</p>
          <%} %>
       </div>
+   <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>

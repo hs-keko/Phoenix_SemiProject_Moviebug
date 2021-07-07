@@ -35,11 +35,15 @@ pageEncoding="UTF-8"%>
           
           <div class="nav_header_menu02 flex_box">
           <div class="nav_w_brand">
-          	MovieBug
+          	 <a href="<%=request.getContextPath()%>/index.jsp"> MovieBug </a>
           </div>
           </div>
           
           <div class="nav_header_menu03 flex_box">
+          
+          
+          <%System.out.println("url : "+ request.getServletPath()); %>
+          <%if(request.getServletPath().equals("/users/login.jsp")) {}%>
           <div class="nav_w_right flex_box">
             <div class="nav_search flex_box">
             <!-- 검색 바 -->
@@ -55,44 +59,45 @@ pageEncoding="UTF-8"%>
             
             <!-- modal -->
             <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" id="exampleModalLabel">
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-xl">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <div class="modal-title" id="exampleModalLabel">
         
         		            	<form action="<%=request.getContextPath() %>/more.jsp" class="">
-		            		<button type="submit">
-			            		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-								  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-								</svg>
-							</button>
-		            		<input id="nav_search_input" class="form-control" type="text" id="keyword" name="keyword" />
-		            	</form>
-		            	
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <ul>
-      	<li>최근검색01</li>
-      	<li>최근검색02</li>
-      	<li>최근검색03</li>
-      	<li>최근검색04</li>
-      </ul>
-      </div>
-    </div>
-  </div>
-</div>
+				            		<button type="submit">
+					            		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+										  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+										</svg>
+									</button>
+					            		<input id="nav_search_input" class="form-control" type="text" id="keyword" name="keyword" />
+					            	</form>
+			            	
+					        </div>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+					      <ul>
+					      	<li>최근검색01</li>
+					      	<li>최근검색02</li>
+					      	<li>최근검색03</li>
+					      	<li>최근검색04</li>
+					      </ul>
+					      </div>
+					    </div>
+					  </div>
+					</div>
             
             	
             </div>
             <div class="nav_user flex_box">
               <div class="nav_login">
               <%if(!isLogin) {%>
-              	<a href="<%= request.getContextPath()%>/users/loginform.jsp">로그인</a>/<a href="<%= request.getContextPath()%>/users/signupform.jsp">회원가입</a>
+              	<a href="<%= request.getContextPath()%>/users/loginform.jsp">로그인</a>/
+              	<a href="<%= request.getContextPath()%>/users/loginform.jsp">회원가입</a>
               	<%}else{ %>
-              		내정보
+              		 <a href="<%=request.getContextPath()%>/users/private/info.jsp"><%=dto.getName() %></a>
               	<%} %>
               </div>
               <div class="profile">
@@ -100,14 +105,17 @@ pageEncoding="UTF-8"%>
               	<%if(isLogin){ %>
               	<div class="btn-group">
 				  <button type="button" class="profile_btn" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-				  
-		            <img src="<%=request.getContextPath() %>/<%=dto.getProfile() %>" />
-					
+				  	<!-- 프로필사진없을때 분기 추가해야됨 -->
+				  	<% if(dto.getProfile() != null){%>
+		            	<img src="<%=request.getContextPath() %>/<%=dto.getProfile()%>" />
+					<%}else{ %>
+						<img src="<%=request.getContextPath()%>/images/bigdata.jpg"/>
+					<%} %>
 				  </button>
               	
 				  <ul class="dropdown-menu dropdown-menu-lg-end">
-				    <li><button class="dropdown-item" type="button">내정보</button></li>
-				    <li><button class="dropdown-item" type="button">로그아웃</button></li>
+				    <li><a href="<%=request.getContextPath()%>/users/private/info.jsp"><button class="dropdown-item" type="button">내정보</button></a></li>
+				    <li><a href="<%=request.getContextPath()%>/users/logout.jsp"><button class="dropdown-item" type="button">로그아웃</button></a></li>
 				  </ul>
 				 
 				</div>
@@ -127,12 +135,12 @@ pageEncoding="UTF-8"%>
 				</div>
             </div>
           </div>
+          
+          
+          
           </div>
-          
-           </div>
-          
+         </div>
         </div>
-      
     </nav>
   </div>
 </header>

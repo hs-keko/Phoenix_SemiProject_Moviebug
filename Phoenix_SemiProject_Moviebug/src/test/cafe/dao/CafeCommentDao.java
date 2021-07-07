@@ -153,7 +153,7 @@ public class CafeCommentDao {
 	               " 		INNER JOIN users" + 
 	               " 		ON board_qna_comment.qna_comment_writer = users.name" +
 	               " 		WHERE qna_comment_ref_group=?" +
-	               " 		ORDER BY qna_comment_group ASC, qna_comment_idx ASC) result1)" +
+	               " 		ORDER BY qna_comment_group DESC, qna_comment_idx ASC) result1)" +
 	               " WHERE rnum BETWEEN ? AND ?";
 	         //PreparedStatement 객체의 참조값 얻어오기
 	         pstmt = conn.prepareStatement(sql);

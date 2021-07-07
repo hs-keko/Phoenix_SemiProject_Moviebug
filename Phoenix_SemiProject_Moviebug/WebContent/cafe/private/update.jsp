@@ -1,4 +1,3 @@
-
 <%@page import="test.cafe.dto.CafeDto"%>
 <%@page import="test.cafe.dao.CafeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
