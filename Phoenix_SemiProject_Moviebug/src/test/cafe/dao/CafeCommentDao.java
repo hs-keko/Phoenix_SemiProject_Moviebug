@@ -27,9 +27,114 @@ public class CafeCommentDao {
 		}
 		return dao;
 	}
+	//댓글 내용을 수정하는 메소드
+		public boolean update(CafeCommentDto dto) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int flag = 0;
+			try {
+				conn = new DbcpBean().getConn();
+				//실행할 sql 문 작성
+				String sql = "UPDATE board_qna_comment"
+						+ " SET qna_comment_content=?"
+						+ " WHERE qna_comment_idx=?";
+				pstmt = conn.prepareStatement(sql);
+				//? 에 바인딩할 내용이 있으면 여기서 바인딩
+				pstmt.setString(1, dto.getQna_comment_content());
+				pstmt.setInt(2, dto.getQna_comment_idx());
+				//insert or update or delete 문 수행하고 변화된 row 의 갯수 리턴 받기
+				flag = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+				}
+			}
+			if (flag > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	//댓글을 삭제하는 메소드
+		public boolean delete(int qna_comment_idx) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int flag = 0;
+			try {
+				conn = new DbcpBean().getConn();
+				//실행할 sql 문 작성
+				String sql = "UPDATE board_qna_comment"
+						+ " SET qna_comment_deleted='yes'"
+						+ " WHERE qna_comment_idx=?";
+				pstmt = conn.prepareStatement(sql);
+				//? 에 바인딩할 내용이 있으면 여기서 바인딩
+				pstmt.setInt(1, qna_comment_idx);
+				//insert or update or delete 문 수행하고 변화된 row 의 갯수 리턴 받기
+				flag = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+				}
+			}
+			if (flag > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 
+	//댓글 갯수를 리턴해주는 메소드
+	   public int getCount(int qna_comment_ref_group) {
+		    int count=0;
+		    Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				//Connection 객체의 참조값 얻어오기 
+				conn = new DbcpBean().getConn();
+				//실행할 sql 문 작성
+				String sql = "SELECT NVL(MAX(ROWNUM), 0) AS count "
+						+ " FROM board_qna_comment"
+						+ " WHERE qna_comment_ref_group=?";
+				//PreparedStatement 객체의 참조값 얻어오기
+				pstmt = conn.prepareStatement(sql);
+				//? 에 바인딩할 내용이 있으면 여기서 바인딩
+				pstmt.setInt(1, qna_comment_ref_group);
+				//select 문 수행하고 결과를 ResultSet 으로 받아오기
+				rs = pstmt.executeQuery();
+				//ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
+				if (rs.next()) {
+					count=rs.getInt("count");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+				}
+			}
+			return count;
+		   }
 	//댓글 목록을 리턴하는 메소드
-	public List<CafeCommentDto> getList(CafeCommentDto dto2){
+	   public List<CafeCommentDto> getList(CafeCommentDto dto2){
 	      List<CafeCommentDto> list=new ArrayList<>();
 	      Connection conn = null;
 	      PreparedStatement pstmt = null;
@@ -49,6 +154,8 @@ public class CafeCommentDao {
 	         pstmt = conn.prepareStatement(sql);
 	         //? 에 바인딩할 내용이 있으면 여기서 바인딩
 	         pstmt.setInt(1, dto2.getQna_comment_ref_group());
+	         pstmt.setInt(2, dto2.getStartRowNum());
+	         pstmt.setInt(3, dto2.getEndRowNum());
 	         //select 문 수행하고 결과를 ResultSet 으로 받아오기
 	         rs = pstmt.executeQuery();
 	         //반복문 돌면서 ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
