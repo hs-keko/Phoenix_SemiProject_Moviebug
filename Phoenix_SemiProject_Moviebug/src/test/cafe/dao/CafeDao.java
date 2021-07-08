@@ -616,8 +616,8 @@ public class CafeDao {
 				String sql = "SELECT *" + 
 						" FROM" + 
 						"	(SELECT qna_idx,qna_title,qna_writer,qna_content,qna_file,qna_regdate," + 
-						"	LAG(num, 1, 0) OVER(ORDER BY qna_idx DESC) AS prevNum," + 
-						"	LEAD(num, 1, 0) OVER(ORDER BY qna_idx DESC) nextNum" + 
+						"	LAG(qna_idx, 1, 0) OVER(ORDER BY qna_idx DESC) AS prevNum," + 
+						"	LEAD(qna_idx, 1, 0) OVER(ORDER BY qna_idx DESC) nextNum" + 
 						"	FROM board_qna" + 
 						"	ORDER BY qna_idx DESC)" + 
 						" WHERE qna_idx=?";

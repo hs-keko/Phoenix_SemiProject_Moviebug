@@ -142,10 +142,10 @@ public class MovieCommentDao {
 		               "   (SELECT result1.*, ROWNUM AS rnum" + 
 		               "    FROM" + 
 		               "      (SELECT comment_idx, comment_writer, comment_content, comment_target_id, comment_ref_group," + 
-		               "      comment_group, comment_deleted, board_comment.regdate, profile" + 
+		               "      comment_group, comment_deleted, comment_regdate, profile" + 
 		               "      FROM board_comment" + 
 		               "      INNER JOIN users" + 
-		               "      ON board_comment.writer = users.email" + 
+		               "      ON board_comment.comment_writer = users.email" + 
 		               "      WHERE comment_ref_group=?" + 
 		               "      ORDER BY comment_group DESC, comment_idx ASC) result1)" + 
 		               " WHERE rnum BETWEEN ? AND ?";

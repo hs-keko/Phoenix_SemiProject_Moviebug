@@ -18,6 +18,12 @@ div.index_content{
 	flex-direction: column;
 }
 
+.index_content .carousel-item img{
+	margin: 0;
+	object-fit: scale-down;
+	height: 600px;
+} 
+
 .index_content01,.index_content02,.index_content03,.index_content04{
 	margin: 30px 0;
 	justify-content: center;

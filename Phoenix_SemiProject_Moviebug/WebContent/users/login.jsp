@@ -39,7 +39,7 @@
 			
 		<p>
 			<strong><%=dto2.getName() %></strong> 님 로그인 되었습니다.
-			<a href="<%=url%>">확인</a>
+			<a href="../cafe/list.jsp">확인</a>
 		</p>
 		<%} else { %>
 			<p>

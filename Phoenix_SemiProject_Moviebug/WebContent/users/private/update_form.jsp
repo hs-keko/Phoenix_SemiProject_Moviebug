@@ -68,22 +68,22 @@
 			<form action="name_update.jsp" method="post">
 				<div class="p-2 bd-highlight">
 					<p class="float-start">이름</p>
-					<p>
-					  <a class="btn btn-primary float-end" data-bs-toggle="collapse" href="#name" role="button" aria-expanded="false" aria-controls="collapseExample">
-					    변경
-					  </a>
-					</p>
-	      			 <div class="collapse" id="name">
+					<div class="collapse" id="name">
 		      		 	 <div class="d-inline-flex p-2 bd-highlight">
 		         		 <label for="name"></label>
 		         		 <input type="text" id="name" name="name" value="<%=dto.getName()%>"/>
 		         		 <button type="submit">저장</button>
 		      		 	 </div>
 	      		 	 </div>
+					<p>
+					  <a class="btn btn-primary float-end" data-bs-toggle="collapse" href="#name" role="button" aria-expanded="false" aria-controls="collapseExample">
+					    변경
+					  </a>
+					</p>
+	      			 
 	      		</div>
       		</form>
-
-		
+	
 		<form action="addr_update.jsp" method="post">
 			<div class="p-2 bd-highlight">
 				<p class="float-start">주소</p>
