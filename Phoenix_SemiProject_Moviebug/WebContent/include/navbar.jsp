@@ -64,6 +64,7 @@ pageEncoding="UTF-8"%>
 				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog modal-xl">
 				    <div class="modal-content">
+
 				      <div class="modal-header search_bar">
 				        <div class="modal-title flex_box search_bar_wrapper" id="exampleModalLabel">
         
@@ -99,12 +100,11 @@ pageEncoding="UTF-8"%>
 						      <div class="row">
 						      	3위
 						      </div>
-						      
-					      </div>
+						     </div>
 					    </div>
 					  </div>
 					</div>
-            <!-- ---------------------------------------------- -->
+
             	
             </div>
             <div class="nav_user flex_box">
@@ -115,7 +115,9 @@ pageEncoding="UTF-8"%>
               	<a href="<%= request.getContextPath()%>/users/loginform.jsp">로그인</a>/
               	<a href="<%= request.getContextPath()%>/users/loginform.jsp">회원가입</a>
               	<%}else{ %>
+
               	<a href="<%=request.getContextPath()%>/users/private/info.jsp"><%=dto.getName() %></a>
+
               	<%} %>
               </div>
               
