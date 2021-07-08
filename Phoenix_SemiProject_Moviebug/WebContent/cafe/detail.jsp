@@ -444,7 +444,7 @@
 				"pageNum=xxx&num=xxx" 형식으로 get 방식 파라미터를 전달한다.
 			*/
 			ajaxPromise("ajax_comment_list.jsp","get",
-					"pageNum="+currentPage+"&qna_idx="<%=qna_idx%>)
+					"pageNum="+currentPage+"&qna_idx=<%=qna_idx%>")
 			.then(function(response){
 				//json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
 				return response.text();
