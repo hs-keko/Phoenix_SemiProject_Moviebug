@@ -233,7 +233,6 @@
       <%
       
       if(email != null){
-
       %>
       <%if(dto.getQna_writer().equals(name)){ %>
       <li><a href="private/updateform.jsp?num=<%=dto.getQna_idx() %>">수정</a></li>

@@ -15,6 +15,7 @@
 <meta charset="UTF-8">
 <title>/users/private/info.jsp</title>
 <style>
+	
    /* 프로필 이미지를 작은 원형으로 만든다 */
    #profileImage{
       width: 50px;
@@ -22,19 +23,36 @@
       border: 1px solid #cecece;
       border-radius: 50%;
    }
+   
+   html, body {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.container {
+		width: 100%;
+		height: 100%;
+		
+	}
+			
+	.container--formheader {
+		display: flex;
+		border: 1px solid #cecece;
+	}
+	
+	.container--form {
+		width: 600px;
+		height: auto;	
+		margin: auto;
+	}
+   
 </style>
 </head>
 <body>
 <div class="container">
+	<div class="container--formheader">
    <h1>가입 정보 입니다.</h1>
-   <table>
-      <tr>
-         <th>이름</th>
-         <td><%=dto.getName() %></td>
-      </tr>
-      <tr>
-         <th>프로필 이미지</th>
-         <td>
+
          <%if(dto.getProfile() == null){ %>   
             <svg id="profileImage" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -43,23 +61,10 @@
          <%}else{ %>
          	<img id="profileImage" src="<%=request.getContextPath()%><%=dto.getProfile()%>"/>
          <%} %>   
-         </td>
-      </tr>
-      <tr>
-         <th>이메일</th>
-         <td><%=email %></td>
-      </tr>
-      <tr>
-         <th>가입일</th>
-         <td><%=dto.getRegdate() %></td>
-      </tr>
-      <tr>
-         <th>주소</th>
-         <td><%=dto.getAddr() %></td>
-      </tr>
-   </table>
-   <a href="update_form.jsp">개인정보 수정</a>
-   <a href="javascript:deleteConfirm()">탈퇴</a>
+  
+   		<a href="update_form.jsp">개인정보 수정</a>
+   		<a href="javascript:deleteConfirm()">탈퇴</a>
+	</div>
 </div>
 <script>
    function deleteConfirm(){
