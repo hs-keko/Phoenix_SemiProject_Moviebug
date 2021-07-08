@@ -31,7 +31,7 @@ public class MovieDao {
          //Connection 객체의 참조값 얻어오기 
          conn = new DbcpBean().getConn();
          //실행할 sql 문 작성
-         String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
+         String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer"
                + " FROM movie_info"
                + " WHERE movie_num=?";
          //PreparedStatement 객체의 참조값 얻어오기
@@ -57,6 +57,7 @@ public class MovieDao {
             dto.setMovie_rating(rs.getString("movie_rating"));
             dto.setMovie_nation(rs.getString("movie_nation"));
             dto.setMovie_director(rs.getString("movie_director"));
+            dto.setMovie_writer(rs.getString("movie_writer"));
          }
       } catch (Exception e) {
          e.printStackTrace();
@@ -129,8 +130,8 @@ public class MovieDao {
          // 실행할 sql 문 작성
 
          String sql = "insert into movie_info ("+
-               "movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director" 
-               + ") values (movie_info_seq.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+               "movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer" 
+               + ") values (movie_info_seq.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,'admin@admin.com')";
          pstmt = conn.prepareStatement(sql);
          // 바인딩
          pstmt.setString(1,dto.getMovie_title_kr());
