@@ -69,6 +69,8 @@
 <link rel="icon" 
 	href="${pageContext.request.contextPath}/images/dy_cat.png" 
 	type="image/x-icon" />
+<!-- Custom styles for this template -->
+<link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
 <style>
 	.genre-container{
 		text-align: center;
@@ -107,8 +109,6 @@
 	
 	.btn-group{
 		width:100%;
-		height: 10%;
-		margin-top: 10px;
 	}
 	
 	li { font-size: 15px; line-height: 30px; }
@@ -204,7 +204,21 @@
    			transform: rotate(360deg);
    		}
    }
+   .info-container {
+   		
+   		margin:0 auto; 
+   		width: 90%;
+   }
+   .movie-detail {
+   		border: 3px solid black;
+   		width: 100%;
+   		height: 550px;
+   }
+   .movie-detail-wrapper{
+   
+   }
 </style>
+
 </head>
 <body>
 	<jsp:include page="include/navbar.jsp"> 
@@ -222,14 +236,19 @@
 		</div>
 		
 		
-		<div class="movieInfo-container row align-items-center">
-			<div class="movieInfo_item trailer">
-				<iframe src="<%=dto.getMovie_trailer() %>" 
-					title="YouTube video player" frameborder="0" 
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+		
+		
+	</div>
+	<div class="info-container">
+	<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+			<div class="bg-dark me-md-3 md-5 md-5 overflow-hidden">
+				<iframe src="<%=dto.getMovie_trailer() %>" style="width:100%; height:550px;"
+						title="YouTube video player" frameborder="0" 
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 				</iframe>
 			</div>
-			<div class="movieInfo_item detail">
+			<div class="me-md-3 md-5 md-5 overflow-hidden">
+				<div class="movie-detail">
 				<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 	  				<input type="radio" class="btn-check" name="btnradio" id="btnOne" autocomplete="off" checked>
 	  				<label class="btn btn-outline-secondary" for="btnOne">기본정보</label>
@@ -243,12 +262,10 @@
 	  				<input type="radio" class="btn-check" name="btnradio" id="btnFour" autocomplete="off">
 	  				<label class="btn btn-outline-secondary" for="btnFour">유저평점</label>
 				</div>
-				
-				<div class="mt-3" id="movieInfo_wrapper"></div>
-			</div>			
-		</div>
+				<div class="movie-detail-wrapper"></div>
+				</div>
+			</div>
 	</div>
-	
 	<!-- 댓글 목록 -->
    <div class="comments">
       <ul>
@@ -334,6 +351,8 @@
       <textarea name="comment_content"><%if(!isLogin){%>댓글 작성을 위해 로그인이 필요 합니다.<%}%></textarea>
       <button type="submit">등록</button>
    </form>
+	</div>
+	
    
    <!-- footer  -->
    <jsp:include page="include/footer.jsp"></jsp:include>
@@ -549,7 +568,7 @@
 <script>
 	
 	function infoOne(){
-		const div=document.querySelector("#movieInfo_wrapper");
+		const div=document.querySelector(".movie-detail-wrapper");
 		div.innerHTML="";
 		const ul=document.createElement("ul");
 		const li1=document.createElement("li");
@@ -574,7 +593,7 @@
 	}
 	
 	function infoTwo(){
-		const div=document.querySelector("#movieInfo_wrapper");
+		const div=document.querySelector(".movie-detail-wrapper");
 		div.innerHTML="";
 		const ul=document.createElement("ul");
 		const li1=document.createElement("li");
@@ -589,7 +608,7 @@
 	}
 	
 	function infoThree(){
-		const div=document.querySelector("#movieInfo_wrapper");
+		const div=document.querySelector(".movie-detail-wrapper");
 		div.innerHTML="";
 		
 		const p=document.createElement("p");
@@ -599,7 +618,7 @@
 	}
 	
 	function infoFour(){
-		const div=document.querySelector("#movieInfo_wrapper");
+		const div=document.querySelector(".movie-detail-wrapper");
 		div.innerHTML="";
 		
 		const h1=document.createElement("h1");
