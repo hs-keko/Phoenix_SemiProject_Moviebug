@@ -28,6 +28,7 @@
 </head>
 <body>
 	<div class="container">
+	
 		<h1>알림</h1>
 		<%if(isValid) {
 			session.setAttribute("email", email);
@@ -38,7 +39,7 @@
 			
 		<p>
 			<strong><%=dto2.getName() %></strong> 님 로그인 되었습니다.
-			<a href="<%=url%>">확인</a>
+			<a href="../cafe/list.jsp">확인</a>
 		</p>
 		<%} else { %>
 			<p>

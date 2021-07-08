@@ -143,18 +143,13 @@ public class CafeCommentDao {
 	         //Connection 객체의 참조값 얻어오기 
 	         conn = new DbcpBean().getConn();
 	         //실행할 sql 문 작성
-	         String sql = "SELECT *" +
-	        	   " FROM" +
-	        	   " 	(SELECT result1.*, ROWNUM AS rnum" +
-	        	   "    FROM" +
-	        	   " 		(SELECT qna_comment_idx, qna_comment_writer, qna_comment_content, qna_comment_target_id, qna_comment_ref_group," + 
-	               " 		qna_comment_group, qna_comment_deleted, board_qna_comment.qna_comment_regdate, profile" + 
-	               " 		FROM board_qna_comment" + 
-	               " 		INNER JOIN users" + 
-	               " 		ON board_qna_comment.qna_comment_writer = users.name" +
-	               " 		WHERE qna_comment_ref_group=?" +
-	               " 		ORDER BY qna_comment_group DESC, qna_comment_idx ASC) result1)" +
-	               " WHERE rnum BETWEEN ? AND ?";
+	         String sql = "SELECT qna_comment_idx, qna_comment_writer, qna_comment_content, qna_comment_target_id, qna_comment_ref_group," + 
+	               " qna_comment_group, qna_comment_deleted, board_qna_comment.qna_comment_regdate, profile" + 
+	               " FROM board_qna_comment" + 
+	               " INNER JOIN users" + 
+	               " ON board_qna_comment.qna_comment_writer = users.name" +
+	               " WHERE qna_comment_ref_group=?" +
+	               " ORDER BY qna_comment_group ASC, qna_comment_idx ASC";
 	         //PreparedStatement 객체의 참조값 얻어오기
 	         pstmt = conn.prepareStatement(sql);
 	         //? 에 바인딩할 내용이 있으면 여기서 바인딩

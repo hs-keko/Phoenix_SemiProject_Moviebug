@@ -86,7 +86,7 @@ public class MovieDao {
          // 실행할 sql 문 작성
          
          String sql = "select result01.*,rownum from " + 
-               "(select movie_title_kr, movie_story, movie_genre,movie_image,movie_rating, movie_year, to_char(sysdate,'yyyymmdd') \"오늘날짜\"" + 
+               "(select movie_num,movie_title_kr,movie_nation, movie_time, substr(movie_story,1,140) movie_story, movie_genre,movie_image,movie_rating, movie_year, to_char(sysdate,'yyyymmdd') \"오늘날짜\"" + 
                " from movie_info where sysdate-30 <= movie_year order by movie_year desc) result01" + 
                " where rownum < 5" + 
                " order by movie_rating desc";
@@ -96,11 +96,15 @@ public class MovieDao {
          while(rs.next()) {
             MovieDto dto = new MovieDto();
             dto.setMovie_genre(rs.getString("movie_genre"));
-            /* dto.setMovie_image(rs.getString("movie_image")); */
+            dto.setMovie_image(rs.getString("movie_image")); 
             dto.setMovie_title_kr(rs.getString("movie_title_kr"));
             dto.setMovie_story(rs.getString("movie_story"));
             dto.setMovie_rating(rs.getString("movie_rating"));
             dto.setMovie_year(rs.getString("movie_year"));
+            dto.setMovie_nation(rs.getString("movie_nation"));
+            dto.setMovie_time(rs.getString("movie_time"));
+            dto.setMovie_num(rs.getInt("movie_num"));
+            
             list.add(dto);
          }
          
@@ -221,7 +225,7 @@ public class MovieDao {
 
          String sql = "select result.* from "
                + "(select movie_num,movie_title_kr,movie_title_eng,movie_year,"
-               + "movie_genre from movie_info order by movie_year desc) result "
+               + "movie_genre,movie_image from movie_info order by movie_year desc) result "
                + "where rownum <= 3";
          pstmt = conn.prepareStatement(sql);
          // 바인딩
@@ -235,6 +239,7 @@ public class MovieDao {
              tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
              tmp.setMovie_year(rs.getString("movie_year"));
              tmp.setMovie_genre(rs.getString("movie_genre"));
+             tmp.setMovie_image(rs.getString("movie_image"));
              list.add(tmp);
           }
       } catch (Exception e) {

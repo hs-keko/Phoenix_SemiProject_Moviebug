@@ -8,7 +8,7 @@
 	
 	//2.로그인된 이메일(id)로부터 이름을 가져와서 
 	//  삭제할 글의 글작성자와 이름이 같은지 비교하여
-	String email=(String)session.getAttribute("eamil");
+	String email=(String)session.getAttribute("email");
 	String name=UsersDao.getInstance().getData(email).getName();
 	String writer=CafeDao.getInstance().getData(num).getQna_writer();
 	//작성자와 이름이 다르면 금지된 요청이라고 응답하고,

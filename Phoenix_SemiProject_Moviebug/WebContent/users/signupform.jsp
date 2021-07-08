@@ -1,74 +1,194 @@
+<%@page import="moviebug.movieinfo.dao.MovieDao"%>
+<%@page import="moviebug.movieinfo.dto.MovieDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	// 로그인 상태 확인
+	boolean isLogin = false;
+	String email = (String)session.getAttribute("email"); 
+	if(email != null) isLogin = true;
+	// 메인 carousel 최신 영화 3개 리스트 가져오기
+	List<MovieDto> NewMovieList = MovieDao.getInstance().getNewMovies();
+	
+	// 평점순위 4개 영화 리스트 가져오기
+	List<MovieDto> Top4List = MovieDao.getInstance().getTop4ResList();
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>/users/signup_form.jsp</title>
 <jsp:include page="../include/resource.jsp"></jsp:include>
+<link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+
+ <!-- 웹폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+<style>
+
+	html, body {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.signupform_container .container {
+		width: 100%;
+		height: 100%;
+		
+	}
+			
+	.container--formborder {
+		display: flex;
+		border: 1px solid #cecece;
+	}
+	
+	.signupform_container .container--form {
+		width: 600px;
+		height: auto;	
+		margin: auto;
+	}
+	
+	.signupform_container h1 {
+		padding: 32px;
+	}
+	
+	.signupform_container .signup_check > a {
+		color: #0000ff;
+	}
+</style>
 </head>
 <body>
+
 <div class="container">
-   <h1 class=text-center>회원 가입</h1>
-   <form class="row g-3" action="signup.jsp" method="post" id="myForm">
-      <div class="col-12 p-3">
-         <label class="control-label" for="name">이름</label>
-         <input class="form-control" type="text" name="name" id="name"/>
-      </div>
-      <div class="col-12 p-3">
-         <label class="control-label" for="email">이메일</label>
-         <input class="form-control" type="text" name="email" id="email"/>
-         <small class="form-text text-muted">ex) moviebug@xxx.xxx</small>
-         <div class="invalid-feedback">사용할 수 없는 이메일입니다.</div>
-      </div>
-      <div class="col-12 p-3">
-         <label class="control-label" for="pwd">비밀번호</label>
-         <input class="form-control" type="password" name="pwd" id="pwd"/>
-         <small class="form-text text-muted">5글자~10글자 이내로 입력하세요.</small>
-         <div class="invalid-feedback">비밀번호를 확인 하세요.</div>
-      </div>
-      <div class="col-12 p-3">
-         <label class="control-label" for="pwd2">비밀번호 확인</label>
-         <input class="form-control" type="password" name="pwd2" id="pwd2"/>
-      </div>
-      <div class="col-12 p-3">
-         <label class="control-label" for="addr">주소</label>
-         <input class="form-control" type="text" name="addr" id="addr"/>
-      </div>
-           
-      <button class="btn btn-primary" type="submit">가입</button>
-      
-      <div class="">
-	      <div class="form-check">
-			  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-			  <label class="form-check-label" for="flexCheckDefault">
-			    텀블벅 이용 약관동의
-			  </label>
-			  <a class="float-end" href="">내용보기</a>
-		  </div>
-		  <div class="form-check">
-			  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-			  <label class="form-check-label" for="flexCheckChecked">
-			    개인정보 수집 이용 동의
-			   </label>
-			   <a class="float-end" href="">내용보기</a>
-	      </div>
-		 
-		  <div class="form-check">
-			  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-			  <label class="form-check-label" for="flexCheckChecked">
-			   만 14세 이상입니다.
-			  </label>
-	      </div>
-      </div>
-   </form>
-</div>
+ <jsp:include page="../include/navbar.jsp"> 
+    	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+    </jsp:include>
+    
+	<div class="container--formborder signupform_container">
+   	 	<div class="container--form">
+   	
+   	 	<h1>회원 가입</h1>
+   	 	
+		   <form class="row g-3" action="signup.jsp" method="post" id="myForm">
+		      <div class="col-12">
+		         <label class="control-label" for="name">이름</label>
+		         <input class="form-control" type="text" name="name" id="name"/>
+		      </div>
+		      <div class="col-12">
+		         <label class="control-label" for="email">이메일</label>
+		         <input class="form-control" type="text" name="email" id="email"/>
+		         <small class="form-text text-muted">ex) moviebug@xxx.xxx</small>
+		         <div class="invalid-feedback">사용할 수 없는 이메일입니다.</div>
+		      </div>
+		      <div class="col-12">
+		         <label class="control-label" for="pwd">비밀번호</label>
+		         <input class="form-control" type="password" name="pwd" id="pwd"/>
+		         <small class="form-text text-muted">5글자~10글자 이내로 입력하세요.</small>
+		         <div class="invalid-feedback">비밀번호를 확인 하세요.</div>
+		      </div>
+		      <div class="col-12">
+		         <label class="control-label" for="pwd2">비밀번호 확인</label>
+		         <input class="form-control" type="password" name="pwd2" id="pwd2"/>
+		      </div>
+		      <div class="col-12">
+		         <label class="control-label" for="addr">주소</label>
+		         <input class="form-control" type="text" name="addr" id="addr"/>
+		      </div>
+		                   
+		      <div class="signup_check">
+				  <input class="form-check-input" type="checkbox" value="true"
+				  onclick="toggle1(this)" name="agree" id="signup_check1">
+				  <label class="form-check-label" for="signup_Check1">
+				   moviebug 이용 약관동의
+				  </label>
+				  <a class="float-end" data-bs-toggle="offcanvas" 
+				  	href="#offcanvasRight" role="button" aria-controls="offcanvasRight">
+	  				내용보기 </a>
+	
+					<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+					  <div class="offcanvas-header">
+					    <h5 id="offcanvasRightLabel">moviebug 이용 약관동의</h5>
+					    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+					  </div>
+					  <div class="offcanvas-body">
+					    ...
+					  </div>
+					</div>
+			  </div>
+			  
+			  <div class="signup_check">
+				  <input class="form-check-input" type="checkbox" value="true"
+				  onclick="toggle2(this)" name="agree" id="signup_check2">
+				  <label class="form-check-label" for="signup_Check2">
+				    개인정보 수집,이용 동의
+				   </label>
+				   <a class="float-end" data-bs-toggle="offcanvas" 
+				  	href="#offcanvasRight2" role="button" aria-controls="offcanvasRight">
+	  				내용보기 </a>
+	
+					<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight2" aria-labelledby="offcanvasRightLabel">
+					  <div class="offcanvas-header">
+					    <h5 id="offcanvasRightLabel">개인정보 수집,이용 동의</h5>
+					    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+					  </div>
+					  <div class="offcanvas-body">
+					    ...
+					  </div>
+					</div>
+		      </div>
+		      
+			  <div class="signup_check">
+				  <input class="form-check-input" type="checkbox" value="true"
+				  onclick="toggle3(this)" name="agree" id="signup_check3">
+				  <label class="form-check-label" for="signup_Check3">
+				   만 14세 이상입니다.
+				  </label>
+		      </div>
+	          <button class="btn btn-primary mb-3" type="submit" id="signBtn">가입</button>
+	   </form>
+  	 </div>
+  </div>
+
 <script src="<%=request.getContextPath() %>/js/gura_util.js"></script>
-<script>
-   //아이디, 비밀번호, 이메일의 유효성 여부를 관리한 변수 만들고 초기값 대입
+<script type="text/javascript">
+   // 이메일, 비밀번호, 약관동의의 유효성 여부를 관리한 변수 만들고 초기값 대입
    let isPwdValid=false;
    let isEmailValid=false;
-
+   let isChecked=false;
+   
+   // 약관동의 버튼 value 값을 얻어오기 위한 변수
+   let result1 = null;
+   let result2 = null;
+   let result3 = null;
+   
+   // 약관동의 버튼 onclick 에 들어갈 함수
+   function toggle1(e) {
+	   if(e.checked) { // checked = true 됐다면
+		   result1 = e.value; // 체크박스에 해당하는 value 값 가져오기
+	   } else {
+		   result1 = '';
+	   }
+   }
+   
+   function toggle2(e) {
+	   if(e.checked) {
+		   result2 = e.value;
+	   } else {
+		   result2 = '';
+	   }
+   }
+   
+   function toggle3(e) {
+	   if(e.checked) {
+		   result3 = e.value;
+	   } else {
+		   result3 = '';
+	   }
+   }
+   
+   
    //아이디를 입력했을때(input) 실행할 함수 등록 
    document.querySelector("#email").addEventListener("input", function(){
       //일단 is-valid,  is-invalid 클래스를 제거한다.
@@ -139,19 +259,32 @@
    
    //폼에 submit 이벤트가 발생했을때 실행할 함수 등록
    document.querySelector("#myForm").addEventListener("submit", function(e){
+	   // 폼 전송부터 막고 검사를 하고 submit 발생
+	   e.preventDefault();
+	   
       /*
-         입력한 아이디, 비밀번호, 이메일의 유효성 여부를 확인해서 하나라도 유효 하지 않으면
-         e.preventDefault(); 
-         가 수행 되도록 해서 폼의 제출을 막아야 한다. 
+  		 유효성 검사를 통해 하나라도 통과하지 못하면 return false 다 통과하면 submit
       */
-      //폼 전체의 유효성 여부 알아내기 
-      let isFormValid = isPwdValid && isEmailValid;
+      
+      if(result1 == "true" && result2 == "true" && result3 == "true") {
+     	  isChecked = true;
+       } else {
+     	  isChecked = false;
+       }
+      
+      //폼 전체의 유효성 여부 알아내기    
+      
+      let isFormValid = isPwdValid && isEmailValid && isChecked;
       if(!isFormValid){//폼이 유효하지 않으면
-         //폼 전송 막기 
-         e.preventDefault();
-      }   
+         // 유효성 검사가 하나라도 맞지 않으면 return false;
+      	 alert("다시 확인해주세요.");
+         return false;
+      } else {
+    	  document.querySelector("#myForm").submit();
+      }
    });
 </script>
+</div>
 </body>
 </html>
 
