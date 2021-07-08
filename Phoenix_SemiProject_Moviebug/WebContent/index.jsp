@@ -14,7 +14,6 @@
 	// 평점순위 4개 영화 리스트 가져오기
 	List<MovieDto> Top4List = MovieDao.getInstance().getTop4ResList();
 	
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -40,7 +39,6 @@
     </jsp:include>
     
     <!-- search modal -->
-
       <div class="row index_content01">
         <div
           id="carouselExampleCaptions"
@@ -86,11 +84,10 @@
                   <%= dto.getMovie_title_eng()%>
                 </p>
               </div>
-            	</div>
+            </div>
               
             </div>
             <%} %>
-            
             
           </div>
           <button
@@ -125,7 +122,7 @@
             <div class="row">
         <!-- ****************************************** -->
               		 <%for(MovieDto dto: Top4List){ %>
-              		 <a href="#" class="col-6 col-lg-3">
+              		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="col-6 col-lg-3">
 		              <div class="col">
 		                <div class="card border-0">
 		                  <img
@@ -166,7 +163,7 @@
               
          <!-- ****************************************** -->
 	      <%for(int i = 0 ; i<4; i++){ %>
-	      		<a href="#" class="col-6 col-lg-3">
+	      		<a href="" class="col-6 col-lg-3">
 	              <div class="col">
 	                <div class="card border-0">
 	                  <img
