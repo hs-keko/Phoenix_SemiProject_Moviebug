@@ -34,6 +34,9 @@ if (searchKeyword != undefined) {
   searchKeyword.forEach(function (arrval) {
     createbtns(arrval)
   })
+}else{
+	// 검색기록이 존재하지 않으면새로 저장
+	localStorage.setItem("sHistory", JSON.stringify([]))
 }
 
 // input 의 값 체크 리셋버튼 toggle 함수
