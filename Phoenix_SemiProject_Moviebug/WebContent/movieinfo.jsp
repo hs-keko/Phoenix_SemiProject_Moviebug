@@ -57,7 +57,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>movieinfo.jsp</title>
+<title>[<%=dto.getMovie_title_kr()%>] 영화 정보</title>
 <jsp:include page="include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="css/footer.css" />
@@ -66,6 +66,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+<link rel="icon" 
+	href="${pageContext.request.contextPath}/images/dy_cat.png" 
+	type="image/x-icon" />
 <style>
 	.genre-container{
 		text-align: center;
