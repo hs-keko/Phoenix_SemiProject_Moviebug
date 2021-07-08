@@ -7,7 +7,10 @@
    String email=(String)session.getAttribute("email");
    //2. UsersDao 객체를 이용해서 가입된 정보를 얻어온다.
    UsersDto dto=UsersDao.getInstance().getData(email);
-   //3. 응답한다.
+   
+	// 로그인 상태 확인
+	boolean isLogin = false;
+	if(email != null) isLogin = true;
 %>    
 <!DOCTYPE html>
 <html>
@@ -15,9 +18,19 @@
 <meta charset="UTF-8">
 <title>/users/private/update.jsp</title>
 <jsp:include page="../../include/resource.jsp"></jsp:include>
+<link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+
+ <!-- 웹폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 <style>
    /* 프로필 이미지를 작은 원형으로 만든다 */
-   
+    html, body {
+		width: 100%;
+		height: 100%;
+	}
+	
    #profileImage{
       width: 100px;
       height: 100px;
@@ -29,112 +42,136 @@
    	  display: none;
    }
    
-   .container {
-   	  margin: 20px;
-   	  border: 1px solid #red;
-   }
+	.container {
+		width: 100%;
+		height: 100%;
+	}
+			
+	.updateform_container {
+		align-items: center;
+		padding-top: 40px;
+		padding-bottom: 40px;
+		border: 1px solid #cecece;
+	}
    
+   .updateform_container .container--form {
+		width: 100%;
+		max-width: 600px;
+		padding: 15px;	
+		margin: auto;
+	}
+    
    .container--image {
    	  padding: 20px;
-   	  border: 3px solid #red;
+   	  border-bottom: 1px solid #cecece;
    }
-
+	
+	#UpdateForm form {
+	 	padding: 20px;
+		border-bottom: 1px solid #cecece;
+	}
+	
+	
 </style>
 </head>
 <body>
 	<div class="container">
-		<h1>설정</h1>
-		 		<a id="profileLink" href="javascript:">
-		      		<%if(dto.getProfile()==null){ %>
-				         <svg id="profileImage" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-				              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-				              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-				         </svg>
-				      <%}else{ %>
-				         <img id="profileImage" 
-				            src="<%=request.getContextPath() %><%=dto.getProfile() %>" />
-				      <%} %>
-		      		</a>	
-		<div class="container--image">
-   		<form class="row g-3" action="profile_update.jsp" method="post">
-   		<input type="hidden" name="profile" 
-   	  		value="<%=dto.getProfile()==null ? "empty" : dto.getProfile()%>" />
-   	  		<button type="submit">저장</button>
-		</form>
-		</div>
-		
-		<div class="clear-fix d-flex flex-column bd-highlight">
-		
-			<form action="name_update.jsp" method="post">
-				<div class="p-2 bd-highlight">
-					<p class="float-start">이름</p>
-					<div class="collapse" id="name">
-		      		 	 <div class="d-inline-flex p-2 bd-highlight">
-		         		 <label for="name"></label>
-		         		 <input type="text" id="name" name="name" value="<%=dto.getName()%>"/>
-		         		 <button type="submit">저장</button>
-		      		 	 </div>
-	      		 	 </div>
-					<p>
-					  <a class="btn btn-primary float-end" data-bs-toggle="collapse" href="#name" role="button" aria-expanded="false" aria-controls="collapseExample">
-					    변경
-					  </a>
-					</p>
-	      			 
-	      		</div>
-      		</form>
-	
-		<form action="addr_update.jsp" method="post">
-			<div class="p-2 bd-highlight">
-				<p class="float-start">주소</p>
-				<p>
-				  <a class="btn btn-primary float-end" data-bs-toggle="collapse" href="#addr" role="button" aria-expanded="false" aria-controls="collapseExample">
-				    변경
-				  </a>
-				</p>
-			</div>
-      		 <div class="collapse" id="addr">
-      		 	 <div class="d-inline-flex p-2 bd-highlight">
-         		 	<label for="addr"></label>
-         		 	<input type="text" id="addr" name="addr" value="<%=dto.getAddr()%>"/>
-         		 	<button type="submit">저장</button>
-      		 	 </div> 	 
-      		</div>
-      	</form>
-
-
-			<form action="pwd_update.jsp" method="post" id="myForm">
-				<div class="p-2 bd-highlight">
-					<p class="float-start">비밀번호</p>
-					<p>
-					  <a class="btn btn-primary float-end" data-bs-toggle="collapse" href="#pwd" role="button" aria-expanded="false" aria-controls="collapseExample">
-					    변경
-					  </a>
-					</p>
+    
+		<div class="updateform_container">
+			<div class="container--form">
+				<h1>설정</h1>
+				 		<a id="profileLink" href="javascript:">
+				      		<%if(dto.getProfile()==null){ %>
+						         <svg id="profileImage" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+						              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+						              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+						         </svg>
+						      <%}else{ %>
+						         <img id="profileImage" 
+						            src="<%=request.getContextPath() %><%=dto.getProfile() %>" />
+						      <%} %>
+				      		</a>	
+				<div class="container--image">
+		   		<form class="row g-3" action="profile_update.jsp" method="post">
+		   		<input type="hidden" name="profile" 
+		   	  		value="<%=dto.getProfile()==null ? "empty" : dto.getProfile()%>" />
+		   	  		<button type="submit">프로필 저장</button>
+				</form>
 				</div>
-				<div class="collapse" id="pwd">
-					  <div class="card card-body">
-					   	<label class="control-label" for="pwd">현재 비밀번호</label>
-				        <input class="form-control mb-3" type="password" name="pwd" id="pwd"/>
-				        
-					   	<label class="control-label" for="newPwd">새 비밀번호</label>
-				        <input class="form-control" type="password" name="newPwd" id="newPwd"/>
-				        
-					   	<label class="control-label" for="newPwd2">새 비밀번호 확인</label>
-				        <input class="form-control" type="password" id="newPwd2"/>
-				        
-				        <button type="submit">저장</button>
-					</div>
-				</div>
-			</form>
+				
+				<div class="clear-fix d-flex flex-column bd-highlight" id="UpdateForm">
+				
+					<form class="update_nameForm" action="name_update.jsp row-3" method="post">
+						<div class="p-2 bd-highlight col-12">
+							<p class="float-start">이름</p>					
+							<p>
+							  <a class="btn btn-primary float-end" data-bs-toggle="collapse" href="#name" role="button" aria-expanded="false" aria-controls="collapseExample">
+							    변경
+							  </a>
+							</p>
+			      		</div>
+			      		<div class="collapse col-12" id="name">
+				      		 	 <div class="d-inline-flex p-2 bd-highlight col-12">
+				         		 <label for="name"></label>
+				         		 <input type="text" id="name" name="name" value="<%=dto.getName()%>"/>
+				         		 <button type="submit">저장</button>
+				      		 	 </div>
+			      		 	 </div>
+		      		</form>
 			
-		</div>
+				<form class="update_addrForm" action="addr_update.jsp row-3" method="post">
+					<div class="p-2 bd-highlight col-12">
+						<p class="float-start">주소</p>
+						<p>
+						  <a class="btn btn-primary float-end" data-bs-toggle="collapse" href="#addr" role="button" aria-expanded="false" aria-controls="collapseExample">
+						    변경
+						  </a>
+						</p>
+					</div>
+		      		 <div class="collapse col-12" id="addr">
+		      		 	 <div class="d-inline-flex p-2 bd-highlight col-12">
+		         		 	<label for="addr"></label>
+		         		 	<input type="text" id="addr" name="addr" value="<%=dto.getAddr()%>"/>
+		         		 	<button type="submit">저장</button>
+		      		 	 </div> 	 
+		      		</div>
+		      	</form>
 		
-		<form action="ajax_profile_upload.jsp" method="post" 
-            id="imageForm" enctype="multipart/form-data">
-     			 <input type="file" name="image" id="image" 
-        			 accept=".jpg, .jpeg, .png, .JPG, .JPEG, .gif"/>
-  		 </form>	
+		
+					<form action="pwd_update.jsp row-3" method="post" id="myForm">
+						<div class="p-2 bd-highlight col-12">
+							<p class="float-start">비밀번호</p>
+							<p>
+							  <a class="btn btn-primary float-end" data-bs-toggle="collapse" href="#pwd" role="button" aria-expanded="false" aria-controls="collapseExample">
+							    변경
+							  </a>
+							</p>
+						</div>
+						<div class="collapse col-12 p-4" id="pwd">
+							  <div class="card card-body col-12">
+							   	<label class="control-label" for="pwd">현재 비밀번호</label>
+						        <input class="form-control mb-3" type="password" name="pwd" id="pwd"/>
+						        
+							   	<label class="control-label" for="newPwd">새 비밀번호</label>
+						        <input class="form-control" type="password" name="newPwd" id="newPwd"/>
+						        
+							   	<label class="control-label" for="newPwd2">새 비밀번호 확인</label>
+						        <input class="form-control" type="password" id="newPwd2"/>
+						        
+						        <button class="m-3" type="submit">저장</button>
+							</div>
+						</div>
+					</form>
+					
+				</div>
+				
+				<form action="ajax_profile_upload.jsp" method="post" 
+		            id="imageForm" enctype="multipart/form-data">
+		     			 <input type="file" name="image" id="image" 
+		        			 accept=".jpg, .jpeg, .png, .JPG, .JPEG, .gif"/>
+		  		 </form>
+	  		 </div>
+  		 </div>	
 	</div>
 <script src="<%=request.getContextPath() %>/js/gura_util.js"></script>
 <script>
