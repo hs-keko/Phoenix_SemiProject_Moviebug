@@ -32,7 +32,6 @@
 
   </head>
   <body>
-    <div class="container-xl index_content">
 
     <jsp:include page="include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
@@ -42,7 +41,7 @@
       <div class="row index_content01">
         <div
           id="carouselExampleCaptions"
-          class="carousel slide"
+          class="carousel slide carousel-fade"
           data-bs-ride="carousel" >
           <div class="carousel-indicators">
             <button
@@ -75,7 +74,7 @@
           <%for(int i = 0; i < NewMovieList.size(); i++) {
           	MovieDto dto = NewMovieList.get(i);
           %>
-            <div class="carousel-item border-0 <%= i == 0 ?  "active" : ""%>">
+            <div class="carousel-item  border-0 <%= i == 0 ?  "active" : ""%>" data-bs-interval="99999">
             	<div class="card border-0">
               <img src="<%=dto.getMovie_image() != null ? dto.getMovie_image():"images/bigdata.jpg" %>" class="d-block w-100" alt="..." />
               <div class="carousel-caption d-none d-md-block">
@@ -111,6 +110,7 @@
         </div>
       </div>
 
+ <div class="container-xl index_content">
       <div class="row index_content02">
       	 <div class="row">
 	        <div class="col flex_box index_category">

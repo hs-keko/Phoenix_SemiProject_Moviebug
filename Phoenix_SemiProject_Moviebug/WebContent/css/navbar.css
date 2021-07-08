@@ -19,7 +19,18 @@ nav{
 
 header{
 	text-align: center;
+	position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
+
+header + div{
+	margin-top: 65px;
+}
+
 .flex_box{
 	display: flex;
 }

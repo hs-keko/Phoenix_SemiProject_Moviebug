@@ -28,20 +28,40 @@ a:hover .poster_info .card-title,.card-text{
 div.index_content {
   display: flex;
   flex-direction: column;
+  z-index: 1;
+    background-color: white;
+    margin-top: 50vh;
 }
+
 
 .index_content .carousel-item img {
   margin: 0;
   object-fit: scale-down;
-  height: 600px;
+  height: 100%;
 }
 
-.index_content01,
+.index_content01{
+	z-index: -999;
+    position: fixed;
+    top: 0;
+    margin-top: 65px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
 .index_content02,
 .index_content03,
 .index_content04 {
   margin: 30px 0;
   justify-content: center;
+}
+
+.index_content01 .carousel-inner{
+	height: 50vh;
+}
+
+.index_content01 .carousel-inner div{
+	height: 100%;
 }
 
 .index_movielist .card {
