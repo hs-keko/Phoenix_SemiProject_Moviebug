@@ -1,3 +1,4 @@
+<%@page import="moviebug.users.dao.UsersDao"%>
 <%@page import="moviebug.movieinfo.dao.MovieCommentDao"%>
 <%@page import="java.util.List"%>
 <%@page import="moviebug.movieinfo.dto.MovieCommentDto"%>
@@ -56,10 +57,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>movieinfo.jsp</title>
+<title>[<%=dto.getMovie_title_kr()%>] 영화 정보</title>
 <jsp:include page="include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="css/footer.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+<link rel="icon" 
+	href="${pageContext.request.contextPath}/images/dy_cat.png" 
+	type="image/x-icon" />
 <style>
 	.genre-container{
 		text-align: center;
@@ -198,7 +207,9 @@
 </style>
 </head>
 <body>
-	
+	<jsp:include page="include/navbar.jsp"> 
+    	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+    </jsp:include>
 	<div class="container">
 		<div class="genre-container mb-3">
 			<p><%=dto.getMovie_genre() %></p>
@@ -267,9 +278,11 @@
                   <%}else{ %>
                      <img class="profile-image" src="${pageContext.request.contextPath}<%=tmp.getProfile()%>"/>
                   <%} %>
-                     <span><%=tmp.getComment_writer() %></span>
+                  		<!-- 댓글 작성자의 이름을 가져와야 한다. -->
+                  		
+                     <span><%=UsersDao.getInstance().getData(tmp.getComment_writer()).getName() %></span>
                   <%if(tmp.getComment_idx() != tmp.getComment_group()){ %>
-                     @<i><%=tmp.getComment_target_id() %></i>
+                     @<i><%=UsersDao.getInstance().getData(tmp.getComment_target_id()).getName() %></i>
                   <%} %>
                      <span><%=tmp.getComment_regdate() %></span>
                      <a data-num="<%=tmp.getComment_idx() %>" href="javascript:" class="reply-link">답글</a>
