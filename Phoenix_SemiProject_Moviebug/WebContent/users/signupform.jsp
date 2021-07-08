@@ -8,11 +8,6 @@
 	boolean isLogin = false;
 	String email = (String)session.getAttribute("email"); 
 	if(email != null) isLogin = true;
-	// 메인 carousel 최신 영화 3개 리스트 가져오기
-	List<MovieDto> NewMovieList = MovieDao.getInstance().getNewMovies();
-	
-	// 평점순위 4개 영화 리스트 가져오기
-	List<MovieDto> Top4List = MovieDao.getInstance().getTop4ResList();
 %>
 <!DOCTYPE html>
 <html>
@@ -33,30 +28,36 @@
 		height: 100%;
 	}
 	
-	.signupform_container .container {
+	 .container {
 		width: 100%;
 		height: 100%;
 		
 	}
 			
-	.container--formborder {
+	.signupform_container {
 		display: flex;
+		align-items: center;
+		padding-top: 40px;
+		padding-bottom: 40px;
 		border: 1px solid #cecece;
 	}
 	
 	.signupform_container .container--form {
-		width: 600px;
-		height: auto;	
+		width: 100%;
+		max-width: 600px;
+		padding: 15px;	
 		margin: auto;
 	}
 	
 	.signupform_container h1 {
 		padding: 32px;
+		text-align: center;
 	}
 	
-	.signupform_container .signup_check > a {
+	.signup_check > a {
 		color: #0000ff;
 	}
+	
 </style>
 </head>
 <body>
@@ -66,7 +67,7 @@
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
     
-	<div class="container--formborder signupform_container">
+	<div class= "signupform_container">
    	 	<div class="container--form">
    	
    	 	<h1>회원 가입</h1>
