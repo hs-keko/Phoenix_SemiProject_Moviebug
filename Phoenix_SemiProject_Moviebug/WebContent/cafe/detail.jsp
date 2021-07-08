@@ -24,8 +24,6 @@
 	   keyword="";
 	   condition=""; 
 	}
-	
-	dto.setQna_idx(qna_idx);
 	if(!keyword.equals("")){
 		   //검색 조건이 무엇이냐에 따라 분기 하기
 		   if(condition.equals("qna_title_content")){//제목 + 내용 검색인 경우
@@ -191,8 +189,18 @@
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
 <div class="container">
-   <a href="detail.jsp?num=<%=dto.getPrevNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">이전글</a>
-   <a href="detail.jsp?num=<%=dto.getNextNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">다음글</a>
+	<%if(dto.getPrevNum()!=0) {%>
+   		<a href="detail.jsp?num=<%=dto.getPrevNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">이전글</a>
+   	<%} %>
+   	<%if(dto.getNextNum()!=0) {%>
+   		<a href="detail.jsp?num=<%=dto.getNextNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">다음글</a>
+   	<%} %>
+   	<%if(!keyword.equals("")){ %>
+   	<p>
+   		<strong><%=condition %></strong> 조건,
+   		<strong><%=keyword %></strong> 검색어로 검색된 내용 자세히 보기
+   	</p>
+   <%} %>
    <table>
       <tr>
          <th>글번호</th>
