@@ -124,6 +124,15 @@
       float: left;
       padding: 5px;
    }
+   #one {
+   		text-align: center; 
+   }
+   #two {
+   		text-align: right; 
+   }
+   #three{
+   		float: right;
+   }
 </style>
 </head>
 <body>
@@ -131,9 +140,11 @@
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
 <div class="container">
+	<h1 id="one">글 목록</h1> 
+	<div id="two">
 	<a href="private/insertform.jsp">새글 작성하기</a>
-	<h1>글 목록</h1>
-	<table>
+	</div>
+	<table class="table table table-striped">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -185,7 +196,7 @@
 	         <%} %>
 	      </ul>
 	   </div>
-         <form action="list.jsp" method="get">
+         <form id="three" action="list.jsp" method="get">
          	<label for="condition">검색 조건</label>
          	<select name="condition" id="condition">
     			 <option value="qna_title_content" <%=condition.equals("qna_title_content") ? "selected" : ""%>>제목+내용</option>
