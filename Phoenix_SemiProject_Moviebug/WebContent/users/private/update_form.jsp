@@ -183,11 +183,7 @@
   		 </div>	
 	</div>
 	
-	  <!-- import footer.jsp -->
-      <jsp:include page="include/footer.jsp"></jsp:include>
-      
-      <!-- import navbar.js -->
-      <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+
 <script src="<%=request.getContextPath() %>/js/gura_util.js"></script>
 <script>
 
