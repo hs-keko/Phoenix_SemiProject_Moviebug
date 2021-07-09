@@ -47,7 +47,9 @@
 		align-items: center;
 		padding-top: 40px;
 		padding-bottom: 40px;
-		transform: translateY(30%);
+		transform: translateY(0%);
+		border: 1px solid #cecece;
+		height: 800px;
 	}
 	
 	.loginform_container .container--form {
