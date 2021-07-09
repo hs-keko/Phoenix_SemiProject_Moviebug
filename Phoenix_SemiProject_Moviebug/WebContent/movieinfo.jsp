@@ -313,7 +313,7 @@
                   </dd>
                </dl>   
                <form id="reForm<%=tmp.getComment_idx() %>" class="animate__animated comment-form re-insert-form" 
-                  action="movieinfo/private/comment_insert.jsp" method="post">
+                  action="<%=request.getContextPath() %>/movieinfo/private/comment_insert.jsp" method="post">
                   <input type="hidden" name="comment_ref_group"
                      value="<%=dto.getMovie_num()%>"/>
                   <input type="hidden" name="comment_target_id"

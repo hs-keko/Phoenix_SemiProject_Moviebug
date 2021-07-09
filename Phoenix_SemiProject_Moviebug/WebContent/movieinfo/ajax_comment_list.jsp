@@ -85,7 +85,7 @@
          </dd>
       </dl>   
       <form id="reForm<%=tmp.getComment_idx() %>" class="animate__animated comment-form re-insert-form" 
-         action="private/comment_insert.jsp" method="post">
+         action="<%=request.getContextPath() %>/movieinfo/private/comment_insert.jsp" method="post">
          <input type="hidden" name="comment_ref_group"
             value="<%=movie_num%>"/>
          <input type="hidden" name="comment_target_id"
@@ -97,7 +97,7 @@
       </form>   
       <%if(tmp.getComment_writer().equals(email)){ %>   
       <form id="updateForm<%=tmp.getComment_idx() %>" class="comment-form update-form" 
-         action="private/comment_update.jsp" method="post">
+         action="<%=request.getContextPath() %>/movieinfo/private/comment_update.jsp" method="post">
          <input type="hidden" name="comment_idx" value="<%=tmp.getComment_idx() %>" />
          <textarea name="comment_content"><%=tmp.getComment_content() %></textarea>
          <button type="submit">수정</button>
