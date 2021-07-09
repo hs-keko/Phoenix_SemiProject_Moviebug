@@ -74,7 +74,7 @@
     int totalRow=CafeCommentDao.getInstance().getCount(qna_idx);
     // 댓글 전체 페이지의 갯수
     int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
-    
+    System.out.println(totalPageCount);
     String email=(String)session.getAttribute("email");
 	 String name=UsersDao.getInstance().getData(email).getName();
 %>
@@ -244,7 +244,11 @@
    <!-- 여기서부터 댓글 목록 입니다. -->
    <div class="comments">
    		<ul>
-   			<%for(CafeCommentDto tmp: commentList){ %>
+   			<%for(CafeCommentDto tmp: commentList){ 
+   				System.out.println(tmp.getQna_comment_ref_group());
+   			System.out.println(tmp.getEndRowNum());
+   			System.out.println(tmp.getStartRowNum());
+   			%>
    				<%if(tmp.getQna_comment_deleted().equals("yes")){%>
    					<li>삭제된 댓글입니다</li>
    				<%
