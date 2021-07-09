@@ -4,9 +4,10 @@
     pageEncoding="UTF-8"%>
 <%
 	//폼 전송되는 파라미터 추출
-	int comment_ref_group=Integer.parseInt(request.getParameter("comment_ref_group"));
-	String comment_target_id=request.getParameter("comment_target_id");
-	String comment_content=request.getParameter("comment_content");
+	int comment_ref_group = Integer.parseInt(request.getParameter("comment_ref_group"));
+	String comment_target_id = request.getParameter("comment_target_id");
+	String comment_content = request.getParameter("comment_content");
+	
 	/*
 		원글의 댓글은 comment_group 번호가 전송이 안되고
 		댓글의 댓글은 comment_group 번호가 전송이 된다.
