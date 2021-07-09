@@ -147,15 +147,16 @@ public class CafeCommentDao {
 	                 " FROM" +
 	                 "    (SELECT result1.*, ROWNUM AS rnum" +
 	                 "    FROM" +
-	                 "       (SELECT distinct qna_comment_idx, qna_comment_writer, qna_comment_content, qna_comment_target_id, qna_comment_ref_group," + 
+	                 "       (SELECT qna_comment_idx, qna_comment_writer, qna_comment_content, qna_comment_target_id, qna_comment_ref_group," + 
 	                 "       qna_comment_group, qna_comment_deleted, board_qna_comment.qna_comment_regdate, profile" + 
 	                 "       FROM board_qna_comment" + 
 	                 "       INNER JOIN users" + 
-	                 "       ON board_qna_comment.qna_comment_writer = users.name" +
+	                 "       ON board_qna_comment.qna_comment_target_id = users.email" +
 	                 "       WHERE qna_comment_ref_group=?" +
 	                 "       ORDER BY qna_comment_group ASC, qna_comment_idx ASC) result1)" +
 	                 " WHERE rnum BETWEEN ? AND ?";
 	         //PreparedStatement 객체의 참조값 얻어오기
+	         System.out.println(sql);
 	         pstmt = conn.prepareStatement(sql);
 	         //? 에 바인딩할 내용이 있으면 여기서 바인딩
 	         pstmt.setInt(1, dto2.getQna_comment_ref_group());

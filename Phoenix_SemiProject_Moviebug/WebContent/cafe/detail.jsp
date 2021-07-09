@@ -275,7 +275,7 @@
 		                  <%} %>
 		                  	<span><strong><%=tmp.getQna_comment_writer() %></strong></span>
 		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
-		                  	[<%=tmp.getQna_comment_writer() %>]님에게
+		                  	[<%=tmp.getQna_comment_target_id() %>]님에게
 		                  <%} %>
 		                  	<span><%=tmp.getQna_comment_regdate () %></span>
 		                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
@@ -292,7 +292,7 @@
                   action="private/comment_insert.jsp" method="post">
                   <input type="hidden" name="qna_comment_ref_group"
                      value="<%=dto.getQna_idx()%>"/>
-                  <input type="hidden" name="qna_comment_writer"
+                  <input type="hidden" name="qna_comment_target_id"
                      value="<%=tmp.getQna_comment_writer()%>"/>
                   <input type="hidden" name="qna_comment_group"
                      value="<%=tmp.getQna_comment_group()%>"/>
@@ -321,7 +321,7 @@
    		<!-- 원글의 글번호가 댓글의 ref_group 번호가 된다. -->
    		<input type="hidden" name="qna_comment_ref_group" value="<%=qna_idx %>" />
    		<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
-   		<input type="hidden" name="qna_comment_writer" value="<%=dto.getQna_writer() %>"/>
+   		<input type="hidden" name="qna_comment_target_id" value="<%=dto.getQna_writer() %>"/>
    		<textarea name="qna_comment_content"></textarea>
    		<button type="submit">등록</button>
    </form>
@@ -332,11 +332,12 @@
 	for(let i=0; i<updateForms.length; i++){
 		//폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
 		updateForms[i].addEventListener("submit", function(e){
-			//submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기
-			const form=this;
 			//폼 제출 막기
 			e.preventDefault();
+			//submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기
+			const form=this;
 			//이벤트가 일어난 폼을 ajax 전송
+			console.log(form)
 			ajaxFormPromise(form)
 			.then(function(response){
 				return response.json();
