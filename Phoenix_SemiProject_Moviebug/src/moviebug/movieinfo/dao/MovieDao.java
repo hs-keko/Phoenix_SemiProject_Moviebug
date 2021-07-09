@@ -267,7 +267,7 @@ public class MovieDao {
 	         //실행할 sql 문 작성
 	         String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer"
 	               + " FROM movie_info"
-	               + ""; // 여기서 한달 이내의 영화 최신순을 어떻게 조건을 주지? order by나 between 아님 where 조건? 일단 다 가져와보자
+	               + " where sysdate-30 <= movie_year order by movie_rating desc"; // order by나 between 아님 where 조건? 일단 다 가져와보자
 	         //PreparedStatement 객체의 참조값 얻어오기
 	         pstmt = conn.prepareStatement(sql);
 	         //? 에 바인딩할 내용이 있으면 여기서 바인딩
@@ -322,7 +322,8 @@ public class MovieDao {
 	         //실행할 sql 문 작성
 	         String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer"
 	               + " FROM movie_info"
-	               + ""; // 고전 명작이라는 조건은 어떻게 주지? 따로 카테고리가 있어야 	where 조건에 넣을텐데 데이블 칼럼을 하나 늘려야 하나? 여기도 일단 전체로 가져온다
+	               + " WHERE movie_rating >= 9"
+	               + " ORDER BY movie_rating desc"; // 고전 명작이라는 조건은 어떻게 주지? 따로 카테고리가 있어야 	where 조건에 넣을텐데 데이블 칼럼을 하나 늘려야 하나? 여기도 일단 전체로 가져온다
 	         //PreparedStatement 객체의 참조값 얻어오기
 	         pstmt = conn.prepareStatement(sql);
 	         //? 에 바인딩할 내용이 있으면 여기서 바인딩

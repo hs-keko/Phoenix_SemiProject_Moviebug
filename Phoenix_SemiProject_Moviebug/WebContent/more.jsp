@@ -9,7 +9,9 @@
 	String category = request.getParameter("category");
 
 	List<MovieDto> list = new ArrayList<>();
-	 
+	
+	if(category == null) category = "search";
+	
 	 if(category.equals("resent")){
 	    list = MovieDao.getInstance().getRecentMovies();
 	 }else if(category.equals("classic")){
@@ -27,7 +29,11 @@
 <div class="row index_content02">
       	 <div class="row">
 	        <div class="col flex_box index_category">
-	      		카테고리 ( 최근개봉영화(한달이내) 가장 높은 평점 )
+	        <%if(category.equals("resent")){ %>
+	      		높은 평점 순 최신작
+	      		<%}else{ %>
+	      		 여름 추천 영화 (스릴러, 액션)
+	      		<%} %>
 	        </div>
       	</div>
         <div class="row">
