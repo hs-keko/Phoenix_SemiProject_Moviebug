@@ -18,7 +18,7 @@
 <meta charset="UTF-8">
 <title>/users/private/update.jsp</title>
 <jsp:include page="../../include/resource.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/navbar.css" />
 
  <!-- 웹폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,6 +66,12 @@
    	  border-bottom: 1px solid #cecece;
    }
 	
+   .container--image button {
+   	  border-radius: 15px;
+   	  width: 100px;
+   	  font-size: 12px;
+   }	
+
 	#UpdateForm form {
 	 	padding: 20px;
 		border-bottom: 1px solid #cecece;
@@ -75,6 +81,9 @@
 </style>
 </head>
 <body>
+    <jsp:include page="../../include/navbar.jsp"> 
+    	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+    </jsp:include>
 	<div class="container">
     
 		<div class="updateform_container">
@@ -95,13 +104,13 @@
 		   		<form class="row g-3" action="profile_update.jsp" method="post">
 		   		<input type="hidden" name="profile" 
 		   	  		value="<%=dto.getProfile()==null ? "empty" : dto.getProfile()%>" />
-		   	  		<button type="submit">프로필 저장</button>
+		   	  		<button class="btn btn-dark" type="submit">프로필 저장</button>
 				</form>
 				</div>
 				
 				<div class="clear-fix d-flex flex-column bd-highlight" id="UpdateForm">
 				
-					<form class="update_nameForm" action="name_update.jsp row-3" method="post">
+					<form class="update_nameForm row-3" action="name_update.jsp" method="post">
 						<div class="p-2 bd-highlight col-12">
 							<p class="float-start">이름</p>					
 							<p>
@@ -114,12 +123,12 @@
 				      		 	 <div class="d-inline-flex p-2 bd-highlight col-12">
 				         		 <label for="name"></label>
 				         		 <input type="text" id="name" name="name" value="<%=dto.getName()%>"/>
-				         		 <button type="submit">저장</button>
+				         		 <button class="btn btn-dark" type="submit">저장</button>
 				      		 	 </div>
 			      		 	 </div>
 		      		</form>
 			
-				<form class="update_addrForm" action="addr_update.jsp row-3" method="post">
+				<form class="update_addrForm row-3" action="addr_update.jsp" method="post">
 					<div class="p-2 bd-highlight col-12">
 						<p class="float-start">주소</p>
 						<p>
@@ -132,13 +141,13 @@
 		      		 	 <div class="d-inline-flex p-2 bd-highlight col-12">
 		         		 	<label for="addr"></label>
 		         		 	<input type="text" id="addr" name="addr" value="<%=dto.getAddr()%>"/>
-		         		 	<button type="submit">저장</button>
+		         		 	<button class="btn btn-dark" type="submit">저장</button>
 		      		 	 </div> 	 
 		      		</div>
 		      	</form>
 		
 		
-					<form action="pwd_update.jsp row-3" method="post" id="myForm">
+					<form class="row-3" action="pwd_update.jsp" method="post" id="myForm">
 						<div class="p-2 bd-highlight col-12">
 							<p class="float-start">비밀번호</p>
 							<p>
@@ -153,12 +162,12 @@
 						        <input class="form-control mb-3" type="password" name="pwd" id="pwd"/>
 						        
 							   	<label class="control-label" for="newPwd">새 비밀번호</label>
-						        <input class="form-control" type="password" name="newPwd" id="newPwd"/>
+						        <input class="form-control mb-3" type="password" name="newPwd" id="newPwd"/>
 						        
 							   	<label class="control-label" for="newPwd2">새 비밀번호 확인</label>
-						        <input class="form-control" type="password" id="newPwd2"/>
+						        <input class="form-control mb-3" type="password" id="newPwd2"/>
 						        
-						        <button class="m-3" type="submit">저장</button>
+						        <button class="btn btn-dark m-3" type="submit">저장</button>
 							</div>
 						</div>
 					</form>
@@ -173,6 +182,12 @@
 	  		 </div>
   		 </div>	
 	</div>
+	
+	  <!-- import footer.jsp -->
+      <jsp:include page="include/footer.jsp"></jsp:include>
+      
+      <!-- import navbar.js -->
+      <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
 <script src="<%=request.getContextPath() %>/js/gura_util.js"></script>
 <script>
 
@@ -231,6 +246,7 @@
       });
       */
    });
+   
    
 </script>
 </body>

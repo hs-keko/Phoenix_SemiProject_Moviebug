@@ -47,7 +47,7 @@
 		align-items: center;
 		padding-top: 40px;
 		padding-bottom: 40px;
-		border: 1px solid #cecece;
+		transform: translateY(30%);
 	}
 	
 	.loginform_container .container--form {
@@ -104,10 +104,10 @@
 					<div class="signup">
 						<p>아직 계정이 없으신가요? <a class="signup_a" href="<%= request.getContextPath()%>/users/signupform.jsp">가입하기</a></p>
 					</div>
+							<p id="company" class="mt-5 mb-3 text-muted">&copy; MovieBug</p>
 				</form>
 			</div>
 		</div>
-		<p id="company" class="mt-5 mb-3 text-muted">&copy; MovieBug</p>
 	</div>
 	
 </body>

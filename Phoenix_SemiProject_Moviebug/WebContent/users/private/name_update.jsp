@@ -22,7 +22,6 @@
 </head>
 <body>
 <script>
-	alert("당신의 정보가 수정되었습니다.");
 	location.href = "update_form.jsp";
 </script>
 </body>
