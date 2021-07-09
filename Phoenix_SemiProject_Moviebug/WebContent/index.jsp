@@ -32,7 +32,6 @@
 
   </head>
   <body>
-    <div class="container-xl index_content">
 
     <jsp:include page="include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
@@ -42,7 +41,7 @@
       <div class="row index_content01">
         <div
           id="carouselExampleCaptions"
-          class="carousel slide"
+          class="carousel slide carousel-fade"
           data-bs-ride="carousel" >
           <div class="carousel-indicators">
             <button
@@ -75,7 +74,7 @@
           <%for(int i = 0; i < NewMovieList.size(); i++) {
           	MovieDto dto = NewMovieList.get(i);
           %>
-            <div class="carousel-item border-0 <%= i == 0 ?  "active" : ""%>">
+            <div class="carousel-item  border-0 <%= i == 0 ?  "active" : ""%>" data-bs-interval="99999">
             	<div class="card border-0">
               <img src="<%=dto.getMovie_image() != null ? dto.getMovie_image():"images/bigdata.jpg" %>" class="d-block w-100" alt="..." />
               <div class="carousel-caption d-none d-md-block">
@@ -111,6 +110,7 @@
         </div>
       </div>
 
+ <div class="container-xl index_content">
       <div class="row index_content02">
       	 <div class="row">
 	        <div class="col flex_box index_category">
@@ -122,14 +122,10 @@
             <div class="row">
         <!-- ****************************************** -->
               		 <%for(MovieDto dto: Top4List){ %>
-              		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="col-6 col-lg-3">
-		              <div class="col">
+		              <div class="col-6 col-lg-3">
+              		 		<a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
 		                <div class="card border-0">
-		                  <img
-		                    src="<%=dto.getMovie_image() != null ? dto.getMovie_image():"images/bigdata.jpg" %>"
-		                    class="card-img-top"
-		                    alt="<%=dto.getMovie_title_kr() %>"/>
-		                  <div class="card-body">
+		                  <div class="card-body poster_info">
 		                    <h5 class="card-title"><%=dto.getMovie_title_kr() %></h5>
 		                    <p class="card-text"><small class="text-muted"><%=dto.getMovie_nation() %> | <%=dto.getMovie_genre() %></small></p>
 		                    <p class="card-text">
@@ -137,9 +133,13 @@
 		                    </p>
 		                    <p class="card-text"><small class="text-danger">평점 <%=dto.getMovie_rating() %></small></p>
 		                  </div>
+		                  <img
+		                    src="<%=dto.getMovie_image() != null ? dto.getMovie_image():"images/bigdata.jpg" %>"
+		                    class="rounded card-img-top"
+		                    alt="<%=dto.getMovie_title_kr() %>"/>
 		                </div>
+              		 		</a>
 		              </div>
-              		 </a>
 		              <%} %>
       <!-- ********************************************* -->
              
@@ -200,8 +200,7 @@
                 <div
                   id="carouselExampleControls02"
                   class="carousel slide"
-                  data-bs-ride="carousel"
-                >
+                  data-bs-ride="carousel">
                   <div class="carousel-inner">
                     <div class="carousel-item active">
                       <img src="images/bigdata.jpg" class="d-block" alt="..." />

@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
   			<div class="col">
   				<ul>
   					<li>공지사항</li>
-  					<li>문의하기</li>
+  					<li><a href="<%=request.getContextPath()%>/cafe/list.jsp">문의하기</a></li>
   					<li>공지사항</li>
   					<li>공지사항</li>
   				</ul>
