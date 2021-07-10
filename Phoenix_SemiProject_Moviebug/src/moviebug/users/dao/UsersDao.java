@@ -3,10 +3,10 @@ package moviebug.users.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import moviebug.users.dto.UsersDto;
-import moviebug.movieinfo.dto.*;
 import test.util.DbcpBean;
 
 public class UsersDao {
@@ -19,10 +19,6 @@ public class UsersDao {
 		return dao;
 	}
 	
-	 public List<UsersDto> getList(UsersDto dto2){
-		 
-		 return null;
-	 }
 	
 		// 사용자 정보 가져오기
 		public UsersDto getUser(String email) {
