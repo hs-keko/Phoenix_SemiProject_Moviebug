@@ -315,7 +315,7 @@ public class MovieDao {
       }
 
 
-         public List<MovieDto> getHorrorList() {
+         public List<MovieDto> getSummerList() {
          MovieDto dto=null;
          Connection conn = null;
          PreparedStatement pstmt = null;
@@ -327,7 +327,7 @@ public class MovieDao {
             //실행할 sql 문 작성
             String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer"
                   + " FROM movie_info"
-                  + " WHERE movie_genre= '스릴러' OR '공포'";
+                  + " WHERE movie_genre= '스릴러' OR '공포' OR '액션'";
             //PreparedStatement 객체의 참조값 얻어오기
             pstmt = conn.prepareStatement(sql);
             //? 에 바인딩할 내용이 있으면 여기서 바인딩

@@ -57,19 +57,17 @@
    }
       String email=(String)session.getAttribute("email");
       
-      
-   
-      List<MovieDto> RecentMovies = MovieDao.getInstance().getRecentList();
-   
-   List<MovieDto> ClassicList = MovieDao.getInstance().getHorrorList();
+   List<MovieDto> RecentMovies = MovieDao.getInstance().getRecentList();
+   List<MovieDto> ClassicList = MovieDao.getInstance().getSummerList();
    
   
 %>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
 <meta charset="UTF-8">
 <title>more.jsp</title>
+
 <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="../css/footer.css" />
