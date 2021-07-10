@@ -29,10 +29,8 @@ const createbtns = (keyword) => {
 // 검색기록이 존재하면 변수에 저장
 if (searchKeyword != undefined) {
   searchKeyword = JSON.parse(localStorage.getItem("sHistory"))
-  console.log(searchKeyword)
-
   searchKeyword.forEach(function (arrval) {
-    createbtns(arrval)
+    // createbtns(arrval)
   })
 }else{
 	// 검색기록이 존재하지 않으면새로 저장
