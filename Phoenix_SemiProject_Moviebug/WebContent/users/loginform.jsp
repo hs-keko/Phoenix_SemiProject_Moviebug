@@ -17,11 +17,6 @@
 	boolean isLogin = false;
 	String email = (String)session.getAttribute("email"); 
 	if(email != null) isLogin = true;
-	// 메인 carousel 최신 영화 3개 리스트 가져오기
-	List<MovieDto> NewMovieList = MovieDao.getInstance().getNewMovies();
-	
-	// 평점순위 4개 영화 리스트 가져오기
-	List<MovieDto> Top4List = MovieDao.getInstance().getTop4ResList();
 %>
 <!DOCTYPE html>
 <html>
@@ -42,28 +37,31 @@
 		height: 100%;
 	}
 	
-	.loginform_container .container {
+	.container {
 		width: 100%;
 		height: 100%;	
 	}			
 	
-	.container--formborder {
+	.loginform_container {
 		display: flex;
+		align-items: center;
+		padding-top: 40px;
+		padding-bottom: 40px;
+		transform: translateY(0%);
 		border: 1px solid #cecece;
+		height: 800px;
 	}
 	
 	.loginform_container .container--form {
-		width: 600px;
-		height: auto;	
+		width: 100%;
+		max-width: 400px;
+		padding: 15px;	
 		margin: auto;
 	}
 	
 	.loginform_container h1 {
 		padding: 32px;
-	}
-	
-	.loginform_container button {
-		width: 600px;
+		text-align: center;
 	}
 	
 	.loginform_container p {
@@ -74,6 +72,11 @@
 	.loginform_container .signup_a{
 		color: #0000ff;
 	}
+	   
+    #company {
+    	text-align: center;
+    }
+      
 </style>
 </head>
 <body>
@@ -82,7 +85,7 @@
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
     
-		<div class="container--formborder loginform_container">
+		<div class="loginform_container">
 			<div class="container--form">	
 			
 				<h1>로그인</h1>
@@ -101,8 +104,9 @@
 					</div>
 					<button class="btn btn-primary" type="submit">로그인</button>
 					<div class="signup">
-						<p>아직 계정이 없으신가요? <a class="signup_a" href="<%= request.getContextPath()%>/users/signupform.jsp">가입하기</a></p>
+						<p>아직 계정이 없으신가요? <a class="signup_a" href="<%=request.getContextPath()%>/users/signupform.jsp">가입하기</a></p>
 					</div>
+						<p id="company" class="mt-5 mb-3 text-muted">&copy; MovieBug</p>
 				</form>
 			</div>
 		</div>

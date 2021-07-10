@@ -8,11 +8,6 @@
 	boolean isLogin = false;
 	String email = (String)session.getAttribute("email"); 
 	if(email != null) isLogin = true;
-	// 메인 carousel 최신 영화 3개 리스트 가져오기
-	List<MovieDto> NewMovieList = MovieDao.getInstance().getNewMovies();
-	
-	// 평점순위 4개 영화 리스트 가져오기
-	List<MovieDto> Top4List = MovieDao.getInstance().getTop4ResList();
 %>
 <!DOCTYPE html>
 <html>
@@ -33,30 +28,36 @@
 		height: 100%;
 	}
 	
-	.signupform_container .container {
+	 .container {
 		width: 100%;
 		height: 100%;
 		
 	}
 			
-	.container--formborder {
+	.signupform_container {
 		display: flex;
+		align-items: center;
+		padding-top: 40px;
+		padding-bottom: 40px;
 		border: 1px solid #cecece;
 	}
 	
 	.signupform_container .container--form {
-		width: 600px;
-		height: auto;	
+		width: 100%;
+		max-width: 600px;
+		padding: 15px;	
 		margin: auto;
 	}
 	
 	.signupform_container h1 {
 		padding: 32px;
+		text-align: center;
 	}
 	
-	.signupform_container .signup_check > a {
+	.signup_check > a {
 		color: #0000ff;
 	}
+	
 </style>
 </head>
 <body>
@@ -66,15 +67,16 @@
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
     
-	<div class="container--formborder signupform_container">
+	<div class= "signupform_container">
    	 	<div class="container--form">
    	
    	 	<h1>회원 가입</h1>
    	 	
 		   <form class="row g-3" action="signup.jsp" method="post" id="myForm">
 		      <div class="col-12">
-		         <label class="control-label" for="name">이름</label>
+		         <label class="control-label" for="name">닉네임</label>
 		         <input class="form-control" type="text" name="name" id="name"/>
+		         <div class="invalid-feedback">사용할 수 없는 닉네임입니다.</div>
 		      </div>
 		      <div class="col-12">
 		         <label class="control-label" for="email">이메일</label>
@@ -157,6 +159,7 @@
    let isPwdValid=false;
    let isEmailValid=false;
    let isChecked=false;
+   let isNameValid=false;
    
    // 약관동의 버튼 value 값을 얻어오기 위한 변수
    let result1 = null;
@@ -188,6 +191,43 @@
 	   }
    }
    
+ //닉네임을 입력했을때(input) 실행할 함수 등록 
+   document.querySelector("#name").addEventListener("input", function(){
+      //일단 is-valid,  is-invalid 클래스를 제거한다.
+      document.querySelector("#name").classList.remove("is-valid");
+      document.querySelector("#name").classList.remove("is-invalid");
+      
+      //1. 입력한 아이디 value 값 읽어오기  
+      let inputName=this.value;
+      //입력한 아이디를 검증할 정규 표현식
+      const reg_name=/^.{2,9}$/;
+      //만일 입력한 아이디가 정규표현식과 매칭되지 않는다면
+      if(!reg_name.test(inputName)){
+         isNameValid=false; //아이디가 매칭되지 않는다고 표시하고 
+         // is-invalid 클래스를 추가한다. 
+         document.querySelector("#name").classList.add("is-invalid");
+         return; //함수를 여기서 끝낸다 (ajax 전송 되지 않도록)
+      }
+      
+      //2. util 에 있는 함수를 이용해서 ajax 요청하기
+      ajaxPromise("checkName.jsp", "get", "inputName="+inputName)
+      .then(function(response){
+         return response.json();
+      })
+      .then(function(data){
+         console.log(data);
+         //data 는 {isExist:true} or {isExist:false} 형태의 object 이다.
+         if(data.isExist){//만일 존재한다면
+            //사용할수 없는 아이디라는 피드백을 보이게 한다. 
+            isNameValid=false;
+            // is-invalid 클래스를 추가한다. 
+            document.querySelector("#name").classList.add("is-invalid");
+         }else{
+            isNameValid=true;
+            document.querySelector("#name").classList.add("is-valid");
+         }
+      });
+   });
    
    //아이디를 입력했을때(input) 실행할 함수 등록 
    document.querySelector("#email").addEventListener("input", function(){
@@ -274,7 +314,7 @@
       
       //폼 전체의 유효성 여부 알아내기    
       
-      let isFormValid = isPwdValid && isEmailValid && isChecked;
+      let isFormValid = isPwdValid && isEmailValid && isChecked && isNameValid;
       if(!isFormValid){//폼이 유효하지 않으면
          // 유효성 검사가 하나라도 맞지 않으면 return false;
       	 alert("다시 확인해주세요.");
