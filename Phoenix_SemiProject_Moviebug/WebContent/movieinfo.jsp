@@ -117,7 +117,7 @@
 		background-color: black;
 	}
 
-	.container{
+	.container.movieinfo{
 		width: 720px;
 	}
 	
@@ -335,7 +335,7 @@
 	<jsp:include page="include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
-	<div class="container">
+	<div class="container movieinfo">
 		<div class="movie_trailer">
 			<video autoplay muted controls width="100%" height="100%">
 				<source src="upload/trailer_Eternal Sunshine.mp4" type="video/mp4">
@@ -461,8 +461,6 @@
       <button type="submit">등록</button>
    </form>
 	</div>
-	
-	
 
 <script src="${pageContext.request.contextPath}/js/gura_util.js"></script>
 <script>
