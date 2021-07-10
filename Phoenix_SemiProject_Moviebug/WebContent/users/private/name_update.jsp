@@ -3,12 +3,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String name = request.getParameter("name");
+	String newName = request.getParameter("newName");
 	// session 영역에 저장된 아이디 읽어오기
 	String email = (String)session.getAttribute("email");
 	// UsersDto 객체에 담아서
 	UsersDto dto = new UsersDto();
-	dto.setName(name);
+	dto.setName(newName);
 	dto.setEmail(email);
 	// DB에 수정 반영하고
 	UsersDao.getInstance().updateName(dto);

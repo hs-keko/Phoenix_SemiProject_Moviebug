@@ -103,11 +103,14 @@
                               src="<%=request.getContextPath() %><%=dto.getProfile() %>" />
                         <%} %>
                         </a>   
-            <div class="container--image">
+            <div class="container--image clear-fix">
                <form class="row g-3" action="profile_update.jsp" method="post">
                <input type="hidden" name="profile" 
                     value="<%=dto.getProfile()==null ? "empty" : dto.getProfile()%>" />
-                    <button class="btn btn-dark" type="submit">프로필 저장</button>
+                    <div class="clear-fix">
+                    <button class="btn btn-dark float-start" type="submit">프로필 저장</button>
+                    <a class="btn btn-primary float-end" href="javascript:deleteConfirm()">회원탈퇴</a>
+                    </div>
             </form>
             </div>
             
@@ -124,11 +127,12 @@
                      </div>
                      <div class="collapse col-12" id="name">
                              <div class="d-inline-flex p-2 bd-highlight col-12">
-                            <label for="name"></label>
-                            <input type="text" id="name" name="name" value="<%=dto.getName()%>"/>
-                            <button class="btn btn-dark" type="submit">저장</button>
-                             </div>
-                          </div>
+                            <label for="newName"></label>                           
+                            <input type="text" id="newName" name="newName" value="<%=dto.getName()%>"/>      							                    
+                            <button class="btn btn-dark" type="submit">저장</button>                            	
+                            <div class="invalid-feedback m-3">사용할 수 없는 닉네임입니다.</div>                                                        	                                                    
+                          	</div>
+                      </div>
                   </form>
          
             <form class="update_addrForm row-3" action="addr_update.jsp" method="post">
@@ -144,7 +148,7 @@
                        <div class="d-inline-flex p-2 bd-highlight col-12">
                          <label for="addr"></label>
                          <input type="text" id="addr" name="addr" value="<%=dto.getAddr()%>"/>
-                         <button class="btn btn-dark" type="submit">저장</button>
+                         <button class="btn btn-dark" type="submit">저장</button>                    
                        </div>     
                   </div>
                </form>
@@ -187,6 +191,45 @@
    </div>
 <script src="<%=request.getContextPath() %>/js/gura_util.js"></script>
 <script>
+
+
+	//닉네임을 입력했을때(input) 실행할 함수 등록 
+	document.querySelector("#newName").addEventListener("input", function(){
+	   //일단 is-valid,  is-invalid 클래스를 제거한다.
+	   document.querySelector("#newName").classList.remove("is-valid");
+	   document.querySelector("#newName").classList.remove("is-invalid");
+	   
+	   //1. 입력한 아이디 value 값 읽어오기  
+	   let inputName=this.value;
+	   //입력한 아이디를 검증할 정규 표현식
+	   const reg_name=/^.{2,9}$/;
+	   //만일 입력한 아이디가 정규표현식과 매칭되지 않는다면
+	   if(!reg_name.test(inputName)){
+	      isNameValid=false; //아이디가 매칭되지 않는다고 표시하고 
+	      // is-invalid 클래스를 추가한다. 
+	      document.querySelector("#newName").classList.add("is-invalid");
+	      return; //함수를 여기서 끝낸다 (ajax 전송 되지 않도록)
+	   }
+	   
+	   //2. util 에 있는 함수를 이용해서 ajax 요청하기
+	   ajaxPromise("update_checkName.jsp", "get", "inputName="+inputName)
+	   .then(function(response){
+	      return response.json();
+	   })
+	   .then(function(data){
+	      console.log(data);
+	      //data 는 {isExist:true} or {isExist:false} 형태의 object 이다.
+	      if(data.isExist){//만일 존재한다면
+	         //사용할수 없는 아이디라는 피드백을 보이게 한다. 
+	         isNameValid=false;
+	         // is-invalid 클래스를 추가한다. 
+	         document.querySelector("#newName").classList.add("is-invalid");
+	      }else{
+	         isNameValid=true;
+	         document.querySelector("#newName").classList.add("is-valid");
+	      }
+	   });
+	});
 
    //폼에 submit 이벤트가 일어났을때 실행할 함수를 등록하고 
    document.querySelector("#myForm").addEventListener("submit", function(e){
@@ -243,6 +286,13 @@
       });
       */
    });
+   
+   function deleteConfirm(){
+      const isDelete=confirm("<%=dto.getName()%> 님 탈퇴 하시겠습니까?");
+      if(isDelete){
+         location.href="delete.jsp";
+      }
+   }
    
 </script>
 </body>

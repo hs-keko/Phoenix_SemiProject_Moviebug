@@ -27,26 +27,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container">
-	
-		<h1>알림</h1>
+<script>
 		<%if(isValid) {
 			session.setAttribute("email", email);
 			// 초 단위로 세션 유지시간을 설정할 수 있다. 
 			session.setMaxInactiveInterval(60*20);
 			UsersDto dto2 = UsersDao.getInstance().getData(email);
-			%>
-			
-		<p>
-			<strong><%=dto2.getName() %></strong> 님 로그인 되었습니다.
-			<a href="../cafe/list.jsp">확인</a>
-		</p>
+		%>			
+		location.href = "../index.jsp";
 		<%} else { %>
-			<p>
-				아이디 혹은 비밀번호가 틀려요.
-				<a href="loginform.jsp?url=<%=encodedUrl%>">다시 시도</a>
-			</p>
+		alert("아이디 혹은 비밀번호가 틀립니다.");
+		location.href= "loginform.jsp?url=<%=encodedUrl%>";
 		<%} %>
-	</div>
+		
+</script>
 </body>
 </html>
