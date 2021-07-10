@@ -23,25 +23,29 @@
   <head>
     <meta charset="UTF-8" />
     <title>MovieBug</title>
+    
+    <!-- navbar 필수 import -->
     <jsp:include page="include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
+    <!-- import css -->
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/index.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
     
     <!-- 웹폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 
-<!-- 웹폰트 test -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
   
   </head>
   <body>
 
-
+	<!-- navbar 필수 import -->
     <jsp:include page="include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
@@ -271,11 +275,14 @@
 
     </div>
 
-    <!-- import footer.jsp -->
-      <jsp:include page="include/footer.jsp"></jsp:include>
       
+      <script src="<%= request.getContextPath()%>/js/index.js"></script>
+
+      <!-- navbar 필수 import -->
       <!-- import navbar.js -->
       <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
-      <script src="<%= request.getContextPath()%>/js/index.js"></script>
+
+		<!-- import footer.jsp -->
+      	<jsp:include page="include/footer.jsp"></jsp:include>
   </body>
 </html>

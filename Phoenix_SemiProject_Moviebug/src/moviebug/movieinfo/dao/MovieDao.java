@@ -324,7 +324,6 @@ public class MovieDao {
             //PreparedStatement 객체의 참조값 얻어오기
             pstmt = conn.prepareStatement(sql);
             //? 에 바인딩할 내용이 있으면 여기서 바인딩
-         
             //select 문 수행하고 결과를 ResultSet 으로 받아오기
             rs = pstmt.executeQuery();
              
