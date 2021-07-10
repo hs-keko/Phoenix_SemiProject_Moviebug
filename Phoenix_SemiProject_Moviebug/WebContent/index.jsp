@@ -142,7 +142,7 @@
 		                    <h5 class="card-title"><%=dto.getMovie_title_kr() %></h5>
 		                    <p class="card-text"><small class="text-muted"><%=dto.getMovie_nation() %> | <%=dto.getMovie_genre() %></small></p>
 		                    <p class="card-text">
-		                      <%=dto.getMovie_story().length() >= 140 ? dto.getMovie_story()+"...":dto.getMovie_story() %>
+		                      <%=dto.getMovie_story().length() >= 100 ? dto.getMovie_story()+"...":dto.getMovie_story() %>
 		                    </p>
 		                    <p class="card-text"><small class="text-danger">평점 <%=dto.getMovie_rating() %></small></p>
 		                  </div>
