@@ -134,7 +134,7 @@
           <div class="col">
             <div class="row" >
         <!-- ****************************************** -->
-              		 <%for(MovieDto dto: NewHAmovies){ %>
+              		 <%for(MovieDto dto: Top4List){ %>
 		              <div class="col-6 col-lg-3">
               		 		<a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
 		                <div class="card border-0">
@@ -175,7 +175,7 @@
             <div class="row">
               
          <!-- ****************************************** -->
-              		 <%for(MovieDto dto: Top4List){ %>
+              		 <%for(MovieDto dto: NewHAmovies){ %>
 		              <div class="col-6 col-lg-3">
               		 		<a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
 		                <div class="card border-0">
