@@ -72,55 +72,179 @@
 <!-- Custom styles for this template -->
 <link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
 <style>
-	.genre-container{
-		text-align: center;
+	.css-title{
+		box-sizing: border-box;
+		min-width: 0px;
+		color: black;
+		font-size: 30px;
+		font-weight: 600;
+		flex: 1 1 0px;
+		width: 446px;
+		margin: 0px;
 	}
 	
-	.title-container{
-		text-align: center;
+	.css-title_eng{
+		box-sizing: border-box;
+		margin: 0px 14px 0px 0px;
+		min-width: 0px;
+		align-items: center;
+		display: flex;
 	}
 	
-	.movieInfo-container{
-		width: 1200px;
-		height: 400px;
-		margin: 0 auto;
-		overflow: hidden; /* 부모 높이를 잊어벼리기때문에 다시 높이를 생기게끔해주는 float 해제 기법 */
+	.css-title_eng_txt{
+		box-sizing: border-box;
+		margin: 0px 0px 0px 4px;
+		min-width: 0px;
+		font-size: 17px;
+		line-height: 1.15;
+		color: rgb(103, 103, 103);
 	}
 	
-	.movieInfo_item{
-		float: left; /* 가로 정렬을 하기 위한 float */
+	.css-detail_txt{
+		box-sizing: border-box;
+		margin: 0;
+		min-width: 0;
 	}
 	
-	.movieInfo_item.trailer{
-		width:600px;
-		height:400px;
+	.css-bar{
+		box-sizing: border-box;
+		display: block;
+		vertical-align: middle;
+		margin: 4px 8px 2px;
+		min-width: 1px;
+		width: 1px;
+		height: 16px;
+		background-color: black;
 	}
-	.movieInfo_item>iframe{
+
+	.container{
+		width: 720px;
+	}
+	
+	.movie_trailer{
+		position: relative;
+	    margin-bottom: 11px;
+	    width: 720px;
+	    height: 405px;
+	    display: flex;
+	    align-items: center;
+	}
+	
+	.movie_primary_info{
+		box-sizing: border-box;
+		position: relative;
+	    margin-bottom: 50px;
+	    min-width: 0px;
+	    width: 720px;
+	    height: 250px;
+	    padding: 20px;
+	    display: flex;
+	    border: 2px solid rgb(170 170 170);
+	    border-radius: 10px;
+	}
+	
+	.movie_primary_info_inner{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
 		width: 100%;
-		height: 100%;
+		display: flex;
 	}
 	
-	.movieInfo_item.detail{
-		width:600px;
-		height:400px;
-		border-style: solid;
-		border-width: 2px;
+	.movie_primary_info_inner_poster{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		width: 151px;
+		height: 204px;
+		overflow: hidden;
+		flex: 0 0 auto;
+		border-radius: 6px;
 	}
 	
-	.btn-group{
-		width:100%;
+	.movie_img{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		max-width: 100%;
+		height: auto;
+		width: 100%
 	}
 	
-	li { font-size: 15px; line-height: 30px; }
-	
-	#rating {
-		text-align: center;
-		margin-top: 10%;
+	.movie_primary_info_inner_detail{
+		box-sizing: border-box;
+		margin: 0px 0px 0px 16px;
+		min-width: 0px;
+		flex: 1 1 0%;
+		flex-direction: column;
+		overflow: hidden;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		display: flex;
 	}
-	.content{
-      border: 1px dotted gray;
-   }
+	
+	.movie_primary_info_inner_detail_title{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		display: flex;
+	}
+	
+	.title_txt_container{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		align-items: center;
+		display:flex;
+	}
+	
+	.title_txt{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	
+	.movie_primary_info_inner_detail_eng_title{
+		box-sizing: border-box;
+		margin: 8px 0px 0px;
+		min-width: 0px;
+		height: auto;
+		align-items: flex-start;
+		flex: 1 1 0%;
+		display: flex;
+	}
+	
+	.movie_primary_info_inner_detail_info{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		flex: 1 1 0%;
+		flex-direction: column;
+		justify-content: space-between;
+		font-size: 16px;
+		color: black;
+		display: flex;
+	}
+	
+	.movie_primary_info_inner_detail_info_one{
+		box-sizing: border-box;
+		margin: 20px 0px 0px 0px;
+		min-width: 0px;
+		align-items: center;
+		display: flex;
+	}
+	.movie_primary_info_inner_detail_info_two{
+		box-sizing: border-box;
+		margin: 0px 0px 0px 0px;
+		min-width: 0px;
+		align-items: center;
+		display: flex;
+	}
+   /*======================================================================*/
    
+   
+   
+   	
    /* 댓글 프로필 이미지를 작은 원형으로 만든다. */
    .profile-image{
       width: 50px;
@@ -174,7 +298,6 @@
    pre {
      display: block;
      padding: 9.5px;
-     margin: 0 0 10px;
      font-size: 13px;
      line-height: 1.42857143;
      color: #333333;
@@ -204,19 +327,7 @@
    			transform: rotate(360deg);
    		}
    }
-   .info-container {
-   		
-   		margin:0 auto; 
-   		width: 90%;
-   }
-   .movie-detail {
-   		border: 3px solid black;
-   		width: 100%;
-   		height: 550px;
-   }
-   .movie-detail-wrapper{
-   
-   }
+
 </style>
 
 </head>
@@ -225,48 +336,46 @@
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
 	<div class="container">
-		<div class="genre-container mb-3">
-			<p><%=dto.getMovie_genre() %></p>
+		<div class="movie_trailer">
+			<video autoplay muted controls width="100%" height="100%">
+				<source src="upload/trailer_Eternal Sunshine.mp4" type="video/mp4">
+			</video>
 		</div>
-		
-		
-		<div class="title-container mb-3">
-			<h1><%=dto.getMovie_title_kr() %></h1>
-			<h5><%=dto.getMovie_title_eng() %></h5>
-		</div>
-		
-		
-		
-		
-	</div>
-	<div class="info-container">
-	<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-			<div class="bg-dark me-md-3 md-5 md-5 overflow-hidden">
-				<iframe src="<%=dto.getMovie_trailer() %>" style="width:100%; height:550px;"
-						title="YouTube video player" frameborder="0" 
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-				</iframe>
-			</div>
-			<div class="me-md-3 md-5 md-5 overflow-hidden">
-				<div class="movie-detail">
-				<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-	  				<input type="radio" class="btn-check" name="btnradio" id="btnOne" autocomplete="off" checked>
-	  				<label class="btn btn-outline-secondary" for="btnOne">기본정보</label>
-	
-	  				<input type="radio" class="btn-check" name="btnradio" id="btnTwo" autocomplete="off">
-	  				<label class="btn btn-outline-secondary" for="btnTwo">감독/출연진</label>
-	  				
-	  				<input type="radio" class="btn-check" name="btnradio" id="btnThree" autocomplete="off">
-	  				<label class="btn btn-outline-secondary" for="btnThree">줄거리</label>
-	
-	  				<input type="radio" class="btn-check" name="btnradio" id="btnFour" autocomplete="off">
-	  				<label class="btn btn-outline-secondary" for="btnFour">유저평점</label>
+		<div class="movie_primary_info">
+			<div class="movie_primary_info_inner">
+				<div class="movie_primary_info_inner_poster">
+					<img class="movie_img" src="<%=dto.getMovie_image() %>"/>
 				</div>
-				<div class="movie-detail-wrapper"></div>
+				<div class="movie_primary_info_inner_detail">
+					<div class="movie_primary_info_inner_detail_title">
+						<div class="title_txt_container">
+							<h2 class="title_txt css-title"><%=dto.getMovie_title_kr() %></h2>
+						</div>
+					</div>
+					<div class="movie_primary_info_inner_detail_eng_title">
+						<div class="eng_title_txt_container">
+							<div class="css-title_eng">
+								<div class="css-title_eng_txt"><%=dto.getMovie_title_eng() %></div>
+							</div>
+						</div>
+					</div>
+					<div class="movie_primary_info_inner_detail_info">
+						<div class="movie_primary_info_inner_detail_info_one">
+							<div class="css-detail_txt">영화</div>
+							<div class="css-bar"></div>
+							<div class="css-detail_txt"><%=dto.getMovie_time() %></div>
+						</div>
+						<div class="movie_primary_info_inner_detail_info_two">
+							<div class="css-detail_txt"><%=dto.getMovie_genre() %></div>
+							<div class="css-bar"></div>
+							<div class="css-detail_txt"><%=dto.getMovie_year() %> 개봉</div>
+						</div>
+					</div>
 				</div>
 			</div>
-	</div>
-	<!-- 댓글 목록 -->
+		</div>
+		
+		<!-- 댓글 목록 -->
    <div class="comments">
       <ul>
          <%for(MovieCommentDto tmp: commentList){ %>
@@ -353,9 +462,7 @@
    </form>
 	</div>
 	
-   
-   <!-- footer  -->
-   <jsp:include page="include/footer.jsp"></jsp:include>
+	
 
 <script src="${pageContext.request.contextPath}/js/gura_util.js"></script>
 <script>
