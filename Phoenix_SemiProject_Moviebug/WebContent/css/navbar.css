@@ -19,12 +19,9 @@ nav{
 
 header{
 	text-align: center;
-	position: fixed;
     width: 100%;
     top: 0;
     z-index: 100;
-    left: 50%;
-    transform: translate(-50%, 0);
 }
 
 header + div{
@@ -36,7 +33,7 @@ header + div{
 }
 
 .header_nav_wrapper{
-	padding: 0 10px;
+	padding: 0;
 }
 
 nav .container{
@@ -45,12 +42,16 @@ nav .container{
 }
 
 .nav_w_brand{
-	font-family: 'Tourney', cursive;
-	font-size: 30px;
+	font-family: 'Major Mono Display', monospace;
+	font-size: 35px;
+}
+
+.nav_w_brand a{
+	 
 }
 
 .nav_wrapper{
-	
+	background-color: transparent;
 	align-items: center;
 	justify-content: center;
     height: 100%;
@@ -121,6 +122,10 @@ nav button, .search_form_btn{
 
 .nav_login, .nav_search{
 	margin-right: 10px;
+}
+
+.nav_search .btn{
+	color: #b1b1b1;
 }
 
 .nav_login:hover{

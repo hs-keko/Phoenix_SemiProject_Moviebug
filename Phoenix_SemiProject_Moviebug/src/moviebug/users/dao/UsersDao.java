@@ -3,6 +3,8 @@ package moviebug.users.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import moviebug.users.dto.UsersDto;
 import test.util.DbcpBean;
@@ -16,6 +18,7 @@ public class UsersDao {
 		}
 		return dao;
 	}
+	
 	
 		// 사용자 정보 가져오기
 		public UsersDto getUser(String email) {
@@ -298,6 +301,43 @@ public class UsersDao {
 			return isValid;
 		}
 	
+		public boolean isNameExist(String name) {
+			boolean isExist = false;
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				// Connection 객체의 참조값 얻어오기
+				conn = new DbcpBean().getConn();
+				// 실행할 sql 문 작성
+				String sql = "SELECT name"
+						+ " FROM users"
+						+ " WHERE name = ?";
+				// PreparedStatement 객체의 참조값 얻어오기
+				pstmt = conn.prepareStatement(sql);
+				// ? 에 바인딩할 내용이 있으면 여기서 바인딩
+				pstmt.setString(1, name);
+				// select 문 수행하고 결과를 ResultSet 으로 받아오기
+				rs = pstmt.executeQuery();
+				// 반복문 돌면서 ResultSet 객체에 있는 내용을 추출해서 원하는 Data type으로 포장하기
+				if (rs.next()) {
+					isExist = true; // 이미 존재한다고 표시
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {}
+			}
+			return isExist;
+		}	
+		
 	public boolean isExist(String email) {
 		boolean isExist = false;
 		Connection conn = null;
