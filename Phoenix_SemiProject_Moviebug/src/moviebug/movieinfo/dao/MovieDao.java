@@ -19,6 +19,55 @@ public class MovieDao {
       }
       return dao;
    }
+   // 최신 공포,액션 영화 4개 
+   public List<MovieDto> getNewHAList(){
+	   	Connection conn = null;
+		PreparedStatement pstmt = null;
+		List<MovieDto> list = new ArrayList<>();
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			// 실행할 sql 문 작성
+	
+			String sql = "select result1.*, rownum from " + 
+					"(select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng, substr(movie_story,1,100) movie_story, movie_company,movie_image," + 
+					"movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer " + 
+					"from movie_info " + 
+					"where (movie_genre like '%액션%' or movie_genre like '%공포%') " + 
+					"order by movie_year desc) result1 " + 
+					"where rownum < 5 " + 
+					"order by rownum asc";
+			pstmt = conn.prepareStatement(sql);
+	
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+	            MovieDto dto = new MovieDto();
+	            dto.setMovie_genre(rs.getString("movie_genre"));
+	            dto.setMovie_image(rs.getString("movie_image")); 
+	            dto.setMovie_title_kr(rs.getString("movie_title_kr"));
+	            dto.setMovie_story(rs.getString("movie_story"));
+	            dto.setMovie_rating(rs.getString("movie_rating"));
+	            dto.setMovie_year(rs.getString("movie_year"));
+	            dto.setMovie_nation(rs.getString("movie_nation"));
+	            dto.setMovie_time(rs.getString("movie_time"));
+	            dto.setMovie_num(rs.getInt("movie_num"));
+	            list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+   }
    
    
    //영화 하나의 정보를 리턴하는 메소드
@@ -86,11 +135,10 @@ public class MovieDao {
          // 실행할 sql 문 작성
          
          String sql = "select result01.*,rownum from " + 
-               "(select movie_num,movie_title_kr,movie_nation, movie_time, substr(movie_story,1,140) movie_story, movie_genre,movie_image,movie_rating, movie_year, to_char(sysdate,'yyyymmdd') \"오늘날짜\"" + 
+               "(select movie_num,movie_title_kr,movie_nation, movie_time, substr(movie_story,1,100) movie_story, movie_genre,movie_image,movie_rating, movie_year, to_char(sysdate,'yyyymmdd') \"오늘날짜\"" + 
                " from movie_info where sysdate-30 <= movie_year order by movie_year desc) result01" + 
                " where rownum < 5" + 
                " order by movie_rating desc";
-         System.out.println(sql);
          pstmt = conn.prepareStatement(sql);
          rs = pstmt.executeQuery();
          while(rs.next()) {

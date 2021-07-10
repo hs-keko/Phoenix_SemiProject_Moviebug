@@ -20,11 +20,11 @@ pageEncoding="UTF-8"%>
 	
 	
 %>
-<header>
+<header class="shadow-sm">
   <div class="header_nav_wrapper">
-    <nav class="bg-white">
+    <nav>
      
-        <div class="container bg-white nav_wrapper">
+        <div class="container nav_wrapper">
         
         <div class="nav_header_menu flex_box">
        

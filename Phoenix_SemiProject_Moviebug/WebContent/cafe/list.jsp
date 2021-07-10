@@ -124,6 +124,13 @@
       float: left;
       padding: 5px;
    }
+   #one{
+   		text-align: center;
+   		margin-top: 15px
+   }
+   #two{
+   		float: right;
+   }
 </style>
 </head>
 <body>
@@ -131,9 +138,11 @@
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
 <div class="container">
-	<a href="private/insertform.jsp">새글 작성하기</a>
-	<h1>글 목록</h1>
-	<table>
+	<h1 id="one">글 목록</h1>
+	<div id="two" class="btn btn-outline-primary">
+		<a href="private/insertform.jsp">새글 작성하기</a>
+	</div>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -161,7 +170,7 @@
 		<%} %>
 		</tbody>
 	</table>
-	<div class="page-ui clearfix">
+	<div class="page-ui clearfix" style="float: left;">
 	      <ul>
 	         <%if(startPageNum != 1){ %>
 	            <li>
@@ -185,6 +194,7 @@
 	         <%} %>
 	      </ul>
 	   </div>
+	   <div style="float:right;">
          <form action="list.jsp" method="get">
          	<label for="condition">검색 조건</label>
          	<select name="condition" id="condition">
@@ -194,14 +204,13 @@
     		</select>
     		<input type="text" name="keyword" placeholder="검색어를 입력하세요..." value="<%=keyword%>"/>
     		<button type="submit">검색</button>
-         </form>
-         
+         </form> 
          <%if(!condition.equals("")){ %>
          	<p>
          		<strong><%=totalRow %></strong>개의 글이 검색되었습니다.
          	</p>
          <%} %>
       </div>
-   <jsp:include page="../include/footer.jsp"></jsp:include>
+     </div>
 </body>
 </html>

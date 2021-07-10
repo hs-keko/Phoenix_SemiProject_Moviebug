@@ -76,9 +76,8 @@
     int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
     System.out.println(totalPageCount);
     String email=(String)session.getAttribute("email");
-	 String name=UsersDao.getInstance().getData(email).getName();
+	String name=UsersDao.getInstance().getData(email).getName();
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,12 +87,10 @@
     <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="../css/footer.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
 <!-- 웹폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
-
 <style>
 	.content{
 		border: 1px dotted red;
@@ -216,7 +213,11 @@
       </tr>
       <tr>
          <th>첨부파일</th>
+         <%if(dto.getQna_file() == null){%>
+         <td> </td>
+         <%}else{ %>
          <td><%=dto.getQna_file() %></td>
+         <%} %>
       </tr>
       <tr>
          <th>등록일</th>
@@ -278,50 +279,53 @@
 		                  <%} %>
 		                  	<span><strong><%=tmp.getQna_comment_writer() %></strong></span>
 		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
-		                  	[<%=tmp.getQna_comment_writer() %>]님에게
+		                  	[<%=tmp.getQna_comment_target_id() %>]님에게
 		                  <%} %>
 		                  	<span><%=tmp.getQna_comment_regdate () %></span>
 		                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
-						<%
-						
-							if(email != null && tmp.getQna_comment_writer().equals(name)){ %>
+						<%	if(email != null && tmp.getQna_comment_writer().equals(name)){ %>
 							<a data-num="<%=tmp.getQna_comment_idx() %>" class="update-link" href="javascript:">수정</a>
 							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link" href="javascript:">삭제</a>
 						<%} %>
 	                  </dt>
 	                  <dd>
-	                     <pre id="pre<%=tmp.getQna_comment_idx()%>"><%=tmp.getQna_comment_content() %></pre>                  
-	                  </dd>
+                     <pre id="pre<%=tmp.getQna_comment_idx()%>"><%=tmp.getQna_comment_content() %></pre>                  
+                  </dd>
 	               </dl>
-				<form id="reForm<%=tmp.getQna_comment_idx() %>" class="animate__animated comment-form re-insert-form"
-					action="private/comment_insert.jsp" method="post">
-					<input type="hidden" name="qna_comment_ref_group"
-						value="<%=dto.getQna_idx() %>" />	
-						<input type="hidden" name="qna_comment_writer"
-						value="<%=tmp.getQna_comment_writer() %>" />
-						<input type="hidden" name="qna_comment_group"
-						value="<%=tmp.getQna_comment_group() %>" />
-						<textarea name="qna_comment_content"></textarea>
-						<button type="submit">등록</button>		
-				</form>
-				<%if(tmp.getQna_comment_writer().equals(name)){ %>	
-					<form id="updateForm<%=tmp.getQna_comment_idx() %>" class="comment-form update-form" 
-						action="private/comment_update.jsp" method="post">
-						<input type="hidden" name="qna_comment_idx" value="<%=tmp.getQna_comment_idx() %>" />
-						<textarea name="qna_comment_content"><%=tmp.getQna_comment_content() %></textarea>
-						<button type="submit">수정</button>
-					</form>
+					<form id="reForm<%=tmp.getQna_comment_idx() %>" class="animate__animated comment-form re-insert-form" 
+                  action="private/comment_insert.jsp" method="post">
+                  <input type="hidden" name="qna_comment_ref_group"
+                     value="<%=dto.getQna_idx()%>"/>
+                  <input type="hidden" name="qna_comment_target_id"
+                     value="<%=tmp.getQna_comment_writer()%>"/>
+                  <input type="hidden" name="qna_comment_group"
+                     value="<%=tmp.getQna_comment_group()%>"/>
+                  <textarea name="qna_comment_content"></textarea>
+                  <button type="submit">등록</button>
+               </form>   
+               <%if(tmp.getQna_comment_writer().equals(name)){ %>   
+               <form id="updateForm<%=tmp.getQna_comment_idx() %>" class="comment-form update-form" 
+                  action="private/comment_update.jsp" method="post">
+                  <input type="hidden" name="qna_comment_idx" value="<%=tmp.getQna_comment_idx() %>" />
+                  <textarea name="qna_comment_content"><%=tmp.getQna_comment_content() %></textarea>
+                  <button type="submit">수정</button>
+               </form>
 					<%} %>						
             	</li>
    			<%} %>
    		</ul>
+   </div>
+   <div class="loader">
+	   	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-hourglass-bottom" viewBox="0 0 16 16">
+		  <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5zm2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702s.18.149.5.149.5-.15.5-.15v-.7c0-.701.478-1.236 1.011-1.492A3.5 3.5 0 0 0 11.5 3V2h-7z"/>
+		</svg>
    </div>
    <!-- 원글에 댓글을 작성할 폼 -->
    <form class="comment-form insert-form" action="private/comment_insert.jsp" method="post">
    		<!-- 원글의 글번호가 댓글의 ref_group 번호가 된다. -->
    		<input type="hidden" name="qna_comment_ref_group" value="<%=qna_idx %>" />
    		<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
-   		<input type="hidden" name="qna_comment_writer" value="<%=dto.getQna_writer() %>"/>
+   		<input type="hidden" name="qna_comment_target_id" value="<%=dto.getQna_writer() %>"/>
    		<textarea name="qna_comment_content"></textarea>
    		<button type="submit">등록</button>
    </form>
@@ -332,11 +336,12 @@
 	for(let i=0; i<updateForms.length; i++){
 		//폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
 		updateForms[i].addEventListener("submit", function(e){
-			//submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기
-			const form=this;
 			//폼 제출 막기
 			e.preventDefault();
+			//submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기
+			const form=this;
 			//이벤트가 일어난 폼을 ajax 전송
+			console.log(form)
 			ajaxFormPromise(form)
 			.then(function(response){
 				return response.json();
@@ -411,57 +416,170 @@
 						form.classList.remove("animated__fadeOut");
 						form.style.display="none";
 				}, {once:true});
-			}
-			
+					
+			}	
 		});
 	}
 	
-	//댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
-	let currentPage=1;
-	//마지막
-	let lastPage=<%=totalPageCount%>;
-	//추가로 댓글을 요청하고 그 작업이 끝났는지 여부를 관리할 변수
-	let isLoading=false; //현재 로딩중인지 여부
-	
-	
-	/*
-	window.scrollY => 위쪽으로 스크롤된 길이
-	window.innerHeight => 웹브라우저의 창의 높이
-	document.body.offsetHeight => body 의 높이 (문서객체가 차지하는 높이)
-	*/
-	window.addEventListener("scroll", function(){
-		//바닥 까지 스크롤 했는지 여부 
-		const isBottom = 
-			window.innerHeight + window.scrollY  >= document.body.offsetHeight;
-		//현재 페이지가 마지막 페이지인지 여부
-		let isLast = currentPage == lastPage;
-		//현재 바닥까지 스크롤 했고 로딩중이 아니고 현재 페이지가 마지막이 아니라면
-		if(isBottom && !isLoading && !isLast){
-			//로딩 작업중이라고 표시
-			isLoading=true;
-			
-			//현재 댓글 페이지를 1 증가 시키고
-			currentPage++;
-			/*
-				해당 페이지의 내용을 ajax 요청을 통해서 받아온다.
-				"pageNum=xxx&num=xxx" 형식으로 get 방식 파라미터를 전달한다.
-			*/
-			ajaxPromise("ajax_comment_list.jsp","get",
-					"pageNum="+currentPage+"&qna_idx=<%=qna_idx%>")
-			.then(function(response){
-				//json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
-				return response.text();
-			})
-			.then(function(date){
-				//data는 html 형식의 문자열이다.
-				console.log(data);
-				document.queryelector(".comments ul")
-					.insertAdjacentHTML("beforeend", data);
-				//로딩이 끝났다고 표시한다.
-				isLoading=false;
+	 
+	   //댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
+	   let currentPage=1;
+	   //마지막 페이지는 totalPageCount 이다.  
+	   let lastPage=<%=totalPageCount%>;
+	   
+	   //추가로 댓글을 요청하고 그 작업이 끝났는지 여부를 관리할 변수 
+	   let isLoading=false; //현재 로딩중인지 여부 
+	   
+	   /*
+	      window.scrollY => 위쪽으로 스크롤된 길이
+	      window.innerHeight => 웹브라우저의 창의 높이
+	      document.body.offsetHeight => body 의 높이 (문서객체가 차지하는 높이)
+	   */
+	   window.addEventListener("scroll", function(){
+	      //바닥 까지 스크롤 했는지 여부 
+	      const isBottom = 
+	         window.innerHeight + window.scrollY  >= document.body.offsetHeight;
+	      //현재 페이지가 마지막 페이지인지 여부 알아내기
+	      let isLast = currentPage == lastPage;   
+	      //현재 바닥까지 스크롤 했고 로딩중이 아니고 현재 페이지가 마지막이 아니라면
+	      if(isBottom && !isLoading && !isLast){
+	    	 //로딩바 띄우기
+	    	 document.querySelector(".loader").style.display="block";
+	    	 
+	         //로딩 작업중이라고 표시
+	         isLoading=true;
+	         
+	         //현재 댓글 페이지를 1 증가 시키고 
+	         currentPage++;
+	         
+	         /*
+	            해당 페이지의 내용을 ajax 요청을 통해서 받아온다.
+	            "pageNum=xxx&num=xxx" 형식으로 GET 방식 파라미터를 전달한다. 
+	         */
+	         ajaxPromise("ajax_comment_list.jsp","get",
+	               "pageNum="+currentPage+"&qna_idx="+<%=qna_idx%>)
+	         .then(function(response){
+	            //json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
+	            return response.text();
+	         })
+	         .then(function(data){
+	            //data 는 html 형식의 문자열이다. 
+	            console.log(data);
+	            // beforebegin | afterbegin | beforeend | afterend
+	            document.querySelector(".comments ul")
+	               .insertAdjacentHTML("beforeend", data);
+	            //로딩이 끝났다고 표시한다.
+	            isLoading=false;
+	            //새로 추가된 댓글 li 요소 안에 있는 a 요소를 찾아서 이벤트 리스너 등록하기
+	            addUpdateListener(".page-"+currentPage+" .update-link");
+	            addDeleteListener(".page-"+currentPage+" .delete-link");
+	            addReplyListener(".page-"+currentPage+" .reply-link");
+	            addUpdateFormListener(".page-"+currentPage+" .update-form");
+				
+	            //로딩바 숨기기
+	            document.querySelector(".loader").style.display="none";
 			});
 		}
 	});
+	      
+	      	//인자로 전달되는 선택자를 이용해서 이벤트 리스너를 등록하는 함수
+	     	function addUpdateListener(sel){
+	     		//댓글 수정 링크의 참조값을 배열에 담아오기
+	     		let updateLinks=document.querySelectorAll(sel);
+	     			for(let i=0; i<updateLinks.length; i++){
+	     				updateLinks[i].addEventListener("click", function(){
+	     					//click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
+	     					const qna_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
+	     					document.querySelector("#updateForm"+qna_comment_idx).style.display="block";
+	     			});
+	     		}
+	      	}
+			function addDeleteListener(sel){
+				//댓글 삭제 링크의 참조값을 배열에 담아오기 
+				let deleteLinks=document.querySelectorAll(sel);
+				for(let i=0; i<deleteLinks.length; i++){
+					deleteLinks[i].addEventListener("click", function(){
+						//click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
+						const qna_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
+						const isDelete=confirm("댓글을 삭제 하시겠습니까?");
+						if(isDelete){
+							// gura_util.js 에 있는 함수들 이용해서 ajax 요청
+							ajaxPromise("private/comment_delete.jsp", "post", "qna_comment_idx="+qna_comment_idx)
+							.then(function(response){
+								return response.json();
+							})
+							.then(function(data){
+								//만일 삭제 성공이면 
+								if(data.isSuccess){
+									//댓글이 있는 곳에 삭제된 댓글입니다를 출력해 준다. 
+									document.querySelector("#reli"+qna_comment_idx).innerText="삭제된 댓글입니다.";
+								}
+							});
+						}
+					});
+				}
+	        }
+			function addReplyListener(sel){
+				//댓글 링크의 참조값을 배열에 담아오기
+				let replyLinks=document.querySelectorAll(sel);
+				//반복문 돌면서 모든 링크에 이벤트 리스너 함수 등록
+				for(let i=0; i<replyLinks.length; i++){
+					replyLinks[i].addEventListener("click", function(){
+							//click 이벤트가 발생한 바로 그 요소의 data-num 속성의 value값 읽어오기
+							const qna_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
+							
+							const form=document.querySelector("#reForm"+qna_comment_idx);
+							
+							//현재 문자열을 읽어온다 (답글 or 취소)
+							let current = this.innerText;
+							if(current=="답글"){
+								//번호를 이용해서 댓글의 댓글폼을 선택해서 보이게 한다.
+								form.style.display="block";
+								form.classList.add("animate__fadeIn");
+								this.innerText="취소";
+								form.addEventListener("animationend", function(){
+										form.classList.remove("animated__fadeIn");
+								}, {once:true});
+							}else if(current=="취소"){
+								form.classList.add("animated__fadeOut");
+								this.innerText="답글";
+								form.addEventListener("animationend", function(){
+									form.classList.remove("animated__fadeOut");
+									form.style.display="none";
+							}, {once:true});
+						}
+						
+					});
+				}
+			}
+			
+			function addUpdateFormListener(sel){
+				//댓글 수정 폼의 참조값을 배열에 담아오기
+				let updateForms=document.querySelectorAll("sel");
+				for(let i=0; i<updateForms.length; i++){
+					//폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
+					updateForms[i].addEventListener("submit", function(e){
+						//submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기
+						const form=this;
+						//폼 제출 막기
+						e.preventDefault();
+						//이벤트가 일어난 폼을 ajax 전송
+						ajaxFormPromise(form)
+						.then(function(response){
+							return response.json();
+						})
+						.then(function(data){
+							if(data.isSuccess){
+								//수정폼에 입력한 value 값을 pre 요소에도 출력하기
+								const qna_comment_idx=form.querySelector("input[name=qna_comment_idx]").value;
+								const qna_comment_content=form.querySelector("textarea[name=qna_comment_content]").value;
+								document.querySelector("#pre"+qna_comment_idx).innerText=qna_comment_content;
+								form.style.display="none";
+							}
+						});
+					});
+				}
+			}
 </script>
 <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>

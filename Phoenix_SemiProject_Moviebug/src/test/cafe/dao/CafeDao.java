@@ -30,8 +30,8 @@ public class CafeDao {
 	         String sql = "SELECT *" + 
 	               " FROM" + 
 	               "   (SELECT qna_idx,qna_title,qna_writer,qna_content,qna_file,qna_regdate" + 
-	               "   LAG(num, 1, 0) OVER(ORDER BY qna_idx DESC) AS prevNum," + 
-	               "   LEAD(num, 1, 0) OVER(ORDER BY qna_idx DESC) nextNum" + 
+	               "   LAG(qna_idx, 1, 0) OVER(ORDER BY qna_idx DESC) AS prevNum," + 
+	               "   LEAD(qna_idx, 1, 0) OVER(ORDER BY qna_idx DESC) nextNum" + 
 	               "   FROM board_qna"+ 
 	               "   WHERE qna_title LIKE '%'||?||'%' OR qna_content LIKE '%'||?||'%'" + 
 	               "   ORDER BY qna_idx DESC)" + 
@@ -84,8 +84,8 @@ public class CafeDao {
 	         String sql = "SELECT *" + 
 	               " FROM" + 
 	               "   (SELECT qna_idx,qna_title,qna_writer,qna_content,qna_file,qna_regdate" + 
-	               "   LAG(num, 1, 0) OVER(ORDER BY qna_idx DESC) AS prevNum," + 
-	               "   LEAD(num, 1, 0) OVER(ORDER BY qna_idx DESC) nextNum" + 
+	               "   LAG(qna_idx, 1, 0) OVER(ORDER BY qna_idx DESC) AS prevNum," + 
+	               "   LEAD(qna_idx, 1, 0) OVER(ORDER BY qna_idx DESC) nextNum" + 
 	               "   FROM board_qna"+ 
 	               "   WHERE qna_writer LIKE '%'||?||'%'" + 
 	               "   ORDER BY qna_idx DESC)" + 
@@ -137,8 +137,8 @@ public class CafeDao {
 	         String sql = "SELECT *" + 
 	               " FROM" + 
 	               "   (SELECT qna_idx,qna_title,qna_writer,qna_content,qna_file,qna_regdate" + 
-	               "   LAG(num, 1, 0) OVER(ORDER BY qna_idx DESC) AS prevNum," + 
-	               "   LEAD(num, 1, 0) OVER(ORDER BY qna_idx DESC) nextNum" + 
+	               "   LAG(qna_idx, 1, 0) OVER(ORDER BY qna_idx DESC) AS prevNum," + 
+	               "   LEAD(qna_idx, 1, 0) OVER(ORDER BY qna_idx DESC) nextNum" + 
 	               "   FROM board_qna" +
 	               "   WHERE qna_title LIKE '%'||?||'%'" +
 	               "   ORDER BY qna_idx DESC)" + 
