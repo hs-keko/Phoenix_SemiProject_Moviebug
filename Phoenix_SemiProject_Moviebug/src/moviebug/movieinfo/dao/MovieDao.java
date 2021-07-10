@@ -260,4 +260,112 @@ public class MovieDao {
       
    }
    
+   public List<MovieDto> getRecentList() {
+         MovieDto dto=null;
+         Connection conn = null;
+         PreparedStatement pstmt = null;
+         ResultSet rs = null;
+         List<MovieDto> list = new ArrayList<>();
+         try {
+            //Connection 객체의 참조값 얻어오기 
+            conn = new DbcpBean().getConn();
+            //실행할 sql 문 작성
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer"
+                  + " FROM movie_info"
+                  + " where sysdate-30 <= movie_year order by movie_rating desc"; // order by나 between 아님 where 조건? 일단 다 가져와보자
+            //PreparedStatement 객체의 참조값 얻어오기
+            pstmt = conn.prepareStatement(sql);
+            //? 에 바인딩할 내용이 있으면 여기서 바인딩
+         
+            //select 문 수행하고 결과를 ResultSet 으로 받아오기
+            rs = pstmt.executeQuery();
+             
+             while(rs.next()) {
+                MovieDto tmp = new MovieDto();
+                tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
+                tmp.setMovie_title_eng(rs.getString("movie_title_eng"));
+                tmp.setMovie_story(rs.getString("movie_story"));
+                tmp.setMovie_character(rs.getString("movie_character"));
+                tmp.setMovie_year(rs.getString("movie_year"));
+                tmp.setMovie_genre(rs.getString("movie_genre"));
+                tmp.setMovie_company(rs.getString("movie_company"));
+                tmp.setMovie_image(rs.getString("movie_image"));
+                tmp.setMovie_trailer(rs.getString("movie_trailer"));
+                tmp.setMovie_time(rs.getString("movie_time"));
+                tmp.setMovie_rating(rs.getString("movie_rating"));
+                tmp.setMovie_nation(rs.getString("movie_nation"));
+                tmp.setMovie_director(rs.getString("movie_director"));
+               
+                list.add(tmp);
+             }
+         } catch (Exception e) {
+            e.printStackTrace();
+         } finally {
+            try {
+               if (rs != null)
+                  rs.close();
+               if (pstmt != null)
+                  pstmt.close();
+               if (conn != null)
+                  conn.close();
+            } catch (Exception e) {
+            }
+         }
+         return list;
+      }
+
+
+         public List<MovieDto> getHorrorList() {
+         MovieDto dto=null;
+         Connection conn = null;
+         PreparedStatement pstmt = null;
+         ResultSet rs = null;
+         List<MovieDto> list = new ArrayList<>();
+         try {
+            //Connection 객체의 참조값 얻어오기 
+            conn = new DbcpBean().getConn();
+            //실행할 sql 문 작성
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer"
+                  + " FROM movie_info"
+                  + " WHERE movie_genre= '스릴러' OR '공포'";
+            //PreparedStatement 객체의 참조값 얻어오기
+            pstmt = conn.prepareStatement(sql);
+            //? 에 바인딩할 내용이 있으면 여기서 바인딩
+         
+            //select 문 수행하고 결과를 ResultSet 으로 받아오기
+            rs = pstmt.executeQuery();
+             
+            while(rs.next()) {
+                MovieDto tmp = new MovieDto();
+                tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
+                tmp.setMovie_title_eng(rs.getString("movie_title_eng"));
+                tmp.setMovie_story(rs.getString("movie_story"));
+                tmp.setMovie_character(rs.getString("movie_character"));
+                tmp.setMovie_year(rs.getString("movie_year"));
+                tmp.setMovie_genre(rs.getString("movie_genre"));
+                tmp.setMovie_company(rs.getString("movie_company"));
+                tmp.setMovie_image(rs.getString("movie_image"));
+                tmp.setMovie_trailer(rs.getString("movie_trailer"));
+                tmp.setMovie_time(rs.getString("movie_time"));
+                tmp.setMovie_rating(rs.getString("movie_rating"));
+                tmp.setMovie_nation(rs.getString("movie_nation"));
+                tmp.setMovie_director(rs.getString("movie_director"));
+               
+                list.add(tmp);
+             }
+         } catch (Exception e) {
+            e.printStackTrace();
+         } finally {
+            try {
+               if (rs != null)
+                  rs.close();
+               if (pstmt != null)
+                  pstmt.close();
+               if (conn != null)
+                  conn.close();
+            } catch (Exception e) {
+            }
+         }
+         return list;
+      }
 }
