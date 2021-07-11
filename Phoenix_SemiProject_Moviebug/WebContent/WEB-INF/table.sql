@@ -74,7 +74,7 @@ CREATE TABLE movie_info(
 	movie_year varchar2(100),-- 영화 제작년도
 	movie_genre VARCHAR2(100), -- 영화 장르
 	movie_company VARCHAR2(100), -- 제작사
-	movie_image VARCHAR2(1000), -- 영화 이미지 경로
+	movie_image VARCHAR2(2000), -- 영화 이미지 경로
 	movie_trailer VARCHAR2(1000), -- 영화 트레일러 경로
 	movie_time VARCHAR2(10), -- 러닝 타임
 	movie_rating VARCHAR2(10) -- 영화 평점
