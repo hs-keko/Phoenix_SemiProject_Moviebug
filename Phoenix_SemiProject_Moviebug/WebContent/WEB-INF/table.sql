@@ -16,7 +16,7 @@ CREATE TABLE board_qna(
 	qna_content CLOB, --글 내용
 	qna_file VARCHAR2(1000), --첨부파일
 	qna_regdate DATE --글 작성일
-);
+); 
 
 -- QNA 게시글의 번호를 얻어낼 시퀀스
 CREATE SEQUENCE board_qna_seq;
