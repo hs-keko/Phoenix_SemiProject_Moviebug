@@ -16,15 +16,14 @@
    String qna_comment_group=request.getParameter("qna_comment_group");
    
    //댓글 작성자는 session 영역에서 얻어내기
-   String email=(String)session.getAttribute("email");
-   String name=UsersDao.getInstance().getData(email).getName();
+   String qna_comment_writer=(String)session.getAttribute("email");
    //댓글의 시퀀스 번호 미리 얻어내기
    int seq=CafeCommentDao.getInstance().getSequence();
    //저장할 댓글의 정보를 dto 에 담기
    CafeCommentDto dto=new CafeCommentDto();
    dto.setQna_comment_idx(seq);
-   dto.setQna_comment_writer(name);
-   dto.setQna_comment_target_id(email);
+   dto.setQna_comment_writer(qna_comment_writer);
+   dto.setQna_comment_target_id(qna_comment_target_id);
    dto.setQna_comment_content(qna_comment_content);
    dto.setQna_comment_ref_group(qna_comment_ref_group);
    //원글의 댓글인경우

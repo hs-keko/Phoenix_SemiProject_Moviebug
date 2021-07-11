@@ -151,7 +151,7 @@ public class CafeCommentDao {
 	                 "       qna_comment_group, qna_comment_deleted, board_qna_comment.qna_comment_regdate, profile" + 
 	                 "       FROM board_qna_comment" + 
 	                 "       INNER JOIN users" + 
-	                 "       ON board_qna_comment.qna_comment_target_id = users.email" +
+	                 "       ON board_qna_comment.qna_comment_writer = users.email" +
 	                 "       WHERE qna_comment_ref_group=?" +
 	                 "       ORDER BY qna_comment_group ASC, qna_comment_idx ASC) result1)" +
 	                 " WHERE rnum BETWEEN ? AND ?";

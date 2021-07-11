@@ -11,6 +11,7 @@
 <%
 	//자세히 보여줄 글번호 가져오기
 	int qna_idx=Integer.parseInt(request.getParameter("num"));
+
 	CafeDto dto1=new CafeDto();
 	dto1.setQna_idx(qna_idx);
 	CafeDto dto=CafeDao.getInstance().getData(dto1);
@@ -76,7 +77,7 @@
     int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
     
     String email=(String)session.getAttribute("email");
-	String name=UsersDao.getInstance().getData(email).getName();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -86,16 +87,25 @@
 <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="../css/footer.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<!-- 웹폰트 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<!-- 웹폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 <style>
-	.content{
-		border: 1px dotted red;
-		width: 500px;
-		height: 300px;
+
+	.container {
+		width: 100%;
+		height: 100%;
+			
+	}
+	.content {
+		width: 100%;
+		height: 100%;
+		border: 1px solid #cecece;
+		margin-bottom: 20px;
+		margin-top: 15px;
+			
 	}
 	.profile-image{
 		width: 50px;
@@ -179,6 +189,8 @@
 			transform: rotate(360deg);
 		}
 	}
+	
+
 </style>
 </head>
 <body>
@@ -187,10 +199,24 @@
 </jsp:include>
 <div class="container">
 	<%if(dto.getPrevNum()!=0) {%>
-   		<a href="detail.jsp?num=<%=dto.getPrevNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">이전글</a>
+   		<div id="prev" style="float: left;">
+   		<a href="detail.jsp?num=<%=dto.getPrevNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">
+		<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+	  		<path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+		</svg>
+		</a>
+		</div>
    	<%} %>
    	<%if(dto.getNextNum()!=0) {%>
-   		<a href="detail.jsp?num=<%=dto.getNextNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">다음글</a>
+   		<div id="prev" style="float: right;">
+   		<a href="detail.jsp?num=<%=dto.getNextNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">
+   		<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+		  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+		</svg>
+   		</a>
+   		</div>
+   		<div style="clear:both;"></div>
+   		<br>
    	<%} %>
    	<%if(!keyword.equals("")){ %>
    	<p>
@@ -229,21 +255,22 @@
 		</td>
 	</tr>
    </table>
-   <ul>
-      <li><a href="list.jsp">목록보기</a></li>
+      
       <%
       
       if(email != null){
       %>
-      <%if(dto.getQna_writer().equals(name)){ %>
-      <li><a href="private/updateform.jsp?num=<%=dto.getQna_idx() %>">수정</a></li>
-      <li><a href="private/delete.jsp?num=<%=dto.getQna_idx() %>">삭제</a></li>
+      <%if(dto.getQna_writer().equals(UsersDao.getInstance().getData(email).getName())){ %>
+      <a class="btn btn-success btn-sm" href="private/updateform.jsp?num=<%=dto.getQna_idx() %>">수정</a>
+      <a class="btn btn-danger btn-sm" href="private/delete.jsp?num=<%=dto.getQna_idx() %>">삭제</a>
       <% } 
       }
       %>
-   </ul>
+      <a class="btn btn-primary btn-sm" href="list.jsp">목록</a>
+      <br>
+      <br>
    <!-- 여기서부터 댓글 목록 입니다. -->
-   <div class="comments">
+   <div id="one" class="comments">
    		<ul>
    			<%for(CafeCommentDto tmp: commentList){ %>
    				<%if(tmp.getQna_comment_deleted().equals("yes")){%>
@@ -273,13 +300,13 @@
 		                  <%}else{ %>
 		                      <img class="profile-image" src="${pageContext.request.contextPath}<%=tmp.getProfile()%>"/>
 		                  <%} %>
-		                  	<span><strong><%=tmp.getQna_comment_writer() %></strong></span>
+		                  	<span><strong><%=UsersDao.getInstance().getData(tmp.getQna_comment_writer()).getName() %></strong></span>
 		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
-		                  	[<%=tmp.getQna_comment_target_id() %>]님에게
+		                  	[<%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %>]님에게
 		                  <%} %>
 		                  	<span><%=tmp.getQna_comment_regdate () %></span>
 		                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
-						<%	if(email != null && tmp.getQna_comment_writer().equals(name)){ %>
+						<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
 							<a data-num="<%=tmp.getQna_comment_idx() %>" class="update-link" href="javascript:">수정</a>
 							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link" href="javascript:">삭제</a>
 						<%} %>
@@ -294,12 +321,12 @@
                      value="<%=dto.getQna_idx()%>"/>
                   <input type="hidden" name="qna_comment_target_id"
                      value="<%=tmp.getQna_comment_writer()%>"/>
-                  <input type="hidden" name="qna_comment_group"
+                  <input id="two" type="hidden" name="qna_comment_group"
                      value="<%=tmp.getQna_comment_group()%>"/>
                   <textarea name="qna_comment_content"></textarea>
                   <button type="submit">등록</button>
                </form>   
-               <%if(tmp.getQna_comment_writer().equals(name)){ %>   
+               <%if(tmp.getQna_comment_writer().equals(email)){ %>   
                <form id="updateForm<%=tmp.getQna_comment_idx() %>" class="comment-form update-form" 
                   action="private/comment_update.jsp" method="post">
                   <input type="hidden" name="qna_comment_idx" value="<%=tmp.getQna_comment_idx() %>" />
@@ -311,11 +338,14 @@
    			<%} %>
    		</ul>
    </div>
+   <br>
+   <br>
    <div class="loader">
 	   	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-hourglass-bottom" viewBox="0 0 16 16">
 		  <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5zm2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702s.18.149.5.149.5-.15.5-.15v-.7c0-.701.478-1.236 1.011-1.492A3.5 3.5 0 0 0 11.5 3V2h-7z"/>
 		</svg>
    </div>
+    <div style="clear:both;"></div>
    <!-- 원글에 댓글을 작성할 폼 -->
    <form class="comment-form insert-form" action="private/comment_insert.jsp" method="post">
    		<!-- 원글의 글번호가 댓글의 ref_group 번호가 된다. -->
@@ -325,97 +355,14 @@
    		<textarea name="qna_comment_content"></textarea>
    		<button type="submit">등록</button>
    </form>
+   </div>
+   <div style="clear:both;"></div>
 <script src="${pageContext.request.contextPath}/js/gura_util.js"></script>
 <script>
-	//댓글 수정 폼의 참조값을 배열에 담아오기
-	let updateForms=document.querySelectorAll(".update-form");
-	for(let i=0; i<updateForms.length; i++){
-		//폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
-		updateForms[i].addEventListener("submit", function(e){
-			//폼 제출 막기
-			e.preventDefault();
-			//submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기
-			const form=this;
-			//이벤트가 일어난 폼을 ajax 전송
-			console.log(form)
-			ajaxFormPromise(form)
-			.then(function(response){
-				return response.json();
-			})
-			.then(function(data){
-				if(data.isSuccess){
-					//수정폼에 입력한 value 값을 pre 요소에도 출력하기
-					const qna_comment_idx=form.querySelector("input[name=qna_comment_idx]").value;
-					const qna_comment_content=form.querySelector("textarea[name=qna_comment_content]").value;
-					document.querySelector("#pre"+qna_comment_idx).innerText=qna_comment_content;
-					form.style.display="none";
-				}
-			});
-		});
-	}
-	//댓글 수정 링크의 참조값을 배열에 담아오기
-	let updateLinks=document.querySelectorAll(".update-link");
-		for(let i=0; i<updateLinks.length; i++){
-			updateLinks[i].addEventListener("click", function(){
-				//click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
-				const qna_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
-				document.querySelector("#updateForm"+qna_comment_idx).style.display="block";
-		});
-	}
-	//댓글 삭제 링크의 참조값을 배열에 담아오기 
-	let deleteLinks=document.querySelectorAll(".delete-link");
-	for(let i=0; i<deleteLinks.length; i++){
-		deleteLinks[i].addEventListener("click", function(){
-			//click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
-			const qna_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
-			const isDelete=confirm("댓글을 삭제 하시겠습니까?");
-			if(isDelete){
-				// gura_util.js 에 있는 함수들 이용해서 ajax 요청
-				ajaxPromise("private/comment_delete.jsp", "post", "qna_comment_idx="+qna_comment_idx)
-				.then(function(response){
-					return response.json();
-				})
-				.then(function(data){
-					//만일 삭제 성공이면 
-					if(data.isSuccess){
-						//댓글이 있는 곳에 삭제된 댓글입니다를 출력해 준다. 
-						document.querySelector("#reli"+qna_comment_idx).innerText="삭제된 댓글입니다.";
-					}
-				});
-			}
-		});
-	}
-	//댓글 링크의 참조값을 배열에 담아오기
-	let replyLinks=document.querySelectorAll(".reply-link");
-	//반복문 돌면서 모든 링크에 이벤트 리스너 함수 등록
-	for(let i=0; i<replyLinks.length; i++){
-		replyLinks[i].addEventListener("click", function(){
-				//click 이벤트가 발생한 바로 그 요소의 data-num 속성의 value값 읽어오기
-				const qna_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
-				
-				const form=document.querySelector("#reForm"+qna_comment_idx);
-				
-				//현재 문자열을 읽어온다 (답글 or 취소)
-				let current = this.innerText;
-				if(current=="답글"){
-					//번호를 이용해서 댓글의 댓글폼을 선택해서 보이게 한다.
-					form.style.display="block";
-					form.classList.add("animate__fadeIn");
-					this.innerText="취소";
-					form.addEventListener("animationend", function(){
-							form.classList.remove("animated__fadeIn");
-					}, {once:true});
-				}else if(current=="취소"){
-					form.classList.add("animated__fadeOut");
-					this.innerText="답글";
-					form.addEventListener("animationend", function(){
-						form.classList.remove("animated__fadeOut");
-						form.style.display="none";
-				}, {once:true});
-					
-			}	
-		});
-	}
+	addUpdateFormListener(".update-form");
+	addUpdateListener(".update-link");
+	addDeleteListener(".delete-link");
+	addReplyListener(".reply-link");
 	
 	 
 	   //댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
@@ -550,33 +497,41 @@
 			}
 			
 			function addUpdateFormListener(sel){
-				//댓글 수정 폼의 참조값을 배열에 담아오기
-				let updateForms=document.querySelectorAll("sel");
-				for(let i=0; i<updateForms.length; i++){
-					//폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
-					updateForms[i].addEventListener("submit", function(e){
-						//submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기
-						const form=this;
-						//폼 제출 막기
-						e.preventDefault();
-						//이벤트가 일어난 폼을 ajax 전송
-						ajaxFormPromise(form)
-						.then(function(response){
-							return response.json();
-						})
-						.then(function(data){
-							if(data.isSuccess){
-								//수정폼에 입력한 value 값을 pre 요소에도 출력하기
-								const qna_comment_idx=form.querySelector("input[name=qna_comment_idx]").value;
-								const qna_comment_content=form.querySelector("textarea[name=qna_comment_content]").value;
-								document.querySelector("#pre"+qna_comment_idx).innerText=qna_comment_content;
-								form.style.display="none";
-							}
-						});
-					});
-				}
-			}
+			      //댓글 수정 폼의 참조값을 배열에 담아오기
+			      let updateForms=document.querySelectorAll(sel);
+			      for(let i=0; i<updateForms.length; i++){
+			         //폼에 submit 이벤트가 일어 났을때 호출되는 함수 등록 
+			         updateForms[i].addEventListener("submit", function(e){
+			            //submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기 
+			            const form=this;
+			            //폼 제출을 막은 다음 
+			            e.preventDefault();
+			            //이벤트가 일어난 폼을 ajax 전송하도록 한다.
+			            ajaxFormPromise(form)
+			            .then(function(response){
+			               return response.json();
+			            })
+			            .then(function(data){
+			               if(data.isSuccess){
+			                  /*
+			                     document.querySelector() 는 html 문서 전체에서 특정 요소의 
+			                     참조값을 찾는 기능
+			                     
+			                     특정문서의 참조값.querySelector() 는 해당 문서 객체의 자손 요소 중에서
+			                     특정 요소의 참조값을 찾는 기능
+			                  */
+			                  const qna_comment_idx=form.querySelector("input[name=qna_comment_idx]").value;
+			                  const qna_comment_content=form.querySelector("textarea[name=qna_comment_content]").value;
+			                  //수정폼에 입력한 value 값을 pre 요소에도 출력하기 
+			                  document.querySelector("#pre"+qna_comment_idx).innerText=qna_comment_content;
+			                  form.style.display="none";
+			               }
+			            });
+			         });
+			      }
+
+			   }
 </script>
-<jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
+<jsp:include page="../include/footer.jsp"></jsp:include>
 </html>
