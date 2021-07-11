@@ -1,10 +1,10 @@
+<%@page import="test.cafe.dto.CafeDto"%>
 <%@page import="moviebug.movieinfo.dao.MovieDao"%>
 <%@page import="moviebug.movieinfo.dto.MovieDto"%>
 <%@page import="moviebug.users.dao.UsersDao"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="test.cafe.dao.CafeDao"%>
-<%@page import="test.cafe.dto.CafeDto"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -71,8 +71,8 @@
 <head>
 <meta charset="UTF-8">
 <title>more.jsp</title>
-	<!-- more css -->
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/more.css" />
+   <!-- more css -->
+   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/more.css" />
 
     <!-- navbar 필수 import -->
     <jsp:include page="include/resource.jsp"></jsp:include>
@@ -80,12 +80,12 @@
     
     <link rel="stylesheet" type="text/css" href="css/footer.css" />
     
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-	<!-- 웹폰트 test -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
+   <!-- 웹폰트 test -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
 <style>
    .page-ui a{
       text-decoration: none;
@@ -114,21 +114,21 @@
 </head>
 <body>
 
-	<!-- navbar 필수 import -->
+   <!-- navbar 필수 import -->
     <jsp:include page="include/navbar.jsp"> 
-    	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+       <jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
 
 <div class="container">
 
-	<!-- 검색했을경우 보이는 검색창 -->
+   <!-- 검색했을경우 보이는 검색창 -->
         <%
-        	//String condition = request.getParameter("condition");
-        	// 검색옵션처리는 나중에
-        	String condition = "qna_title_content";
-        	String keyword = request.getParameter("keyword");
-        	if(keyword != null){%>
-        	
+           //String condition = request.getParameter("condition");
+           // 검색옵션처리는 나중에
+           String condition = "qna_title_content";
+           String keyword = request.getParameter("keyword");
+           if(keyword != null){%>
+           
          <form action="list.jsp" method="get">
             <label for="condition">검색 조건</label>
             <select name="condition" id="condition">
@@ -145,79 +145,77 @@
                <strong><%=totalRow %></strong>개의 글이 검색되었습니다.
             </p>
          <%} 
-        	}%>
+           }%>
         
 
 
-	<div class="container-xl index_content">
-	 	 <%if(category.equals("resent")){ %>
-	      <div class="row index_content02">
-	      	 <div class="row">
-		        <div class="col flex_box index_category">
-				   <h1>최신 인기</h1>
-		        </div>
-	      	</div>
-	      	
-	        <div class="row row-cols-1 row-cols-md-4 g-4"> 
-		      <%for(MovieDto tmp: ResentList) {%>
-		     
-		          <div class="col col-6 col-lg-3">
-		     		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>">
-		            <div class="card border-0">
-		              <img
-		                src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
-		                class="card-img-top"
-		                alt="<%=tmp.getMovie_title_kr() %>"/>
-		              <div class="card-body">
-		                <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
-		                <p class="card-text"><small class="text-muted"><%=tmp.getMovie_nation() %> | <%=tmp.getMovie_genre() %></small></p>
-		                <p class="card-text">
-		                  <%=tmp.getMovie_story() == null ? '.' : tmp.getMovie_story().length() >= 140 ? tmp.getMovie_story()+"...":tmp.getMovie_story() %>
-		                </p>
-		                <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
-		              </div>
-		            </div>
-		         </a>
-		          </div>
-	          <%} %>
-	         </div>
-	       </div>
-	       
-	       <%}else if(category.equals("classic")){ %>  
-	       <div class="row index_content02">
-	      	 <div class="row">
-		        <div class="col flex_box index_category">
-				   <h1>여름 특선</h1>
-		        </div>
-	      	</div>
-	      	
-	        <div class="row row-cols-1 row-cols-md-4 g-4"> 
-		      <%for(MovieDto tmp: SummerList) {%>
-		     
-		          <div class="col col-6 col-lg-3">
-		     		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>">
-		            <div class="card border-0">
-		              <img
-		                src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
-		                class="card-img-top"
-		                alt="<%=tmp.getMovie_title_kr() %>"/>
-		              <div class="card-body">
-		                <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
-		                <p class="card-text"><small class="text-muted"><%=tmp.getMovie_nation() %> | <%=tmp.getMovie_genre() %></small></p>
-		                <p class="card-text">
-		                  <%=tmp.getMovie_story() == null ? '.' : tmp.getMovie_story().length() >= 140 ? tmp.getMovie_story()+"...":tmp.getMovie_story() %>
-		                </p>
-		                <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
-		              </div>
-		            </div>
-	         		 </a>
-		          </div>
-	          <%} %>
-	        </div>
-	        <%} %> 
-	</div>
-	       
+   <div class="container-xl index_content">
+        <%if(category.equals("resent")){ %>
+         <div class="row index_content02">
+             <div class="row">
+              <div class="col flex_box index_category">
+               <h1>최신 인기작</h1>
+              </div>
+            </div>
+            
+           <div class="row row-cols-1 row-cols-md-4 g-4"> 
+            <%for(MovieDto tmp: ResentList) {%>
+                <div class="col col-6 col-lg-3 movie_list">
+                  <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>" class="poster_link">
+                  <div class="card border-0">
+                  <div class="card-body poster_info">
+                    <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
+                    <p class=""><small class="text-muted"><%=tmp.getMovie_nation() %> | <%=tmp.getMovie_genre() %></small></p>
+                    <p class="card-text">
+                      <%=tmp.getMovie_story() == null ? '.' : tmp.getMovie_story().length() >= 120 ? tmp.getMovie_story()+"...":tmp.getMovie_story() %>
+                    </p>
+                    <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
+                  </div>
+                  <img
+                    src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
+                    class="rounded card-img-top"
+                    alt="<%=tmp.getMovie_title_kr() %>"/>
+                   </div>
+                   </a>
+                 </div>
+              <%} %>
+         </div>
+       </div>
           
+          <%}else if(category.equals("classic")){ %>  
+          <div class="row index_content02">
+             <div class="row">
+              <div class="col flex_box index_category">
+               <h1>여름 특선</h1>
+              </div>
+            </div>
+            
+           <div class="row row-cols-1 row-cols-md-4 g-4"> 
+            <%for(MovieDto tmp: SummerList) {%>
+             <div class="col col-6 col-lg-3 movie_list">
+               <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>" class="poster_link">
+               <div class="card border-0">
+                <div class="card-body poster_info">
+                   <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
+                   <p class="card-text"><small class="text-muted"><%=tmp.getMovie_nation() %> | <%=tmp.getMovie_genre() %></small></p>
+                   <p class="card-text">
+                     <%=tmp.getMovie_story() == null ? '.' : tmp.getMovie_story().length() >= 120 ? tmp.getMovie_story()+"...":tmp.getMovie_story() %>
+                   </p>
+                   <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
+                </div>
+                <img
+                  src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
+                  class="rounded card-img-top"
+                  alt="<%=tmp.getMovie_title_kr() %>"/>
+                 </div>
+                 </a>
+               </div>
+            <%} %>
+          </div>
+       <%} %> 
+     </div>
+          
+             
           
    <div class="page-ui clearfix">
          <ul>
@@ -243,10 +241,8 @@
             <%} %>
          </ul>
      </div>
-      
-         
-</div>
-      
+   </div>
+</div>      
       
    <jsp:include page="include/footer.jsp"></jsp:include>
 </body>
