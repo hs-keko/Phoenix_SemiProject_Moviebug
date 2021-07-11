@@ -328,6 +328,7 @@ public class MovieDao {
              
              while(rs.next()) {
                 MovieDto tmp = new MovieDto();
+                tmp.setMovie_num(rs.getInt("movie_num"));
                 tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
                 tmp.setMovie_title_eng(rs.getString("movie_title_eng"));
                 tmp.setMovie_story(rs.getString("movie_story"));
@@ -382,6 +383,7 @@ public class MovieDao {
              
             while(rs.next()) {
                 MovieDto tmp = new MovieDto();
+                tmp.setMovie_num(rs.getInt("movie_num"));
                 tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
                 tmp.setMovie_title_eng(rs.getString("movie_title_eng"));
                 tmp.setMovie_story(rs.getString("movie_story"));
