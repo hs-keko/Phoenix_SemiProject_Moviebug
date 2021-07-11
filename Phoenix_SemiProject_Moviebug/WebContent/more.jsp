@@ -36,7 +36,12 @@
    //특수기호를 인코딩한 키워드
    String encodedK=URLEncoder.encode(category);
    
+   //최신 인기
+   List<MovieDto> ResentList = MovieDao.getInstance().getResentList();
+   //여름 특선
+   List<MovieDto> SummerList = MovieDao.getInstance().getSummerList();
    
+ 
    boolean isSearch = false;
    
    
@@ -58,13 +63,6 @@
       endPageNum=totalPageCount; //보정해 준다.
    }
       String email=(String)session.getAttribute("email");
-      
-      
-   
-      List<MovieDto> RecentMovies = MovieDao.getInstance().getRecentList();
-   
-      // dao 문제 있음
-   // List<MovieDto> ClassicList = MovieDao.getInstance().getHorrorList();
    
   
 %>
@@ -123,71 +121,102 @@
 
 <div class="container">
 
-		<!-- 검색했을경우 보이는 검색창 -->
-         <%
-         	//String condition = request.getParameter("condition");
-         	// 검색옵션처리는 나중에
-         	String condition = "qna_title_content";
-         	String keyword = request.getParameter("keyword");
-         	if(keyword != null){%>
-         	
-	         <form action="list.jsp" method="get">
-	            <label for="condition">검색 조건</label>
-	            <select name="condition" id="condition">
-	              <option value="qna_title_content" <%=condition.equals("qna_title_content") && condition != null ? "selected" : ""%>>제목+내용</option>
-	               <option value="qna_title" <%=condition.equals("qna_title") && condition != null ? "selected" : ""%>>제목</option>
-	               <option value="qna_writer" <%=condition.equals("qna_writer")  && condition != null? "selected" : ""%>>작성자</option>
-	          </select>
-	          <input type="text" name="keyword" placeholder="검색어를 입력하세요..." value="<%=keyword%>"/>
-	          <button type="submit">검색</button>
-	         </form>
-	
-	         <%if(!condition.equals("")){ %>
-	            <p>
-	               <strong><%=totalRow %></strong>개의 글이 검색되었습니다.
-	            </p>
-	         <%} 
-         	}%>
-         
+	<!-- 검색했을경우 보이는 검색창 -->
+        <%
+        	//String condition = request.getParameter("condition");
+        	// 검색옵션처리는 나중에
+        	String condition = "qna_title_content";
+        	String keyword = request.getParameter("keyword");
+        	if(keyword != null){%>
+        	
+         <form action="list.jsp" method="get">
+            <label for="condition">검색 조건</label>
+            <select name="condition" id="condition">
+              <option value="qna_title_content" <%=condition.equals("qna_title_content") && condition != null ? "selected" : ""%>>제목+내용</option>
+               <option value="qna_title" <%=condition.equals("qna_title") && condition != null ? "selected" : ""%>>제목</option>
+               <option value="qna_writer" <%=condition.equals("qna_writer")  && condition != null? "selected" : ""%>>작성자</option>
+          </select>
+          <input type="text" name="keyword" placeholder="검색어를 입력하세요..." value="<%=keyword%>"/>
+          <button type="submit">검색</button>
+         </form>
+
+         <%if(!condition.equals("")){ %>
+            <p>
+               <strong><%=totalRow %></strong>개의 글이 검색되었습니다.
+            </p>
+         <%} 
+        	}%>
+        
 
 
-<div class="container-xl index_content">
-      <div class="row index_content02">
-      	 <div class="row">
-	        <div class="col flex_box index_category">
-			   <h1>높은 평점 순 최신작</h1>
+	<div class="container-xl index_content">
+	 	 <%if(category.equals("resent")){ %>
+	      <div class="row index_content02">
+	      	 <div class="row">
+		        <div class="col flex_box index_category">
+				   <h1>최신 인기</h1>
+		        </div>
+	      	</div>
+	      	
+	        <div class="row row-cols-1 row-cols-md-4 g-4"> 
+		      <%for(MovieDto tmp: ResentList) {%>
+		     
+		          <div class="col col-6 col-lg-3">
+		     		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>">
+		            <div class="card border-0">
+		              <img
+		                src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
+		                class="card-img-top"
+		                alt="<%=tmp.getMovie_title_kr() %>"/>
+		              <div class="card-body">
+		                <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
+		                <p class="card-text"><small class="text-muted"><%=tmp.getMovie_nation() %> | <%=tmp.getMovie_genre() %></small></p>
+		                <p class="card-text">
+		                  <%=tmp.getMovie_story() == null ? '.' : tmp.getMovie_story().length() >= 140 ? tmp.getMovie_story()+"...":tmp.getMovie_story() %>
+		                </p>
+		                <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
+		              </div>
+		            </div>
+		         </a>
+		          </div>
+	          <%} %>
+	         </div>
+	       </div>
+	       
+	       <%}else if(category.equals("classic")){ %>  
+	       <div class="row index_content02">
+	      	 <div class="row">
+		        <div class="col flex_box index_category">
+				   <h1>여름 특선</h1>
+		        </div>
+	      	</div>
+	      	
+	        <div class="row row-cols-1 row-cols-md-4 g-4"> 
+		      <%for(MovieDto tmp: SummerList) {%>
+		     
+		          <div class="col col-6 col-lg-3">
+		     		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>">
+		            <div class="card border-0">
+		              <img
+		                src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
+		                class="card-img-top"
+		                alt="<%=tmp.getMovie_title_kr() %>"/>
+		              <div class="card-body">
+		                <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
+		                <p class="card-text"><small class="text-muted"><%=tmp.getMovie_nation() %> | <%=tmp.getMovie_genre() %></small></p>
+		                <p class="card-text">
+		                  <%=tmp.getMovie_story() == null ? '.' : tmp.getMovie_story().length() >= 140 ? tmp.getMovie_story()+"...":tmp.getMovie_story() %>
+		                </p>
+		                <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
+		              </div>
+		            </div>
+	         		 </a>
+		          </div>
+	          <%} %>
 	        </div>
-      	</div>
-      	
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-      <%for(MovieDto tmp: RecentMovies) {%>
-     
-          <div class="col col-6 col-lg-3">
-     		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>">
-            <div class="card border-0">
-              <img
-                src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
-                class="card-img-top"
-                alt="<%=tmp.getMovie_title_kr() %>"/>
-              <div class="card-body">
-                <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
-                <p class="card-text"><small class="text-muted"><%=tmp.getMovie_nation() %> | <%=tmp.getMovie_genre() %></small></p>
-                <p class="card-text">
-                  <%=tmp.getMovie_story().length() >= 140 ? tmp.getMovie_story()+"...":tmp.getMovie_story() %>
-                </p>
-                <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
-              </div>
-            </div>
-         </a>
-          </div>
-      
-          <%} %>
-          </div>
-          
-          
-          </div>
-          </div>
-       
+	        <%} %> 
+	</div>
+	       
           
           
    <div class="page-ui clearfix">
@@ -213,10 +242,10 @@
                </li>
             <%} %>
          </ul>
-      </div>
+     </div>
       
          
-      </div>
+</div>
       
       
    <jsp:include page="include/footer.jsp"></jsp:include>
