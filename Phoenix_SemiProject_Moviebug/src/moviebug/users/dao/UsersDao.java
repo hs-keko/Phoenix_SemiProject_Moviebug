@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moviebug.users.dto.UsersDto;
+import test.cafe.dto.CafeDto;
 import test.util.DbcpBean;
 
 public class UsersDao {
@@ -18,8 +19,7 @@ public class UsersDao {
 		}
 		return dao;
 	}
-	
-	
+	   
 		// 사용자 정보 가져오기
 		public UsersDto getUser(String email) {
 			Connection conn = null;
@@ -31,7 +31,9 @@ public class UsersDao {
 				conn = new DbcpBean().getConn();
 				// 실행할 sql 문 작성
 
-				String sql = "select name,email,addr,profile,regdate from users where email = ?";
+				String sql = "select name,email,addr,profile,regdate "
+						+ " from users "
+						+ " where email = ?";
 				pstmt = conn.prepareStatement(sql);
 				// 바인딩
 				pstmt.setString(1, email);

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import moviebug.users.dto.UsersDto;
 import test.cafe.dto.CafeDto;
 import test.util.DbcpBean;
 
@@ -18,6 +19,98 @@ public class CafeDao {
       }
       return dao;
    }
+   
+ //글 목록을 리턴하는 메소드
+   public List<CafeDto> userGetList(CafeDto dto){
+      List<CafeDto> list=new ArrayList<CafeDto>();
+      Connection conn = null;
+      PreparedStatement pstmt = null;
+      ResultSet rs = null;
+      try {
+         //Connection 객체의 참조값 얻어오기 
+         conn = new DbcpBean().getConn();
+         //실행할 sql 문 작성
+         String sql = "SELECT *"
+         		+ " FROM "
+         		+ " (SELECT result1.*, ROWNUM as rnum"
+         		+ " FROM"
+         		+ " (SELECT qna_idx, qna_writer, qna_title, qna_file, qna_regdate" + 
+         		" FROM board_qna" + 
+         		" WHERE qna_writer = ? " +
+         		" ORDER BY board_qna.qna_idx DESC) result1)"
+         		+ " WHERE rnum BETWEEN ? AND ?";
+         //PreparedStatement 객체의 참조값 얻어오기
+         pstmt = conn.prepareStatement(sql);
+         //? 에 바인딩할 내용이 있으면 여기서 바인딩
+         pstmt.setString(1, dto.getQna_writer());
+         pstmt.setInt(2, dto.getStartRowNum());
+         pstmt.setInt(3, dto.getEndRowNum());
+         //select 문 수행하고 결과를 ResultSet 으로 받아오기
+         rs = pstmt.executeQuery();
+         //반복문 돌면서 ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
+         while (rs.next()) {
+            CafeDto dto2=new CafeDto();
+            dto2.setQna_idx(rs.getInt("qna_idx"));
+            dto2.setQna_writer(rs.getString("qna_writer"));
+            dto2.setQna_title(rs.getString("qna_title"));
+            dto2.setQna_file(rs.getString("qna_file"));
+            dto2.setQna_regdate(rs.getString("qna_regdate"));
+            list.add(dto2);
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      } finally {
+         try {
+            if (rs != null)
+               rs.close();
+            if (pstmt != null)
+               pstmt.close();
+            if (conn != null)
+               conn.close();
+         } catch (Exception e) {
+         }
+      }
+      return list;
+   }
+   
+// 특정유저가 쓴 게시글 전체 row의 갯수 리턴
+   public int userGetCount(CafeDto dto) {
+	 //글의 갯수를 담을 지역변수 
+      int count=0;
+      Connection conn = null;
+      PreparedStatement pstmt = null;
+      ResultSet rs = null;
+      try {
+         conn = new DbcpBean().getConn();
+         //select 문 작성
+         String sql = "SELECT NVL(MAX(ROWNUM), 0) AS qna_idx "
+               + " FROM board_qna"
+               + " WHERE qna_writer = ?";
+         pstmt = conn.prepareStatement(sql);
+         // ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+         pstmt.setString(1, dto.getQna_writer());
+         //select 문 수행하고 ResultSet 받아오기
+         rs = pstmt.executeQuery();
+         //while문 혹은 if문에서 ResultSet 으로 부터 data 추출
+         if (rs.next()) {
+            count=rs.getInt("qna_idx");
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      } finally {
+         try {
+            if (rs != null)
+               rs.close();
+            if (pstmt != null)
+               pstmt.close();
+            if (conn != null)
+               conn.close();
+         } catch (Exception e) {
+         }
+      }
+      return count;
+}
+   
    		public CafeDto getDataTC(CafeDto dto) {
 	      CafeDto dto2=null;
 	      Connection conn = null;
