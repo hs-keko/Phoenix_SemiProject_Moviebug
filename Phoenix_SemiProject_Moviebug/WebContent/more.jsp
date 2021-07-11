@@ -36,8 +36,10 @@
    //특수기호를 인코딩한 키워드
    String encodedK=URLEncoder.encode(category);
    
-   String condition = request.getParameter("condition");
-   String keyword = request.getParameter("keyword");
+   
+   boolean isSearch = false;
+   
+   
    
    //CafeDto 객체에 startRowNum 과 endRowNum 을 담는다.
    CafeDto dto=new CafeDto();
@@ -61,7 +63,8 @@
    
       List<MovieDto> RecentMovies = MovieDao.getInstance().getRecentList();
    
-   List<MovieDto> ClassicList = MovieDao.getInstance().getHorrorList();
+      // dao 문제 있음
+   // List<MovieDto> ClassicList = MovieDao.getInstance().getHorrorList();
    
   
 %>
@@ -70,15 +73,21 @@
 <head>
 <meta charset="UTF-8">
 <title>more.jsp</title>
-<jsp:include page="../include/resource.jsp"></jsp:include>
-    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
-    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<!-- more css -->
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/more.css" />
 
-<!-- 웹폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+    <!-- navbar 필수 import -->
+    <jsp:include page="include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
+    <link rel="stylesheet" type="text/css" href="css/footer.css" />
+    
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
 <style>
    .page-ui a{
       text-decoration: none;
@@ -106,15 +115,55 @@
 </style>
 </head>
 <body>
-<jsp:include page="../include/navbar.jsp">
-   <jsp:param value="<%=email != null ? email:null %>" name="email"/>
-</jsp:include>
-<div class="container">
-   <h1>높은 평점 순 최신작</h1>
 
+	<!-- navbar 필수 import -->
+    <jsp:include page="include/navbar.jsp"> 
+    	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+    </jsp:include>
+
+<div class="container">
+
+		<!-- 검색했을경우 보이는 검색창 -->
+         <%
+         	//String condition = request.getParameter("condition");
+         	// 검색옵션처리는 나중에
+         	String condition = "qna_title_content";
+         	String keyword = request.getParameter("keyword");
+         	if(keyword != null){%>
+         	
+	         <form action="list.jsp" method="get">
+	            <label for="condition">검색 조건</label>
+	            <select name="condition" id="condition">
+	              <option value="qna_title_content" <%=condition.equals("qna_title_content") && condition != null ? "selected" : ""%>>제목+내용</option>
+	               <option value="qna_title" <%=condition.equals("qna_title") && condition != null ? "selected" : ""%>>제목</option>
+	               <option value="qna_writer" <%=condition.equals("qna_writer")  && condition != null? "selected" : ""%>>작성자</option>
+	          </select>
+	          <input type="text" name="keyword" placeholder="검색어를 입력하세요..." value="<%=keyword%>"/>
+	          <button type="submit">검색</button>
+	         </form>
+	
+	         <%if(!condition.equals("")){ %>
+	            <p>
+	               <strong><%=totalRow %></strong>개의 글이 검색되었습니다.
+	            </p>
+	         <%} 
+         	}%>
+         
+
+
+<div class="container-xl index_content">
+      <div class="row index_content02">
+      	 <div class="row">
+	        <div class="col flex_box index_category">
+			   <h1>높은 평점 순 최신작</h1>
+	        </div>
+      	</div>
+      	
+        <div class="row row-cols-1 row-cols-md-4 g-4">
       <%for(MovieDto tmp: RecentMovies) {%>
-      <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>" class="col-6 col-lg-3">
-          <div class="col">
+     
+          <div class="col col-6 col-lg-3">
+     		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>">
             <div class="card border-0">
               <img
                 src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
@@ -129,11 +178,18 @@
                 <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
               </div>
             </div>
+         </a>
           </div>
-               </a>
+      
           <%} %>
-      </tbody>
-   </table>
+          </div>
+          
+          
+          </div>
+          </div>
+       
+          
+          
    <div class="page-ui clearfix">
          <ul>
             <%if(startPageNum != 1){ %>
@@ -158,23 +214,11 @@
             <%} %>
          </ul>
       </div>
-         <form action="list.jsp" method="get">
-            <label for="condition">검색 조건</label>
-            <select name="condition" id="condition">
-              <option value="qna_title_content" <%=condition.equals("qna_title_content") ? "selected" : ""%>>제목+내용</option>
-               <option value="qna_title" <%=condition.equals("qna_title") ? "selected" : ""%>>제목</option>
-               <option value="qna_writer" <%=condition.equals("qna_writer") ? "selected" : ""%>>작성자</option>
-          </select>
-          <input type="text" name="keyword" placeholder="검색어를 입력하세요..." value="<%=keyword%>"/>
-          <button type="submit">검색</button>
-         </form>
-
-         <%if(!condition.equals("")){ %>
-            <p>
-               <strong><%=totalRow %></strong>개의 글이 검색되었습니다.
-            </p>
-         <%} %>
+      
+         
       </div>
-   <jsp:include page="../include/footer.jsp"></jsp:include>
+      
+      
+   <jsp:include page="include/footer.jsp"></jsp:include>
 </body>
 </html>

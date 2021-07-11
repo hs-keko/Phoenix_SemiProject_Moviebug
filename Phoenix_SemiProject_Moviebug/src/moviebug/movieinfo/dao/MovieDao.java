@@ -30,7 +30,7 @@ public class MovieDao {
 			// 실행할 sql 문 작성
 	
 			String sql = "select result1.*, rownum from " + 
-					"(select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng, substr(movie_story,1,100) movie_story, movie_company,movie_image," + 
+					"(select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng, substr(movie_story,1,120) movie_story, movie_company,movie_image," + 
 					"movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer " + 
 					"from movie_info " + 
 					"where (movie_genre like '%액션%' or movie_genre like '%공포%') " + 
@@ -135,7 +135,7 @@ public class MovieDao {
          // 실행할 sql 문 작성
          
          String sql = "select result01.*,rownum from " + 
-               "(select movie_num,movie_title_kr,movie_nation, movie_time, substr(movie_story,1,100) movie_story, movie_genre,movie_image,movie_rating, movie_year, to_char(sysdate,'yyyymmdd') \"오늘날짜\"" + 
+               "(select movie_num,movie_title_kr,movie_nation, movie_time, substr(movie_story,1,120) movie_story, movie_genre,movie_image,movie_rating, movie_year, to_char(sysdate,'yyyymmdd') \"오늘날짜\"" + 
                " from movie_info where sysdate-30 <= movie_year order by movie_year desc) result01" + 
                " where rownum < 5" + 
                " order by movie_rating desc";
@@ -324,7 +324,6 @@ public class MovieDao {
             //PreparedStatement 객체의 참조값 얻어오기
             pstmt = conn.prepareStatement(sql);
             //? 에 바인딩할 내용이 있으면 여기서 바인딩
-         
             //select 문 수행하고 결과를 ResultSet 으로 받아오기
             rs = pstmt.executeQuery();
              
