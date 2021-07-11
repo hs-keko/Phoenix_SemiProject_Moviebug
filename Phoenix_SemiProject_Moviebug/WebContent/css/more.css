@@ -36,81 +36,11 @@ a:hover .poster_info .card-title,
   height: 100%;
 }
 
-.index_content01 {
-  position: fixed;
-  top: 0;
-  margin-top: 65px;
-  height: 100vh;
-  width: 100vw;
-  transition: all 0.2s ease-out 0.2s;
-}
-
-.index_content02,
-.index_content03,
-.index_content04 {
+.index_content02 {
   margin: 30px 0;
   justify-content: center;
 }
 
-.index_content01 .carousel_wrapper {
-  height: 100%;
-  padding: 0;
-}
-
-.index_content01 .carousel-inner {
-  height: 95%;
-}
-
-.index_content01 .carousel-inner div {
-  height: 100%;
-}
-
-.index_content01 .carousel-item img {
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
-}
-
-.index_content01 .carousel-item .card {
-  background-color: transparent;
-  align-items: center;
-  justify-content: center;
-}
-
-.index_content01 .carousel-item .carousel-caption{
-	height: auto;
-}
-
-.index_movielist .card {
-  width: 240px;
-  height: 292px;
-  border: none;
-}
-
-.index_carousel .carousel-item-next.active {
-  flex-direction: row;
-  display: flex;
-}
-
-.morewrapper {
-	margin-top: 50px;
-}
-
-.moreanchor {
-  display: flex;
-  justify-content: center;
-  border: 1px solid rgb(230, 230, 230);
-  padding: 8px;
-  border-radius: 22px;
-  width: 30%;
-  margin: 15px 0;
-  color: rgb(109, 109, 109);
-}
-
-.moreanchor:hover {
-  color: rgb(109, 109, 109);
-  background: rgb(242, 242, 242);
-}
 
 .index_category {
   font-size: 20px;
