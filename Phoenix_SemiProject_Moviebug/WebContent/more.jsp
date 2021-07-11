@@ -63,7 +63,6 @@
       endPageNum=totalPageCount; //보정해 준다.
    }
       String email=(String)session.getAttribute("email");
-
    
   
 %>
