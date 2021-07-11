@@ -12,6 +12,8 @@
    //2. UsersDao 객체를 이용해서 가입된 정보를 얻어온다.
    UsersDto dto=UsersDao.getInstance().getData(email);
    
+   String qna_writer = dto.getName();
+   
    // 로그인 상태 확인
    boolean isLogin = false;
    if(email != null) isLogin = true;
@@ -35,30 +37,21 @@
    int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
    //보여줄 페이지의 끝 ROWNUM
    int endRowNum=pageNum*PAGE_ROW_COUNT;
-   
-   String keyword=request.getParameter("keyword");
-   String condition=request.getParameter("condition");
-   
-   if(keyword==null){
-	   keyword="";
-	   condition="";
-   }
-   //특수기호를 인코딩한 키워드
-   String encodedK=URLEncoder.encode(keyword);
-   
+    
    //CafeDto 객체에 startRowNum 과 endRowNum 을 담는다.
    CafeDto dto2=new CafeDto();
    dto2.setStartRowNum(startRowNum);
    dto2.setEndRowNum(endRowNum);
+   dto2.setQna_writer(qna_writer);
 
 	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
 	 List<CafeDto> list=null;
 	 //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
 	 int totalRow=0;
 	 //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
-	 list=CafeDao.getInstance().getList(dto2);
+	 list=CafeDao.getInstance().userGetList(dto2);
 	 //키워드가 없을때 호출하는 메소드를 이용해서 전제 row 의 갯수를 얻어온다.
-	 totalRow=CafeDao.getInstance().getCount();
+	 totalRow=CafeDao.getInstance().userGetCount(dto2);
 
    
    //하단 시작 페이지 번호 
@@ -221,9 +214,9 @@
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image-fill" viewBox="0 0 16 16">
 					  <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
 					</svg>
-					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+					<a href="<%=request.getContextPath()%>/cafe/detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
 				<%}else{ %>
-					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+					<a href="<%=request.getContextPath()%>/cafe/detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
 				<%} %>
 				</td>
 				<td><%=tmp.getQna_regdate() %></td>
@@ -235,22 +228,22 @@
 	      <ul>
 	         <%if(startPageNum != 1){ %>
 	            <li>
-	               <a href="list.jsp?pageNum=<%=startPageNum-1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Prev</a>
+	               <a href="info.jsp?pageNum=<%=startPageNum-1 %>">Prev</a>
 	            </li>   
 	         <%} %>
 	         
 	         <%for(int i=startPageNum; i<=endPageNum ; i++){ %>
 	            <li>
 	               <%if(pageNum == i){ %>
-	                  <a class="active" href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
+	                  <a class="active" href="info.jsp?pageNum=<%=i %>"><%=i %></a>
 	               <%}else{ %>
-	                  <a href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
+	                  <a href="info.jsp?pageNum=<%=i %>"><%=i %></a>
 	               <%} %>
 	            </li>   
 	         <%} %>
 	         <%if(endPageNum < totalPageCount){ %>
 	            <li>
-	               <a href="list.jsp?pageNum=<%=endPageNum+1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Next</a>
+	               <a href="info.jsp?pageNum=<%=endPageNum+1 %>">Next</a>
 	            </li>
 	         <%} %>
 	      </ul>
