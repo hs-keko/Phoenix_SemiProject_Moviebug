@@ -91,12 +91,12 @@
             	<div class="card border-0">
               <img src="<%=dto.getMovie_image() != null ? dto.getMovie_image():"images/bigdata.jpg" %>" class="d-block" alt="..." />
               <div class="carousel-caption d-none d-md-block">
-              <button type="button" class="btn btn-primary">
-              <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>">
-                <h5><%=dto.getMovie_title_kr() %></h5>
-                <p>
-                  <%= dto.getMovie_title_eng()%>
-                </p>
+              <button type="button" class="btn btn-white rounded-pill index_carousel_btn">
+	              <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>">
+	                <h5><%=dto.getMovie_title_kr() %></h5>
+	                <p>
+	                  	정보보기
+	                </p>
                 </a>
               </button>
               </div>
@@ -139,14 +139,14 @@
             <div class="row" >
         <!-- ****************************************** -->
               		 <%for(MovieDto dto: Top4List){ %>
-		              <div class="col-6 col-lg-3">
-              		 		<a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
+		              <div class="col-6 col-lg-3 movie_list">
+              		 	<a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
 		                <div class="card border-0">
 		                  <div class="card-body poster_info">
 		                    <h5 class="card-title"><%=dto.getMovie_title_kr() %></h5>
 		                    <p class="card-text"><small class="text-muted"><%=dto.getMovie_nation() %> | <%=dto.getMovie_genre() %></small></p>
 		                    <p class="card-text">
-		                      <%=dto.getMovie_story().length() >= 100 ? dto.getMovie_story()+"...":dto.getMovie_story() %>
+		                      <%=dto.getMovie_story().length() >= 120 ? dto.getMovie_story()+"...":dto.getMovie_story() %>
 		                    </p>
 		                    <p class="card-text"><small class="text-danger">평점 <%=dto.getMovie_rating() %></small></p>
 		                  </div>
@@ -176,18 +176,18 @@
       	</div>
         <div class="row">
           <div class="col">
-            <div class="row">
+            <div class="row movie_list">
               
          <!-- ****************************************** -->
               		 <%for(MovieDto dto: NewHAmovies){ %>
-		              <div class="col-6 col-lg-3">
+		              <div class="col-6 col-lg-3 movie_list">
               		 		<a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
 		                <div class="card border-0">
 		                  <div class="card-body poster_info">
 		                    <h5 class="card-title"><%=dto.getMovie_title_kr() %></h5>
 		                    <p class="card-text"><small class="text-muted"><%=dto.getMovie_nation() %> | <%=dto.getMovie_genre() %></small></p>
 		                    <p class="card-text">
-		                      <%=dto.getMovie_story().length() >= 140 ? dto.getMovie_story()+"...":dto.getMovie_story() %>
+		                      <%=dto.getMovie_story().length() >= 120 ? dto.getMovie_story()+"...":dto.getMovie_story() %>
 		                    </p>
 		                    <p class="card-text"><small class="text-danger">평점 <%=dto.getMovie_rating() %></small></p>
 		                  </div>

@@ -53,7 +53,7 @@ a:hover .poster_info .card-title,
   display: flex;
   flex-direction: column;
   z-index: 1;
-  margin-top: 100vh;
+  margin-top: 50vh;
 }
 
 .index_content .carousel-item img {
@@ -62,11 +62,38 @@ a:hover .poster_info .card-title,
   height: 100%;
 }
 
+.index_carousel_btn{
+	background-color: rgb(255 255 255 / 30%);
+	padding: 10px 30px;
+}
+
+.index_carousel_btn p{
+	margin: 0;
+}
+
+
+.index_carousel_btn:hover{
+	background-color: rgb(0 0 0 / 74%);
+}
+
+.index_content .card{
+	height: 100%;
+}
+
+.index_content .card img{
+	height: 100%;
+    object-fit: cover;
+}
+
+.movie_list{
+	margin-bottom: 20px;
+}
+
 .index_content01 {
   position: fixed;
   top: 0;
   margin-top: 65px;
-  height: 100vh;
+  height: 55vh;
   width: 100vw;
   transition: all 0.2s ease-out 0.2s;
 }
@@ -158,4 +185,5 @@ a:hover .poster_info .card-title,
   opacity: 0;
   -webkit-transition: all 0.2s ease-out 0.3s;
   transition: all 0.2s ease-out 0.3s;
+  overflow: hidden;
 }
