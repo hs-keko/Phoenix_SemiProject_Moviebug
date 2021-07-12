@@ -35,13 +35,12 @@ const createbtns = (keyword) => {
   keywordbtnanpath = path.origin + "/" + path.pathname.split("/")[1]
 
   // 검색 기록 버튼 요소
-  // test
-  console.log(keywordbtnanpath + "/cafe/list.jsp?keyword=" + keyword)
-
   let searchan = document.createElement("a")
   searchan.setAttribute(
     "href",
-    keywordbtnanpath + "/cafe/list.jsp?keyword=" + keyword
+    keywordbtnanpath +
+      "/cafe/list.jsp?condition=qna_title_content&keyword=" +
+      keyword
   )
   let searchbtns = document.createElement("button")
   searchbtns.setAttribute("class", "btn btn-light")
