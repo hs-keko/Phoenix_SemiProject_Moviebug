@@ -11,29 +11,34 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/private/updateform.jsp</title>
+<jsp:include page="../../include/resource.jsp"></jsp:include>
 </head>
 <body>
 <div class="container">
-	<h1>글 수정 폼 입니다.</h1>
+	<br>
+	<br>
 	<form action="update.jsp" method="post">
 		<input type="hidden" name="qna_idx" value="<%=num %>" />
-		<div>
-			<label for="qna_writer">작성자</label>
-			<input type="text" id="qna_writer" value="<%=dto.getQna_writer() %>" disabled/>
-		</div>
-		<div>
-			<label for="qna_title">제목</label>
-			<input type="text" name="qna_title" id="qna_title" value="<%=dto.getQna_title()%>"/>
-		</div>
-		<div>
-			<label for="qna_content">내용</label>
-			<textarea name="qna_content" id="qna_content"><%=dto.getQna_content() %></textarea>
-		</div>
-		<div>
-			<label for="qna_file">첨부파일</label>
-			<input type="file" name="qna_file" id="qna_file" value="<%=dto.getQna_file()%>"/>
-		</div>
-		<button type="submit" onclick="submitContents(this);">수정확인</button>
+			<div class="mb-3">
+				<label class="form-label" for="qna_writer">작성자</label>
+				<input class="form-control" type="text" id="qna_writer" value="<%=dto.getQna_writer() %>" disabled/>
+			</div>
+			<div>
+				<label class="form-label" for="qna_title">제목</label>
+				<input class="form-control" type="text" name="qna_title" id="qna_title" value="<%=dto.getQna_title()%>"/>
+			</div>
+			<br>
+			<div class="mb-3">
+				<label class="form-label" for="qna_file">첨부파일</label>
+				<input class="form-control" type="file" name="qna_file" id="qna_file" value="<%=dto.getQna_file()%>"/>
+			</div>
+			<br>
+			<div class="mb-3">
+				<label class="form-label" for="qna_content">내용</label>
+				<textarea class="form-control" name="qna_content" id="qna_content"><%=dto.getQna_content() %></textarea>
+			</div>
+			
+		<button class="btn btn-primary float-end" type="submit" onclick="submitContents(this);">수정확인</button>
 		<button type="reset"><a href=../list.jsp>취소</a></button>
 	</form>
 </div>
