@@ -29,17 +29,31 @@ let btnsarrtag = document.querySelector(".search_btns")
 
 // 검색 기록 버튼 추가 함수
 const createbtns = (keyword) => {
+  // 검색링크 href 경로 구하기 cafe/list.jsp
+  let keywordbtnanpath = ""
+  let path = window.location
+  keywordbtnanpath = path.origin + "/" + path.pathname.split("/")[1]
+
   // 검색 기록 버튼 요소
+  // test
+  console.log(keywordbtnanpath + "/cafe/list.jsp?keyword=" + keyword)
+
+  let searchan = document.createElement("a")
+  searchan.setAttribute(
+    "href",
+    keywordbtnanpath + "/cafe/list.jsp?keyword=" + keyword
+  )
   let searchbtns = document.createElement("button")
   searchbtns.setAttribute("class", "btn btn-light")
   searchbtns.setAttribute("type", "button")
-  searchbtns.innerText = keyword
+  searchbtns.innerText = "#" + keyword
 
-  // gird col
+  searchan.appendChild(searchbtns)
+
   let cols = document.createElement("div")
-  cols.setAttribute("class", "flex_box")
+  cols.setAttribute("class", "flex_box mx-3")
 
-  cols.appendChild(searchbtns)
+  cols.appendChild(searchan)
 
   btnsarrtag.appendChild(cols)
 }

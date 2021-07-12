@@ -146,7 +146,7 @@ pageEncoding="UTF-8"%>
 					        <button type="button" class="btn-close search_closeBtn" data-bs-dismiss="modal" aria-label="Close"></button>
 					      </div>
 					      <div class="modal-body">
-						      <div class="row search_btns justify-content-around">
+						      <div class="d-flex flex-row search_btns justify-content-start">
 								
 						      </div>
 						      <div class="row">
