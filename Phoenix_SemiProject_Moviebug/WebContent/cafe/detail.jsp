@@ -12,10 +12,6 @@
 	//자세히 보여줄 글번호 가져오기
 	int qna_idx=Integer.parseInt(request.getParameter("num"));
 
-	CafeDto dto1=new CafeDto();
-	dto1.setQna_idx(qna_idx);
-	CafeDto dto=CafeDao.getInstance().getData(dto1);
-	
 	String keyword=request.getParameter("keyword");
 	String condition=request.getParameter("condition");
 	
@@ -25,6 +21,10 @@
 	   keyword="";
 	   condition=""; 
 	}
+	//CafeDto 객체를 생성해서 
+	CafeDto dto=new CafeDto();
+	//자세히 보여줄 글번호를 넣어준다. 
+	dto.setQna_idx(qna_idx);
 	if(!keyword.equals("")){
 		   //검색 조건이 무엇이냐에 따라 분기 하기
 		   if(condition.equals("qna_title_content")){//제목 + 내용 검색인 경우
@@ -93,12 +93,32 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 <style>
-
+	
+		html, body {
+		width: 100%;
+		height: 100%;
+		}
+		.detail_container .container {
+		width: 100%;
+		height: 100%;	
+		}					
+	
 	.container {
 		width: 100%;
 		height: 100%;
 			
 	}
+	.container--formborder {
+		display: flex;
+		border: 1px solid #cecece;
+	}
+	
+	.detail_container .container--form {
+		width: 600px;
+		height: auto;	
+		margin: auto;
+	}
+	
 	.content {
 		width: 100%;
 		height: 100%;
@@ -353,7 +373,7 @@
    		<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
    		<input type="hidden" name="qna_comment_target_id" value="<%=dto.getQna_writer() %>"/>
    		<textarea name="qna_comment_content"></textarea>
-   		<button type="submit">등록</button>
+   		<button class="btn btn-primary" type="submit">등록</button>
    </form>
    </div>
    <div style="clear:both;"></div>
