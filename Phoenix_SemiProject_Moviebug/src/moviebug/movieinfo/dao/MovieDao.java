@@ -308,8 +308,7 @@ public class MovieDao {
       
    }
    
-   public List<MovieDto> getRecentList() {
-         MovieDto dto=null;
+   public List<MovieDto> getResentList() {
          Connection conn = null;
          PreparedStatement pstmt = null;
          ResultSet rs = null;
@@ -318,9 +317,9 @@ public class MovieDao {
             //Connection 객체의 참조값 얻어오기 
             conn = new DbcpBean().getConn();
             //실행할 sql 문 작성
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer"
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
                   + " FROM movie_info"
-                  + " where sysdate-30 <= movie_year order by movie_rating desc"; // order by나 between 아님 where 조건? 일단 다 가져와보자
+                  + " where sysdate-30 <= movie_year order by movie_rating desc"; 
             //PreparedStatement 객체의 참조값 얻어오기
             pstmt = conn.prepareStatement(sql);
             //? 에 바인딩할 내용이 있으면 여기서 바인딩
@@ -362,8 +361,7 @@ public class MovieDao {
       }
 
 
-         public List<MovieDto> getHorrorList() {
-         MovieDto dto=null;
+         public List<MovieDto> getSummerList() {
          Connection conn = null;
          PreparedStatement pstmt = null;
          ResultSet rs = null;
@@ -372,9 +370,9 @@ public class MovieDao {
             //Connection 객체의 참조값 얻어오기 
             conn = new DbcpBean().getConn();
             //실행할 sql 문 작성
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer"
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
                   + " FROM movie_info"
-                  + " WHERE movie_genre= '스릴러' OR '공포'";
+                  + " where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')";
             //PreparedStatement 객체의 참조값 얻어오기
             pstmt = conn.prepareStatement(sql);
             //? 에 바인딩할 내용이 있으면 여기서 바인딩
