@@ -158,7 +158,7 @@
               </div>
             </div>
             
-           <div class="row row-cols-1 row-cols-md-4 g-4"> 
+           <div class="row row-cols-1 row-cols-md-4 g-4 row_row"> 
             <%for(MovieDto tmp: ResentList) {%>
                 <div class="col col-6 col-lg-3 movie_list">
                   <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>" class="poster_link">

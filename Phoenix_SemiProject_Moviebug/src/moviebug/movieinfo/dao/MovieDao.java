@@ -317,7 +317,7 @@ public class MovieDao {
             //Connection 객체의 참조값 얻어오기 
             conn = new DbcpBean().getConn();
             //실행할 sql 문 작성
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
                   + " FROM movie_info"
                   + " where sysdate-30 <= movie_year order by movie_rating desc"; 
             //PreparedStatement 객체의 참조값 얻어오기
@@ -371,7 +371,7 @@ public class MovieDao {
             //Connection 객체의 참조값 얻어오기 
             conn = new DbcpBean().getConn();
             //실행할 sql 문 작성
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
                   + " FROM movie_info"
                   + " where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')";
             //PreparedStatement 객체의 참조값 얻어오기
