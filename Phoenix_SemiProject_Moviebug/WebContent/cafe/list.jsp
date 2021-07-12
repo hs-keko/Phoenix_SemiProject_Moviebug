@@ -126,11 +126,15 @@
    }
    #one{
    		text-align: center;
-   		margin-top: 15px
+   		margin-top: 15px;
    }
    #two{
    		float: right;
    }
+   #three{
+   		margin-bottom: 30px;
+   }
+
 </style>
 </head>
 <body>
@@ -138,7 +142,7 @@
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
 <div class="container">
-	<h1 id="one">글 목록</h1>
+	<h1 id="one"> Q&A </h1>
 	<div id="two" class="btn btn-outline-primary">
 		<a href="private/insertform.jsp">새글 작성하기</a>
 	</div>
@@ -157,8 +161,9 @@
 				<td><%=tmp.getQna_idx() %></td>
 				<td><%=tmp.getQna_writer() %></td>
 				<td><%if(tmp.getQna_file() != null){ %>
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image-fill" viewBox="0 0 16 16">
-					  <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-arrow-up" viewBox="0 0 16 16">
+					  <path d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
+					  <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 					</svg>
 					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
 				<%}else{ %>
@@ -170,7 +175,7 @@
 		<%} %>
 		</tbody>
 	</table>
-	<div class="page-ui clearfix" style="float: left;">
+	<div id="three" class="page-ui clearfix" style="float: left;">
 	      <ul>
 	         <%if(startPageNum != 1){ %>
 	            <li>
@@ -194,7 +199,7 @@
 	         <%} %>
 	      </ul>
 	   </div>
-	   <div style="float:right;">
+	   <div id="three" style="float:right;">
          <form action="list.jsp" method="get">
          	<label for="condition">검색 조건</label>
          	<select name="condition" id="condition">
@@ -212,5 +217,11 @@
          <%} %>
       </div>
      </div>
+     <div style="clear:both;"></div>
+	<!-- footer  -->
+	
 </body>
+<div id=footer>
+   	<jsp:include page="../include/footer.jsp"></jsp:include>
+</div>
 </html>
