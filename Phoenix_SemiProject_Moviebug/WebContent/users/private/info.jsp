@@ -12,6 +12,7 @@
    //2. UsersDao 객체를 이용해서 가입된 정보를 얻어온다.
    UsersDto dto=UsersDao.getInstance().getData(email);
    
+   // QNA 게시판의 이름과 유저정보 이름 확인
    String qna_writer = dto.getName();
    
    // 로그인 상태 확인
