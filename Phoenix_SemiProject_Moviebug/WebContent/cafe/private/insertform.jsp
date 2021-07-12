@@ -17,22 +17,26 @@
 </head>
 <body>
 <div class="container">
-	<h1>새 글 등록하는 폼</h1>
+	<br>
+	<br>
 	<form action="insert.jsp" method="post">
 		<div class="mb-3">
 			<label class="form-label" for="qna_title">제목</label>
 			<input class="form-control" type="text" name="qna_title" id="qna_title"/>
 		</div>	
+		<div>
+	         <label class="form-label" for="qna_file">첨부파일</label>
+	         <input class="form-control" type="file" name="qna_file" id="qna_file"/>
+        </div>
+        <br>
 		<div class="mb-3">
 			<label class="form-label" for="qna_content">내용</label>
 			<textarea class="form-control" name="qna_content" id="qna_content"></textarea>
 		</div>
-		<div>
-         <label class="form-label" for="qna_file">첨부파일</label>
-         <input class="form-control" type="file" name="qna_file" id="qna_file"/>
-      </div>
-		<button class="btn btn-primary" type="submit" onclick="submitContents(this);">저장</button>
+		<button class="btn btn-primary float-end" type="submit" onclick="submitContents(this);">저장</button>
 	</form>
+	<br>
+	<br>
 
 </div>
 <script src="${pageContext.request.contextPath }/SmartEditor/js/HuskyEZCreator.js"></script>

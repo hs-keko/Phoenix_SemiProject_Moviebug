@@ -10,7 +10,7 @@ window.addEventListener(
     // 위로 스크롤
     if (e.wheelDelta >= 120 && window.scrollY <= location) {
       window.scrollTo({ top: header, behavior: "smooth" })
-      top.style.zIndex = "1"
+      top.style.zIndex = "0"
       top.style.opacity = "1"
     }
 

@@ -1,5 +1,6 @@
 a {
   text-decoration: none;
+  color: white;
 }
 
 a:active,
@@ -20,6 +21,7 @@ a:hover .poster_info {
 
 a:hover .poster_info .card-title,
 .card-text {
+  color: white;
   opacity: 1;
   z-index: 1;
 }
@@ -28,6 +30,7 @@ a:hover .poster_info .card-title,
   display: flex;
   flex-direction: column;
   z-index: 1;
+  margin-top: 50vh;
 }
 
 .index_content .carousel-item img {
@@ -40,7 +43,6 @@ a:hover .poster_info .card-title,
   margin: 30px 0;
   justify-content: center;
 }
-
 
 .index_category {
   font-size: 20px;
@@ -62,4 +64,5 @@ a:hover .poster_info .card-title,
   opacity: 0;
   -webkit-transition: all 0.2s ease-out 0.3s;
   transition: all 0.2s ease-out 0.3s;
+  overflow: hidden;
 }
