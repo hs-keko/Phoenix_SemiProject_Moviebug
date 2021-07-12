@@ -1,6 +1,29 @@
+html {
+  background-color: black;
+}
+
+body {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: gray;
+}
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+
 a {
   text-decoration: none;
-  color: rgb(109, 109, 109);
+  color: white;
 }
 
 a:active,
@@ -19,20 +42,19 @@ a:hover .poster_info {
   z-index: 1;
 }
 
-a:hover .poster_info .card-title,.card-text{
-	color: white;
+a:hover .poster_info .card-title,
+.card-text {
+  color: white;
   opacity: 1;
   z-index: 1;
 }
 
-div.index_content {
+.index_content {
   display: flex;
   flex-direction: column;
   z-index: 1;
-    background-color: white;
-    margin-top: 50vh;
+  margin-top: 50vh;
 }
-
 
 .index_content .carousel-item img {
   margin: 0;
@@ -40,13 +62,40 @@ div.index_content {
   height: 100%;
 }
 
-.index_content01{
-	z-index: -999;
-    position: fixed;
-    top: 0;
-    margin-top: 65px;
-    left: 50%;
-    transform: translate(-50%, 0);
+.index_carousel_btn{
+	background-color: rgb(255 255 255 / 30%);
+	padding: 10px 30px;
+}
+
+.index_carousel_btn p{
+	margin: 0;
+}
+
+
+.index_carousel_btn:hover{
+	background-color: rgb(0 0 0 / 74%);
+}
+
+.index_content .card{
+	height: 100%;
+}
+
+.index_content .card img{
+	height: 100%;
+    object-fit: cover;
+}
+
+.movie_list{
+	margin-bottom: 20px;
+}
+
+.index_content01 {
+  position: fixed;
+  top: 0;
+  margin-top: 65px;
+  height: 55vh;
+  width: 100vw;
+  transition: all 0.2s ease-out 0.2s;
 }
 
 .index_content02,
@@ -56,12 +105,33 @@ div.index_content {
   justify-content: center;
 }
 
-.index_content01 .carousel-inner{
-	height: 50vh;
+.index_content01 .carousel_wrapper {
+  height: 100%;
+  padding: 0;
 }
 
-.index_content01 .carousel-inner div{
-	height: 100%;
+.index_content01 .carousel-inner {
+  height: 95%;
+}
+
+.index_content01 .carousel-inner div {
+  height: 100%;
+}
+
+.index_content01 .carousel-item img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.index_content01 .carousel-item .card {
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+}
+
+.index_content01 .carousel-item .carousel-caption{
+	height: auto;
 }
 
 .index_movielist .card {
@@ -76,6 +146,7 @@ div.index_content {
 }
 
 .morewrapper {
+	margin-top: 50px;
 }
 
 .moreanchor {
@@ -114,4 +185,5 @@ div.index_content {
   opacity: 0;
   -webkit-transition: all 0.2s ease-out 0.3s;
   transition: all 0.2s ease-out 0.3s;
+  overflow: hidden;
 }
