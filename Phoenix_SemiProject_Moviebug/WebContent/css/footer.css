@@ -1,3 +1,13 @@
 footer{
-	background-color: rgb(242, 242, 242);
+	background-color: rgb(0 0 0 / 50%);
+}
+
+.footer_inner{
+	color: rgb(191 191 191 / 67%);
+	padding: 20px;
+}
+
+.footer_brand{
+	font-family: 'Major Mono Display', monospace;
+	font-size: 35px;
 }
