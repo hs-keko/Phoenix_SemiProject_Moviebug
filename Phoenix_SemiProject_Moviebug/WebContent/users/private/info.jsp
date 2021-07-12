@@ -100,7 +100,7 @@
    
 	.container {
 		width: 100%;
-		height: 100%;
+		height: 65%;
 	}
 			
 	.updateform_container {
@@ -108,6 +108,8 @@
 		padding-top: 40px;
 		padding-bottom: 40px;
 		border: 1px solid #cecece;
+		transform: translateY(0%);
+		height: 500px;
 	}
    
    .updateform_container .container--form {
@@ -115,6 +117,7 @@
 		max-width: 600px;
 		padding: 15px;	
 		margin: auto;
+		
 	}
     
    .container--image {
@@ -252,6 +255,14 @@
       		</div>
 		</div>
 	</div>
+      <script src="<%= request.getContextPath()%>/js/index.js"></script>
+
+      <!-- navbar 필수 import -->
+      <!-- import navbar.js -->
+      <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+
+		<!-- import footer.jsp -->
+      	<jsp:include page="../../include/footer.jsp"></jsp:include>
 </body>
 </html>
 
