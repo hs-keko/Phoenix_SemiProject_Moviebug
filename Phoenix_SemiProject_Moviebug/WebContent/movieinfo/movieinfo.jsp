@@ -72,6 +72,7 @@
 <!-- Custom styles for this template -->
 <link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
 <style>
+	
 	.css-title{
 		box-sizing: border-box;
 		min-width: 0px;
@@ -81,6 +82,7 @@
 		flex: 1 1 0px;
 		width: 446px;
 		margin: 0px;
+		font-family: 'NanumSquare';
 	}
 	
 	.css-title_eng{
@@ -116,6 +118,7 @@
 		height: 16px;
 		background-color: black;
 	}
+	
 
 	.container.movieinfo{
 		width: 720px;
@@ -295,6 +298,15 @@
 		height: 350px;
 		padding: 20px;
 	}
+	
+	.movie_secondary_info_detail_title_wrapper{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		padding-top: 12px;
+		padding-bottom: 12px;
+		display: flex;
+	}
    /*======================================================================*/
    
    
@@ -416,12 +428,14 @@
 					</div>
 					<div class="movie_primary_info_inner_detail_info">
 						<div class="movie_primary_info_inner_detail_info_one">
-							<div class="css-detail_txt">영화</div>
+							<div class="css-detail_txt"><%=dto.getMovie_nation() %></div>
+							<div class="css-bar"></div>
+							<div class="css-detail_txt"><%=dto.getMovie_genre() %></div>
 							<div class="css-bar"></div>
 							<div class="css-detail_txt"><%=dto.getMovie_time() %></div>
 						</div>
 						<div class="movie_primary_info_inner_detail_info_two">
-							<div class="css-detail_txt"><%=dto.getMovie_genre() %></div>
+							<div class="css-detail_txt"><%=dto.getMovie_company() %></div>
 							<div class="css-bar"></div>
 							<div class="css-detail_txt"><%=dto.getMovie_year() %> 개봉</div>
 						</div>
@@ -443,7 +457,7 @@
 				</div>
 			</div>
 			<div class="movie_secondary_info_detail_wrapper">
-				<p>내일 할랍니다</p>
+				
 			</div>
 		</div>
 		
@@ -745,32 +759,20 @@
 <script>
 	
 	function infoOne(){
-		const div=document.querySelector(".movie-detail-wrapper");
+		const div=document.querySelector(".movie_secondary_info_detail_wrapper");
 		div.innerHTML="";
-		const ul=document.createElement("ul");
-		const li1=document.createElement("li");
-		const li2=document.createElement("li");
-		const li3=document.createElement("li");
-		const li4=document.createElement("li");
-		const li5=document.createElement("li");
-		
-		li1.innerText="제작년월 : <%=dto.getMovie_year()%>";
-		li2.innerText="장르 : <%=dto.getMovie_genre()%>";
-		li3.innerText="국가 : <%=dto.getMovie_nation()%>";
-		li4.innerText="러닝타임 : <%=dto.getMovie_time()%>";
-		li5.innerText="제작사 : <%=dto.getMovie_company()%>";
-		
-		ul.append(li1);
-		ul.append(li2);
-		ul.append(li3);
-		ul.append(li4);
-		ul.append(li5);
-		
-		div.append(ul);
+		const div1=document.createElement("div");
+		const div2=document.createElement("div");
+		div1.setAttribute('class','movie_secondary_info_detail_title_wrapper');
+		div2.setAttribute('class','movie_secondary_info_detail_content_wrapper');
+		div1.innerText="줄거리";
+		div2.innerText="<%=dto.getMovie_story()%>";
+		div.append(div1);
+		div.append(div2);
 	}
 	
 	function infoTwo(){
-		const div=document.querySelector(".movie-detail-wrapper");
+		const div=document.querySelector(".movie_secondary_info_detail_wrapper");
 		div.innerHTML="";
 		const ul=document.createElement("ul");
 		const li1=document.createElement("li");
@@ -785,7 +787,7 @@
 	}
 	
 	function infoThree(){
-		const div=document.querySelector(".movie-detail-wrapper");
+		const div=document.querySelector(".movie_secondary_info_detail_wrapper");
 		div.innerHTML="";
 		
 		const p=document.createElement("p");
@@ -795,7 +797,7 @@
 	}
 	
 	function infoFour(){
-		const div=document.querySelector(".movie-detail-wrapper");
+		const div=document.querySelector(".movie_secondary_info_detail_wrapper");
 		div.innerHTML="";
 		
 		const h1=document.createElement("h1");
