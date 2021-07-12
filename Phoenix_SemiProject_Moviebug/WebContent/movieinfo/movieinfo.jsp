@@ -72,6 +72,7 @@
 <!-- Custom styles for this template -->
 <link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
 <style>
+	
 	.css-title{
 		box-sizing: border-box;
 		min-width: 0px;
@@ -81,6 +82,7 @@
 		flex: 1 1 0px;
 		width: 446px;
 		margin: 0px;
+		font-family: 'NanumSquare';
 	}
 	
 	.css-title_eng{
@@ -116,6 +118,7 @@
 		height: 16px;
 		background-color: black;
 	}
+	
 
 	.container.movieinfo{
 		width: 720px;
@@ -295,6 +298,58 @@
 		height: 350px;
 		padding: 20px;
 	}
+	
+	.movie_secondary_info_detail_box{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		width: 100%;
+		paddig-top: 12px;
+		padding-bottom: 12px;
+		display: flex;
+	}
+	.movie_secondary_info_detail_title{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		flex: 0 0 auto;
+		width: 86px;
+		line-height: 27px;
+		font-weight: bold;
+		color: rgb(120 120 120);
+	}
+	
+	.movie_secondary_info_detail_content{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		flex: 1 1 0%;
+		line-height: 27px;
+		font-weight: bold;
+		color: rgb(120 120 120);
+	}
+	
+	.movie_secondary_info_detail_rating_box{
+		box-sizing: border-box;
+		margin: 0px;
+		min-width: 0px;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		
+	}
+	
+	#star{
+		width: 40px;
+		height: 40px;
+		margin-right: 20px;
+	}
+	
+	#rating_span{
+		font-size: 40px;
+	}
    /*======================================================================*/
    
    
@@ -416,12 +471,14 @@
 					</div>
 					<div class="movie_primary_info_inner_detail_info">
 						<div class="movie_primary_info_inner_detail_info_one">
-							<div class="css-detail_txt">영화</div>
+							<div class="css-detail_txt"><%=dto.getMovie_nation() %></div>
+							<div class="css-bar"></div>
+							<div class="css-detail_txt"><%=dto.getMovie_genre() %></div>
 							<div class="css-bar"></div>
 							<div class="css-detail_txt"><%=dto.getMovie_time() %></div>
 						</div>
 						<div class="movie_primary_info_inner_detail_info_two">
-							<div class="css-detail_txt"><%=dto.getMovie_genre() %></div>
+							<div class="css-detail_txt"><%=dto.getMovie_company() %></div>
 							<div class="css-bar"></div>
 							<div class="css-detail_txt"><%=dto.getMovie_year() %> 개봉</div>
 						</div>
@@ -443,7 +500,7 @@
 				</div>
 			</div>
 			<div class="movie_secondary_info_detail_wrapper">
-				<p>내일 할랍니다</p>
+				
 			</div>
 		</div>
 		
@@ -745,57 +802,77 @@
 <script>
 	
 	function infoOne(){
-		const div=document.querySelector(".movie-detail-wrapper");
+		const div=document.querySelector(".movie_secondary_info_detail_wrapper");
 		div.innerHTML="";
-		const ul=document.createElement("ul");
-		const li1=document.createElement("li");
-		const li2=document.createElement("li");
-		const li3=document.createElement("li");
-		const li4=document.createElement("li");
-		const li5=document.createElement("li");
 		
-		li1.innerText="제작년월 : <%=dto.getMovie_year()%>";
-		li2.innerText="장르 : <%=dto.getMovie_genre()%>";
-		li3.innerText="국가 : <%=dto.getMovie_nation()%>";
-		li4.innerText="러닝타임 : <%=dto.getMovie_time()%>";
-		li5.innerText="제작사 : <%=dto.getMovie_company()%>";
+		const box_div=document.createElement("div");
+		const div1=document.createElement("div");
+		const div2=document.createElement("div");
 		
-		ul.append(li1);
-		ul.append(li2);
-		ul.append(li3);
-		ul.append(li4);
-		ul.append(li5);
+		box_div.setAttribute('class','movie_secondary_info_detail_box');
+		div1.setAttribute('class','movie_secondary_info_detail_title');
+		div2.setAttribute('class','movie_secondary_info_detail_content');
 		
-		div.append(ul);
+		div1.innerText="줄거리";
+		div2.innerText="<%=dto.getMovie_story()%>";
+		
+		box_div.append(div1);
+		box_div.append(div2);
+		
+		div.append(box_div);
 	}
 	
 	function infoTwo(){
-		const div=document.querySelector(".movie-detail-wrapper");
+		const div=document.querySelector(".movie_secondary_info_detail_wrapper");
 		div.innerHTML="";
-		const ul=document.createElement("ul");
-		const li1=document.createElement("li");
-		const li2=document.createElement("li");
-		li1.innerText="감독 : <%=dto.getMovie_director()%>";
-		li2.innerText="출연진 : <%=dto.getMovie_character()%>";
 		
-		ul.append(li1);
-		ul.append(li2);
+		const box_div1=document.createElement("div");
+		const box_div2=document.createElement("div");
+		const div1=document.createElement("div");
+		const div2=document.createElement("div");
+		const div3=document.createElement("div");
+		const div4=document.createElement("div");
 		
-		div.append(ul);
+		box_div1.setAttribute('class','movie_secondary_info_detail_box');
+		box_div2.setAttribute('class','movie_secondary_info_detail_box');
+		div1.setAttribute('class','movie_secondary_info_detail_title');
+		div2.setAttribute('class','movie_secondary_info_detail_content');
+		div3.setAttribute('class','movie_secondary_info_detail_title');
+		div4.setAttribute('class','movie_secondary_info_detail_content');
+		
+		div1.innerText="감독";
+		div2.innerText="<%=dto.getMovie_director()%>";
+		div3.innerText="출연진";
+		div4.innerText="<%=dto.getMovie_character()%>";
+		
+		box_div1.append(div1);
+		box_div1.append(div2);
+		box_div2.append(div3);
+		box_div2.append(div4);
+		
+		div.append(box_div1);
+		div.append(box_div2);
 	}
 	
 	function infoThree(){
-		const div=document.querySelector(".movie-detail-wrapper");
+		const div=document.querySelector(".movie_secondary_info_detail_wrapper");
 		div.innerHTML="";
 		
-		const p=document.createElement("p");
-		p.setAttribute('class','mt-3');
-		p.innerText="<%=dto.getMovie_story()%>";
-		div.append(p);
+		const box_div=document.createElement("div");
+		const star_img=document.createElement("img");
+		const span=document.createElement("span");
+		box_div.setAttribute('class','movie_secondary_info_detail_rating_box');
+		star_img.setAttribute('src','https://upload.wikimedia.org/wikipedia/commons/0/0b/Star_red.svg');
+		star_img.setAttribute('id','star');
+		span.setAttribute('id','rating_span');
+		span.innerText=" <%=dto. getMovie_rating()%> 점";
+		box_div.append(star_img);
+		box_div.append(span);
+		div.append(box_div);
 	}
 	
 	function infoFour(){
-		const div=document.querySelector(".movie-detail-wrapper");
+		const div=document.querySelector(".movie_secondary_info_detail_wrapper");
 		div.innerHTML="";
 		
 		const h1=document.createElement("h1");
