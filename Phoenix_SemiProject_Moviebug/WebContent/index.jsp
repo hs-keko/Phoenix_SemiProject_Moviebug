@@ -14,25 +14,38 @@
 	// 평점순위 4개 영화 리스트 가져오기
 	List<MovieDto> Top4List = MovieDao.getInstance().getTop4ResList();
 	
+	// 최신 공포,액션 영화 4개 리스트
+	List<MovieDto> NewHAmovies = MovieDao.getInstance().getNewHAList();
+	
 %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>index.jsp</title>
+    <title>MovieBug</title>
+    
+    <!-- navbar 필수 import -->
     <jsp:include page="include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
+    <!-- import css -->
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/index.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
     
     <!-- 웹폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
+  
   </head>
   <body>
 
+	<!-- navbar 필수 import -->
     <jsp:include page="include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
@@ -41,7 +54,7 @@
       <div class="row index_content01">
         <div
           id="carouselExampleCaptions"
-          class="carousel slide carousel-fade"
+          class="carousel slide carousel-fade carousel_wrapper"
           data-bs-ride="carousel" >
           <div class="carousel-indicators">
             <button
@@ -74,14 +87,18 @@
           <%for(int i = 0; i < NewMovieList.size(); i++) {
           	MovieDto dto = NewMovieList.get(i);
           %>
-            <div class="carousel-item  border-0 <%= i == 0 ?  "active" : ""%>" data-bs-interval="99999">
+            <div class="carousel-item  border-0 <%= i == 0 ?  "active" : ""%>" data-bs-interval="10000">
             	<div class="card border-0">
-              <img src="<%=dto.getMovie_image() != null ? dto.getMovie_image():"images/bigdata.jpg" %>" class="d-block w-100" alt="..." />
+              <img src="<%=dto.getMovie_image() != null ? dto.getMovie_image():"images/bigdata.jpg" %>" class="d-block" alt="..." />
               <div class="carousel-caption d-none d-md-block">
-                <h5><%=dto.getMovie_title_kr() %></h5>
-                <p>
-                  <%= dto.getMovie_title_eng()%>
-                </p>
+              <button type="button" class="btn btn-white rounded-pill index_carousel_btn">
+	              <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>">
+	                <h5><%=dto.getMovie_title_kr() %></h5>
+	                <p>
+	                  	정보보기
+	                </p>
+                </a>
+              </button>
               </div>
             </div>
               
@@ -114,22 +131,22 @@
       <div class="row index_content02">
       	 <div class="row">
 	        <div class="col flex_box index_category">
-	      		카테고리 ( 최근개봉영화(한달이내) 가장 높은 평점 )
+	      		최신 인기
 	        </div>
       	</div>
         <div class="row">
           <div class="col">
-            <div class="row">
+            <div class="row" >
         <!-- ****************************************** -->
               		 <%for(MovieDto dto: Top4List){ %>
-		              <div class="col-6 col-lg-3">
-              		 		<a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
+		              <div class="col-6 col-lg-3 movie_list">
+              		 	<a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
 		                <div class="card border-0">
 		                  <div class="card-body poster_info">
 		                    <h5 class="card-title"><%=dto.getMovie_title_kr() %></h5>
 		                    <p class="card-text"><small class="text-muted"><%=dto.getMovie_nation() %> | <%=dto.getMovie_genre() %></small></p>
 		                    <p class="card-text">
-		                      <%=dto.getMovie_story().length() >= 140 ? dto.getMovie_story()+"...":dto.getMovie_story() %>
+		                      <%=dto.getMovie_story().length() >= 120 ? dto.getMovie_story()+"...":dto.getMovie_story() %>
 		                    </p>
 		                    <p class="card-text"><small class="text-danger">평점 <%=dto.getMovie_rating() %></small></p>
 		                  </div>
@@ -154,34 +171,34 @@
       <div class="row index_content03">
         <div class="row">
 	        <div class="col flex_box index_category">
-	      		고전 명작
+	      		여름 추천
 	        </div>
       	</div>
         <div class="row">
           <div class="col">
-            <div class="row">
+            <div class="row movie_list">
               
          <!-- ****************************************** -->
-	      <%for(int i = 0 ; i<4; i++){ %>
-	      		<a href="" class="col-6 col-lg-3">
-	              <div class="col">
-	                <div class="card border-0">
-	                  <img
-	                    src="images/bigdata.jpg"
-	                    class="card-img-top"
-	                    alt="..."
-	                  />
-	                  <div class="card-body">
-	                    <h5 class="card-title">Card title 0<%=i %></h5>
-	                    <p class="card-text">
-	                      This is a longer card with supporting text below as a
-	                      natural lead-in to additional c
-	                    </p>
-	                  </div>
-	                </div>
-	              </div>
-	      		</a>
-	              <%} %>
+              		 <%for(MovieDto dto: NewHAmovies){ %>
+		              <div class="col-6 col-lg-3 movie_list">
+              		 		<a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
+		                <div class="card border-0">
+		                  <div class="card-body poster_info">
+		                    <h5 class="card-title"><%=dto.getMovie_title_kr() %></h5>
+		                    <p class="card-text"><small class="text-muted"><%=dto.getMovie_nation() %> | <%=dto.getMovie_genre() %></small></p>
+		                    <p class="card-text">
+		                      <%=dto.getMovie_story().length() >= 120 ? dto.getMovie_story()+"...":dto.getMovie_story() %>
+		                    </p>
+		                    <p class="card-text"><small class="text-danger">평점 <%=dto.getMovie_rating() %></small></p>
+		                  </div>
+		                  <img
+		                    src="<%=dto.getMovie_image() != null ? dto.getMovie_image():"images/bigdata.jpg" %>"
+		                    class="rounded card-img-top"
+		                    alt="<%=dto.getMovie_title_kr() %>"/>
+		                </div>
+              		 		</a>
+		              </div>
+		              <%} %>
 		      <!-- ********************************************* -->
              
             </div>
@@ -257,10 +274,15 @@
       </div>
 
     </div>
-    <!-- import footer.jsp -->
-      <jsp:include page="include/footer.jsp"></jsp:include>
+
       
+      <script src="<%= request.getContextPath()%>/js/index.js"></script>
+
+      <!-- navbar 필수 import -->
       <!-- import navbar.js -->
       <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+
+		<!-- import footer.jsp -->
+      	<jsp:include page="include/footer.jsp"></jsp:include>
   </body>
 </html>
