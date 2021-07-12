@@ -91,16 +91,42 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/list.jsp</title>
-<jsp:include page="../include/resource.jsp"></jsp:include>
-    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
-    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<<!-- navbar 필수 import -->
+    <jsp:include page="../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
 
-<!-- 웹폰트 -->
+	<link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+
+    <!-- 웹폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
+  
 <style>
+
+	html, body {
+	  height: 100%;
+	  margin: 0;
+	}
+	.content {
+	  min-height: 100%;
+	}
+	.content-inside {
+	  padding: 20px;
+	  padding-bottom: 50px;
+	}
+	.footer {
+	  height: 50px;
+	  margin-top: -50px;
+	}
    .page-ui a{
       text-decoration: none;
       color: #000;
@@ -138,6 +164,8 @@
 </style>
 </head>
 <body>
+<div class="content">
+    <div class="content-inside">
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
@@ -218,10 +246,11 @@
       </div>
      </div>
      <div style="clear:both;"></div>
+     </div>
+  </div>
 	<!-- footer  -->
-	
-</body>
 <div id=footer>
    	<jsp:include page="../include/footer.jsp"></jsp:include>
 </div>
+</body>
 </html>

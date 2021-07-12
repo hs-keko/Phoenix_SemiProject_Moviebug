@@ -84,20 +84,56 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/detail.jsp</title>
-<jsp:include page="../include/resource.jsp"></jsp:include>
+<!-- navbar 필수 import -->
+    <jsp:include page="../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
     <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="../css/footer.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	
 	<!-- 웹폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
-<style>
+
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
+  
+	<!-- 웹폰트 댓글  -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 	
+	   .font-do{
+	   		font-family: 'Nanum Gothic', sans-serif;
+	   }
+	   .font-small { 
+	   		font-size: small; 
+	   		color: gray
+	   }
+	   
 		html, body {
-		width: 100%;
-		height: 100%;
+		  height: 100%;
+		  margin: 0;
 		}
+		.content {
+		  min-height: 100%;
+		}
+		.content-inside {
+		  padding: 20px;
+		  padding-bottom: 50px;
+		}
+		.footer {
+		  height: 50px;
+		  margin-top: -50px;
+		}
+
 		.detail_container .container {
 		width: 100%;
 		height: 100%;	
@@ -292,11 +328,7 @@
    <!-- 여기서부터 댓글 목록 입니다. -->
    <div id="one" class="comments">
    		<ul>
-   			<%for(CafeCommentDto tmp: commentList){ 
-   				System.out.println(tmp.getQna_comment_ref_group());
-   			System.out.println(tmp.getEndRowNum());
-   			System.out.println(tmp.getStartRowNum());
-   			%>
+   			<%for(CafeCommentDto tmp: commentList){ %>
    				<%if(tmp.getQna_comment_deleted().equals("yes")){%>
    					<li>삭제된 댓글입니다</li>
    				<%
@@ -328,16 +360,21 @@
 		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
 		                  	[<%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %>]님에게
 		                  <%} %>
-		                  	<span><%=tmp.getQna_comment_regdate () %></span>
-		                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
-						<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
-							<a data-num="<%=tmp.getQna_comment_idx() %>" class="update-link" href="javascript:">수정</a>
-							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link" href="javascript:">삭제</a>
-						<%} %>
+		                  	
 	                  </dt>
+	                  <dd class="font-do">
+	                     <pre id="pre<%=tmp.getQna_comment_idx()%>"><%=tmp.getQna_comment_content() %></pre>          
+	                  </dd>
 	                  <dd>
-                     <pre id="pre<%=tmp.getQna_comment_idx()%>"><%=tmp.getQna_comment_content() %></pre>                  
-                  </dd>
+	                  <span class="font-small"><%=tmp.getQna_comment_regdate () %></span>
+	                  </dd>
+	                  <dd>
+		                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link link-secondary">답글</a>
+						<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
+							<a data-num="<%=tmp.getQna_comment_idx() %>" class="link-secondary update-link " href="javascript:">수정</a>
+							<a data-num="<%=tmp.getQna_comment_idx() %>" class="link-secondary delete-link" href="javascript:">삭제</a>
+						<%} %>
+					</dd>
 	               </dl>
 					<form id="reForm<%=tmp.getQna_comment_idx() %>" class="animate__animated comment-form re-insert-form" 
                   action="private/comment_insert.jsp" method="post">
@@ -556,6 +593,9 @@
 
 			   }
 </script>
+	<!-- footer  -->
+<div id=footer>
+   	<jsp:include page="../include/footer.jsp"></jsp:include>
+</div>
 </body>
-<jsp:include page="../include/footer.jsp"></jsp:include>
 </html>
