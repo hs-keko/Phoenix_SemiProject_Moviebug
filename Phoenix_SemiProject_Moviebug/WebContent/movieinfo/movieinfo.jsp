@@ -350,6 +350,11 @@
 	#rating_span{
 		font-size: 40px;
 	}
+	
+	#noRating_span{
+		font-size: 40px;
+		color: rgb(170 170 170);
+	}
    /*======================================================================*/
    
    
@@ -860,25 +865,23 @@
 		
 		const box_div=document.createElement("div");
 		const star_img=document.createElement("img");
-		const span=document.createElement("span");
+		const rating_span=document.createElement("span");
+		const noRating_span=document.createElement("span");
 		box_div.setAttribute('class','movie_secondary_info_detail_rating_box');
 		star_img.setAttribute('src','https://upload.wikimedia.org/wikipedia/commons/0/0b/Star_red.svg');
 		star_img.setAttribute('id','star');
-		span.setAttribute('id','rating_span');
-		span.innerText=" <%=dto. getMovie_rating()%> 점";
-		box_div.append(star_img);
-		box_div.append(span);
+		rating_span.setAttribute('id','rating_span');
+		noRating_span.setAttribute('id','noRating_span');
+		rating_span.innerText=" <%=dto. getMovie_rating()%> 점";
+		noRating_span.innerText="개봉 전입니다.";
+		<%if(dto.getMovie_rating()!=null){%>
+			box_div.append(star_img);
+			box_div.append(rating_span);
+		<%}else{%>
+			box_div.append(noRating_span);
+		<%}%>
 		div.append(box_div);
-	}
-	
-	function infoFour(){
-		const div=document.querySelector(".movie_secondary_info_detail_wrapper");
-		div.innerHTML="";
 		
-		const h1=document.createElement("h1");
-		h1.setAttribute('id','rating');
-		h1.innerText="<%=dto.getMovie_rating()%> 점";
-		div.append(h1);
 	}
 	
 	infoOne();
@@ -892,9 +895,7 @@
 	document.querySelector("#btnThree").addEventListener("click",function(){
 		infoThree();
 	});
-	document.querySelector("#btnFour").addEventListener("click",function(){
-		infoFour();
-	});
+
 	
 	
 </script>
