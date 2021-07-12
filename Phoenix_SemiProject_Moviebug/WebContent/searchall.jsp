@@ -50,23 +50,22 @@
 	   //만일 검색 키워드가 넘어온다면 
 	   if(!keyword.equals("")){
 	      //검색 조건이 무엇이냐에 따라 분기 하기
-	      if(condition.equals("movie_title_content")){//제목 + 내용 검색인 경우
-	         //검색 키워드를 CafeDto 에 담아서 전달한다.
-	         Mdto.setMovie_title_kr(keyword);
-	         Mdto.setMovie_character(keyword);
-	         //제목+내용 검색일때 호출하는 메소드를 이용해서 목록 얻어오기 
-	         Mlist=CafeDao.getInstance().getListTC(Mdto);
+	      if(condition.equals("movie_title_direc")){//제목 + 배우 검색인 경우
+	        Mdto.setMovie_title_eng(keyword);
+	        Mdto.setMovie_title_kr(keyword);
+	        Mdto.setMovie_director(keyword);
+	        Mlist=MovieDao.getInstance().getListTD(Mdto);
 	         //제목+내용 검색일때 호출하는 메소드를 이용해서 row  의 갯수 얻어오기
-	         MtotalRow=CafeDao.getInstance().getCountTC(Mdto);
-	      }else if(condition.equals("movie_title")){ //제목 검색인 경우
+	         MtotalRow=MovieDao.getInstance().getCountTD(Mdto);
+	      }/* else if(condition.equals("movie_title")){ //제목 검색인 경우
 	    	  Mdto.setMovie_title_kr(keyword);
 	         Mlist=MovieDao.getInstance().getListT(Mdto);
-	         MtotalRow=CafeDao.getInstance().getCountT(Mdto);
+	         MtotalRow=MovieDao.getInstance().getCountT(Mdto);
 	      }else if(condition.equals("movie_char")){ //작성자 검색인 경우
 	         Mdto.setMovie_character(keyword);
 	         Mlist=MovieDao.getInstance().getListW(Mdto);
-	         MtotalRow=CafeDao.getInstance().getCountW(Mdto);
-	      } // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다.
+	         MtotalRow=MovieDao.getInstance().getCountW(Mdto);
+	      } // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다. */
 	   }else{//검색 키워드가 넘어오지 않는다면
 	      //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
 	      Mlist=MovieDao.getInstance().getList(Mdto);
@@ -103,7 +102,14 @@
 	         dto.setQna_writer(keyword);
 	         list=CafeDao.getInstance().getListW(dto);
 	         totalRow=CafeDao.getInstance().getCountW(dto);
-	      } // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다.
+	      }else if(condition.equals("movie_title_direc")){
+	    	  // navbar 검색 처리중
+		         //검색 키워드를 CafeDto 에 담아서 전달한다.
+		         dto.setQna_title(keyword);
+		         dto.setQna_content(keyword);
+		         //제목+내용 검색일때 호출하는 메소드를 이용해서 목록 얻어오기 
+		         list=CafeDao.getInstance().getListTC(dto);
+	      }
 	   }else{//검색 키워드가 넘어오지 않는다면
 	      //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
 	      list=CafeDao.getInstance().getList(dto);
@@ -191,10 +197,11 @@
 	</div>
 	
 		   <div id="three" style="float:right;">
-         <form action="list.jsp" method="get">
+         <form action="searchall.jsp" method="get">
          	<label for="condition">검색 조건</label>
          	<select name="condition" id="condition">
-    			 <option value="qna_title_content" <%=condition.equals("qna_title_content") ? "selected" : ""%>>제목+내용</option>
+    			 <option value="movie_title_direc" <%=condition.equals("qna_title_content") ? "selected" : ""%>>영화 제목/감독</option>
+         		<option value="qna_title_content" <%=condition.equals("qna_title_content") ? "selected" : ""%>>제목+내용</option>
 		         <option value="qna_title" <%=condition.equals("qna_title") ? "selected" : ""%>>제목</option>
 		         <option value="qna_writer" <%=condition.equals("qna_writer") ? "selected" : ""%>>작성자</option>
     		</select>
@@ -212,27 +219,21 @@
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th>작성자</th>
+				<th>감독</th>
 				<th>제목</th>
-				<th>작성일</th>
+				<th>개봉일</th>
 			</tr>
 		</thead>
 		<tbody>
-		<%for(CafeDto tmp:list) {%>
+		<%for(MovieDto tmp:Mlist) {%>
 			<tr>
-				<td><%=tmp.getQna_idx() %></td>
-				<td><%=tmp.getQna_writer() %></td>
-				<td><%if(tmp.getQna_file() != null){ %>
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-arrow-up" viewBox="0 0 16 16">
-					  <path d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
-					  <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-					</svg>
-					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
-				<%}else{ %>
-					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
-				<%} %>
+				<td><%=tmp.getMovie_num()%></td>
+				<td><%=tmp.getMovie_director() != null ? tmp.getMovie_director():"알수없음" %></td>
+				<td>
+					<a href="detail.jsp?num=<%=tmp.getMovie_num()%>"><%=tmp.getMovie_title_kr() %> 
+					<%=tmp.getMovie_title_eng() != null ? "( "+tmp.getMovie_title_eng()+" )":"" %></a>
 				</td>
-				<td><%=tmp.getQna_regdate() %></td>
+				<td><%=tmp.getMovie_year() %></td>
 			</tr>
 		<%} %>
 		</tbody>

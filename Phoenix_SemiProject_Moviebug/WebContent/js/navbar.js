@@ -39,7 +39,7 @@ const createbtns = (keyword) => {
   searchan.setAttribute(
     "href",
     keywordbtnanpath +
-      "/cafe/list.jsp?condition=qna_title_content&keyword=" +
+      "/searchall.jsp?condition=movie_title_direc&keyword=" +
       keyword
   )
   let searchbtns = document.createElement("button")
