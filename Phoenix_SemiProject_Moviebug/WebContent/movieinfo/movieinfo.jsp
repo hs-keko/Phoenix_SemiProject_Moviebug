@@ -453,7 +453,7 @@
 	<div class="container movieinfo">
 		<div class="movie_trailer">
 			<video autoplay muted controls width="100%" height="100%">
-				<source src="../upload/trailer_Eternal Sunshine.mp4" type="video/mp4">
+				<source src="../trailer/<%=movie_num%>.mp4" type="video/mp4">
 			</video>
 		</div>
 		<div class="movie_primary_info">
