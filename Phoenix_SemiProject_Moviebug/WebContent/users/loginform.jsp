@@ -80,10 +80,10 @@
 </style>
 </head>
 <body>
-	<div class="container">
 	 <jsp:include page="../include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
+	<div class="container">
     
 		<div class="loginform_container">
 			<div class="container--form">	
@@ -111,6 +111,8 @@
 			</div>
 		</div>
 	</div>
-	
+	  <!-- navbar 필수 import -->
+      <!-- import navbar.js -->
+      <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
 </body>
 </html>

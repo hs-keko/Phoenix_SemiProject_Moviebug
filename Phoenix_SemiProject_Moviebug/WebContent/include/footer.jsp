@@ -8,26 +8,26 @@ pageEncoding="UTF-8"%>
 	  			<div class="col">
 		  				Developers 
 		  		</div>
-			<div class="col">
-				<div class="row row-cols-3">
-					<div class="col mt-1 mb-1 overflow-hidden">
-						고현석 | github.com/hs-keko
+				<div class="col">
+					<div class="row row-cols-3">
+						<div class="col mt-1 mb-1 overflow-hidden">
+							고현석 | github.com/hs-keko
+						</div>
+						<div class="col mt-1 mb-1 overflow-hidden">
+							김다연 | github.com/dy0712
+						</div>
+						<div class="col mt-1 mb-1 overflow-hidden">
+							석우현 | github.com/seok97
+						</div>
+						<div class="col mt-1 mb-1 overflow-hidden">
+							이다영 | github.com/dayoung1227
+						</div>
+						<div class="col mt-1 mb-1 overflow-hidden">
+							이충근 | github.com/LCG1997
+						</div>
+		
 					</div>
-					<div class="col mt-1 mb-1 overflow-hidden">
-						김다연 | github.com/dy0712
-					</div>
-					<div class="col mt-1 mb-1 overflow-hidden">
-						석우현 | github.com/seok97
-					</div>
-					<div class="col mt-1 mb-1 overflow-hidden">
-						이다영 | github.com/dayoung1227
-					</div>
-					<div class="col mt-1 mb-1 overflow-hidden">
-						이충근 | github.com/LCG1997
-					</div>
-	
 				</div>
-			</div>
   			</div>
   			
   			<div class="d-flex col col-12 col-lg-3 justify-content-center align-items-center">
@@ -38,7 +38,7 @@ pageEncoding="UTF-8"%>
   		</div>
   		
   		<div class="row border-top border-1 border-dark py-2">
-  			@ MOVIEBUG Corp.
+  			<div class="col">@ MOVIEBUG Corp. | <a href="<%=request.getContextPath() %>/cafe/list.jsp">문의하기</a></div>
   		</div>
   	</div>
   </div>
