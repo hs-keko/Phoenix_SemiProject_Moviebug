@@ -14,7 +14,7 @@ pageEncoding="UTF-8"%>
 						고현석 | github.com/hs-keko
 					</div>
 					<div class="col mt-1 mb-1 overflow-hidden">
-						김다영 | github.com/dy0712
+						김다연 | github.com/dy0712
 					</div>
 					<div class="col mt-1 mb-1 overflow-hidden">
 						석우현 | github.com/seok97

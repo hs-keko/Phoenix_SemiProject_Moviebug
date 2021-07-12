@@ -151,42 +151,40 @@
          
 
 
-<div class="container-xl index_content">
+	<div class="container-xl index_content">
       <div class="row index_content02">
       	 <div class="row">
 	        <div class="col flex_box index_category">
 			   <h1>높은 평점 순 최신작</h1>
 	        </div>
-      	</div>
+      		</div>
       	
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-      <%for(MovieDto tmp: RecentMovies) {%>
+	        <div class="row row-cols-1 row-cols-md-4 g-4">
+		      <%for(MovieDto tmp: RecentMovies) {%>
+		     
+		          <div class="col col-6 col-lg-3">
+		     		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>">
+			            <div class="card border-0">
+			              <img
+			                src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
+			                class="card-img-top"
+			                alt="<%=tmp.getMovie_title_kr() %>"/>
+			              <div class="card-body">
+			                <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
+			                <p class="card-text"><small class="text-muted"><%=tmp.getMovie_nation() %> | <%=tmp.getMovie_genre() %></small></p>
+			                <p class="card-text">
+			                  <%=tmp.getMovie_story().length() >= 140 ? tmp.getMovie_story()+"...":tmp.getMovie_story() %>
+			                </p>
+			                <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
+			              </div>
+			            </div>
+			         </a>
+		          </div>
+	      		 <%} %>
+	          </div>
      
-          <div class="col col-6 col-lg-3">
-     		 <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>">
-            <div class="card border-0">
-              <img
-                src="<%=tmp.getMovie_image() != null ? tmp.getMovie_image():"images/bigdata.jpg" %>"
-                class="card-img-top"
-                alt="<%=tmp.getMovie_title_kr() %>"/>
-              <div class="card-body">
-                <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
-                <p class="card-text"><small class="text-muted"><%=tmp.getMovie_nation() %> | <%=tmp.getMovie_genre() %></small></p>
-                <p class="card-text">
-                  <%=tmp.getMovie_story().length() >= 140 ? tmp.getMovie_story()+"...":tmp.getMovie_story() %>
-                </p>
-                <p class="card-text"><small class="text-danger">평점 <%=tmp.getMovie_rating() %></small></p>
-              </div>
-            </div>
-         </a>
           </div>
-      
-          <%} %>
-          </div>
-          
-          
-          </div>
-          </div>
+		</div>
        
           
           
