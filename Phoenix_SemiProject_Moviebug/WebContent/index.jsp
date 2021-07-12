@@ -32,15 +32,6 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/index.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
     
-    <!-- 웹폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
-
-	<!-- 웹폰트 test -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
   
   </head>
   <body>

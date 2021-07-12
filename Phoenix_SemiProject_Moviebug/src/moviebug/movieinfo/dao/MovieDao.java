@@ -19,6 +19,38 @@ public class MovieDao {
       }
       return dao;
    }
+   
+   //모든 영화 목록
+   public List<MovieDto> getAllMovies(){
+	   	Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MovieDto> list = new ArrayList<>();
+		
+		try {
+			conn = new DbcpBean().getConn();
+			// 실행할 sql 문 작성
+	
+			String sql = "";
+			pstmt = conn.prepareStatement(sql);
+			// 바인딩
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+   }
+   
    // 최신 공포,액션 영화 4개 
    public List<MovieDto> getNewHAList(){
          Connection conn = null;
@@ -219,47 +251,6 @@ public class MovieDao {
          return false;
       }
    }
-   
-   
-   public boolean Testinsert(MovieDto dto) {
-      Connection conn = null;
-      PreparedStatement pstmt = null;
-      int flag = 0;
-      try {
-         conn = new DbcpBean().getConn();
-         // 실행할 sql 문 작성
-
-         String sql = "insert into movie_info ("+
-               "movie_num,movie_title_kr ,movie_year,movie_genre,movie_company" 
-               + ") values (movie_info_seq.nextval,?,?,?,?)";
-         pstmt = conn.prepareStatement(sql);
-         // 바인딩
-         pstmt.setString(1, dto.getMovie_title_kr());
-         pstmt.setString(2, dto.getMovie_year());
-         pstmt.setString(3, dto.getMovie_genre());
-         pstmt.setString(4, dto.getMovie_company());
-         
-         
-         flag = pstmt.executeUpdate();
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-         try {
-            if (pstmt != null)
-               pstmt.close();
-            if (conn != null)
-               conn.close();
-         } catch (Exception e) {
-            e.printStackTrace();
-         }
-      }
-      if (flag > 0) {
-         return true;
-      } else {
-         return false;
-      }
-   }
-   
    
    
    public List<MovieDto> getNewMovies(){
