@@ -5,16 +5,59 @@
 <%
 	int num=Integer.parseInt(request.getParameter("num"));
 	CafeDto dto=CafeDao.getInstance().getData(num);
+	
+	String email=(String)session.getAttribute("email");
 %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/cafe/private/updateform.jsp</title>
-<jsp:include page="../../include/resource.jsp"></jsp:include>
+   <jsp:include page="../../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	
+	<!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
+  
+	<!-- 웹폰트 댓글  -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<style>
+	html, body {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.container {
+		width: 100%;
+		height: 100%;	
+	}
+	.footer {
+		  height: 50px;
+		  margin-top: -50px;
+	}
+	a{
+	text-decoration: none; 
+	}
+</style>
 </head>
 <body>
 <div class="container">
+<jsp:include page="../../include/navbar.jsp">
+	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+</jsp:include>
 	<br>
 	<br>
 	<form action="update.jsp" method="post">
@@ -37,9 +80,10 @@
 				<label class="form-label" for="qna_content">내용</label>
 				<textarea class="form-control" name="qna_content" id="qna_content"><%=dto.getQna_content() %></textarea>
 			</div>
-			
-		<button class="btn btn-primary float-end" type="submit" onclick="submitContents(this);">수정확인</button>
-		<button type="reset"><a href=../list.jsp>취소</a></button>
+		<div class="w-100 clearfix">
+			<button class="btn btn-outline-secondary float-end ms-2" type="submit" onclick="submitContents(this);">수정확인</button>
+			<button class="btn btn-outline-secondary float-end" type="reset"><a class="link-secondary" href=../list.jsp>취소</a></button>
+		</div>
 	</form>
 </div>
 <!-- SmartEditor 에서 필요한 javascript 로딩  -->
@@ -96,6 +140,11 @@
 		oEditors.getById["qna_content"].setDefaultFont(sDefaultFont, nFontSize);
 	}
 </script>
+<script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+	<!-- footer  -->
+<div id="footer">
+   	<jsp:include page="../../include/footer.jsp"></jsp:include>
+</div>
 </body>
 </html>
 

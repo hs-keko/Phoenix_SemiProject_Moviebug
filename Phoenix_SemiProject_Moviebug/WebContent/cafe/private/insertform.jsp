@@ -1,21 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String email=(String)session.getAttribute("email");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/cafe/private/insertform.jsp</title>
-<jsp:include page="../../include/resource.jsp"></jsp:include>
+   <jsp:include page="../../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	
+	<!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
+  
+	<!-- 웹폰트 댓글  -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 <style>
 
 	#qna_content{
 		height: 500px;
 	}
+	html, body {
+		width: 100%;
+		height: 100%;
+	}
 	
+	.container {
+		width: 100%;
+		height: 100%;	
+	}
+	.footer {
+		  height: 50px;
+		  margin-top: -50px;
+	}
 
 </style>
 </head>
 <body>
+<jsp:include page="../../include/navbar.jsp">
+	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
+</jsp:include>
 <div class="container">
 	<br>
 	<br>
@@ -33,7 +71,7 @@
 			<label class="form-label" for="qna_content">내용</label>
 			<textarea class="form-control" name="qna_content" id="qna_content"></textarea>
 		</div>
-		<button class="btn btn-primary float-end" type="submit" onclick="submitContents(this);">저장</button>
+		<button class="btn btn-outline-secondary float-end" type="submit" onclick="submitContents(this);">저장</button>
 	</form>
 	<br>
 	<br>
@@ -91,6 +129,12 @@
       var nFontSize = 24;
       oEditors.getById["qna_content"].setDefaultFont(sDefaultFont, nFontSize);
    }
+   
 </script>
+<script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+	<!-- footer  -->
+<div id=footer>
+   	<jsp:include page="../../include/footer.jsp"></jsp:include>
+</div>
 </body>
 </html>
