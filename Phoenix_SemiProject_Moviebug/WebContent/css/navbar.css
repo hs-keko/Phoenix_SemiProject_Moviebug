@@ -19,12 +19,9 @@ nav{
 
 header{
 	text-align: center;
-	position: fixed;
     width: 100%;
     top: 0;
     z-index: 100;
-    left: 50%;
-    transform: translate(-50%, 0);
 }
 
 header + div{
@@ -36,7 +33,7 @@ header + div{
 }
 
 .header_nav_wrapper{
-	padding: 0 10px;
+	padding: 0;
 }
 
 nav .container{
@@ -45,18 +42,22 @@ nav .container{
 }
 
 .nav_w_brand{
-	font-family: 'Tourney', cursive;
-	font-size: 30px;
+	font-family: 'Major Mono Display', monospace;
+	font-size: 35px;
+}
+
+.nav_w_brand a{
+	 
 }
 
 .nav_wrapper{
-	
+	background-color: transparent;
 	align-items: center;
 	justify-content: center;
     height: 100%;
 }
 
-nav button{
+nav button, .search_form_btn{
 	border: 0;
 	outline: 0;
 	background-color: transparent;
@@ -123,6 +124,10 @@ nav button{
 	margin-right: 10px;
 }
 
+.nav_search .btn{
+	color: #b1b1b1;
+}
+
 .nav_login:hover{
 	cursor: pointer;
 }
@@ -158,47 +163,43 @@ nav button{
 	}
 }
 
-header .search_bar{
+ .search_bar{
 	justify-content: space-between;
 }
 
-header .search_bar_wrapper{
+ .search_bar_wrapper{
 	width: 90%;
 	justify-content: space-between;
 	
 }
 
-header .search_bar_form{
+ .search_bar_form{
 	justify-content: space-around;
 	width: -webkit-fill-available;
 }
 
-header #nav_search_input{
+#nav_search_input{
 	width: 90%;
 	border: none;
 }
 
-header input:focus {
+.nav_search_input:focus {
 	outline: none;
 }
 
-header .keyword_resetBtn{
+.keyword_resetBtn{
 	align-items: center;
 	display: none;
 }
 
-header .keyword_resetBtn:hover{
+ .keyword_resetBtn:hover{
 	cursor: pointer;
 }
 
 
 @media(max-width: 992px){
 	
-	header .search_form_btn{
+	.search_form_btn{
 		display: none;		
 	}
-}
-
-header .search_btns{
-	
 }
