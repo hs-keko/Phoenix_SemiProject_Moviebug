@@ -53,7 +53,7 @@ a:hover .poster_info .card-title,
   display: flex;
   flex-direction: column;
   z-index: 1;
-  margin-top: 50vh;
+  margin-top: 55vh;
 }
 
 .index_content .carousel-item img {
@@ -152,26 +152,29 @@ a:hover .poster_info .card-title,
 .moreanchor {
   display: flex;
   justify-content: center;
-  border: 1px solid rgb(230, 230, 230);
+  border: 1px solid rgb(119 119 119);
   padding: 8px;
   border-radius: 22px;
   width: 30%;
   margin: 15px 0;
   color: rgb(109, 109, 109);
+  font-size: 20px;
+  transition: all 0.5s ease-out;
 }
 
 .moreanchor:hover {
-  color: rgb(109, 109, 109);
-  background: rgb(242, 242, 242);
+    color: rgb(255 255 255 / 81%);
+    background: rgb(103 103 103 / 69%);
 }
 
 .index_category {
-  font-size: 20px;
+  font-size: 25px;
   margin: 30px 20px;
   font-family: "SF Pro Text", "Helvetica Neue", "Segoe UI", Arial, "NotoSansKR",
     sans-serif;
   letter-spacing: -0.025em;
   font-weight: bold;
+  color: rgb(255 255 255 / 81%);
 }
 
 .index_content .poster_info {

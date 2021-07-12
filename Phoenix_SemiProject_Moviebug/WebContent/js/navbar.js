@@ -1,3 +1,21 @@
+// 현재 페이지명
+const getPageName = () => {
+  let pageName = ""
+  let tmpPageName = window.location.href
+  let strpname = tmpPageName.split("/")
+  // pageName = strpname[strpname.length - 1].split("?")[0]
+  pageName = strpname[4]
+  return pageName
+}
+
+// 내정보, qna 페이지에 따라 navbar 요소 none 처리
+const navDisplay = (pageName) => {
+  let nav_userinfo = document.querySelector(".nav_user")
+  if (pageName === "users" || pageName === "cafe") {
+    nav_userinfo.style.display = "none"
+  }
+}
+
 // navbar 검색창, 리셋버튼, 검색폼
 let sInput = document.querySelector("#nav_search_input")
 let keywordResetBtn = document.querySelector(".keyword_resetBtn")
@@ -19,22 +37,11 @@ const createbtns = (keyword) => {
 
   // gird col
   let cols = document.createElement("div")
-  cols.setAttribute("class", "col flex_box")
+  cols.setAttribute("class", "flex_box")
 
   cols.appendChild(searchbtns)
 
   btnsarrtag.appendChild(cols)
-}
-
-// 검색기록이 존재하면 변수에 저장
-if (searchKeyword != undefined) {
-  searchKeyword = JSON.parse(localStorage.getItem("sHistory"))
-  searchKeyword.forEach(function (arrval) {
-    // createbtns(arrval)
-  })
-}else{
-	// 검색기록이 존재하지 않으면새로 저장
-	localStorage.setItem("sHistory", JSON.stringify([]))
 }
 
 // input 의 값 체크 리셋버튼 toggle 함수
@@ -77,6 +84,21 @@ const searchHistory = (keyword) => {
   localStorage.setItem("sHistory", JSON.stringify(searchKeyword))
 }
 
+//////////////////////////////////////////////////////////////////////////// run
+// users 일때 내정보 숨김
+navDisplay(getPageName())
+
+// 검색기록이 존재하면 변수에 저장
+if (searchKeyword != undefined) {
+  searchKeyword = JSON.parse(localStorage.getItem("sHistory"))
+  searchKeyword.forEach(function (arrval) {
+    createbtns(arrval)
+  })
+} else {
+  // 검색기록이 존재하지 않으면새로 저장
+  localStorage.setItem("sHistory", JSON.stringify([]))
+}
+
 sInput.addEventListener("input", (e) => {
   let keyword = e.target.value
   keywordCheck(keyword)
@@ -84,7 +106,7 @@ sInput.addEventListener("input", (e) => {
 
 keywordResetBtn.addEventListener("click", () => {
   sInput.value = ""
-  keywordCheck("")
+  keywordResetBtn.style.display = "none"
 })
 
 searchform.addEventListener("submit", function (e) {
