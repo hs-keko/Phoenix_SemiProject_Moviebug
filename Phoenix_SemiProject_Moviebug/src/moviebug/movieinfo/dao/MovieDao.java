@@ -20,153 +20,153 @@ public class MovieDao {
       }
       return dao;
    }
-   // ¸ğµç ¿µÈ­ ¸®½ºÆ® ºÒ·¯¿À±â
+   // ëª¨ë“  ì˜í™” ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸°
    public List<MovieDto> getList(MovieDto dto){
-      List<MovieDto> list=new ArrayList<MovieDto>();
-         Connection conn = null;
-         PreparedStatement pstmt = null;
-         ResultSet rs = null;
-         try {
-            //Connection °´Ã¼ÀÇ ÂüÁ¶°ª ¾ò¾î¿À±â 
-            conn = new DbcpBean().getConn();
-            //½ÇÇàÇÒ sql ¹® ÀÛ¼º
-            String sql = "select * " + 
-                  "from (select result1.*, rownum as rnum" + 
-                  " from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
-                  " movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
-                  " from movie_info order by movie_year desc) result1)" + 
-                  " where rnum between ? and ?";
-            //PreparedStatement °´Ã¼ÀÇ ÂüÁ¶°ª ¾ò¾î¿À±â
-            pstmt = conn.prepareStatement(sql);
-            //? ¿¡ ¹ÙÀÎµùÇÒ ³»¿ëÀÌ ÀÖÀ¸¸é ¿©±â¼­ ¹ÙÀÎµù
-            pstmt.setInt(1, dto.getStartRowNum());
-            pstmt.setInt(2, dto.getEndRowNum());
-            //select ¹® ¼öÇàÇÏ°í °á°ú¸¦ ResultSet À¸·Î ¹Ş¾Æ¿À±â
-            rs = pstmt.executeQuery();
-            //¹İº¹¹® µ¹¸é¼­ ResultSet °´Ã¼¿¡ ÀÖ´Â ³»¿ëÀ» ÃßÃâÇØ¼­ ¿øÇÏ´Â Data type À¸·Î Æ÷ÀåÇÏ±â
-            while (rs.next()) {
-               MovieDto tmp=new MovieDto();
-               tmp.setMovie_genre(rs.getString("movie_genre"));
-               tmp.setMovie_image(rs.getString("movie_image")); 
-               tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
-               tmp.setMovie_story(rs.getString("movie_story"));
-               tmp.setMovie_rating(rs.getString("movie_rating"));
-               tmp.setMovie_year(rs.getString("movie_year"));
-               tmp.setMovie_nation(rs.getString("movie_nation"));
-               tmp.setMovie_time(rs.getString("movie_time"));
-               tmp.setMovie_num(rs.getInt("movie_num"));
-               list.add(tmp);
-            }
-         } catch (Exception e) {
-            e.printStackTrace();
-         } finally {
-            try {
-               if (rs != null)
-                  rs.close();
-               if (pstmt != null)
-                  pstmt.close();
-               if (conn != null)
-                  conn.close();
-            } catch (Exception e) {
-            }
-         }
-         return list;
+	   List<MovieDto> list=new ArrayList<MovieDto>();
+	      Connection conn = null;
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      try {
+	         //Connection ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸° 
+	         conn = new DbcpBean().getConn();
+	         //ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
+	         String sql = "select * " + 
+	         		"from (select result1.*, rownum as rnum" + 
+	         		" from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
+	         		" movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
+	         		" from movie_info order by movie_year desc) result1)" + 
+	         		" where rnum between ? and ?";
+	         //PreparedStatement ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸°
+	         pstmt = conn.prepareStatement(sql);
+	         //? ì— ë°”ì¸ë”©í•  ë‚´ìš©ì´ ìˆìœ¼ë©´ ì—¬ê¸°ì„œ ë°”ì¸ë”©
+	         pstmt.setInt(1, dto.getStartRowNum());
+	         pstmt.setInt(2, dto.getEndRowNum());
+	         //select ë¬¸ ìˆ˜í–‰í•˜ê³  ê²°ê³¼ë¥¼ ResultSet ìœ¼ë¡œ ë°›ì•„ì˜¤ê¸°
+	         rs = pstmt.executeQuery();
+	         //ë°˜ë³µë¬¸ ëŒë©´ì„œ ResultSet ê°ì²´ì— ìˆëŠ” ë‚´ìš©ì„ ì¶”ì¶œí•´ì„œ ì›í•˜ëŠ” Data type ìœ¼ë¡œ í¬ì¥í•˜ê¸°
+	         while (rs.next()) {
+	        	 MovieDto tmp=new MovieDto();
+					tmp.setMovie_genre(rs.getString("movie_genre"));
+					tmp.setMovie_image(rs.getString("movie_image")); 
+					tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
+					tmp.setMovie_story(rs.getString("movie_story"));
+					tmp.setMovie_rating(rs.getString("movie_rating"));
+					tmp.setMovie_year(rs.getString("movie_year"));
+					tmp.setMovie_nation(rs.getString("movie_nation"));
+					tmp.setMovie_time(rs.getString("movie_time"));
+					tmp.setMovie_num(rs.getInt("movie_num"));
+	            list.add(tmp);
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         try {
+	            if (rs != null)
+	               rs.close();
+	            if (pstmt != null)
+	               pstmt.close();
+	            if (conn != null)
+	               conn.close();
+	         } catch (Exception e) {
+	         }
+	      }
+	      return list;
    }
    
-   //¿µÈ­ Á¦¸ñ/°¨µ¶ °Ë»ö ¸®½ºÆ® ¸ñ·Ï °³¼ö
+   //ì˜í™” ì œëª©/ê°ë… ê²€ìƒ‰ ë¦¬ìŠ¤íŠ¸ ëª©ë¡ ê°œìˆ˜
    public int getCountTD(MovieDto dto){
-      int count = 0;
-         Connection conn = null;
-      PreparedStatement pstmt = null;
-      ResultSet rs = null;
-      try {
-         conn = new DbcpBean().getConn();
-         // ½ÇÇàÇÒ sql ¹® ÀÛ¼º
-   
-         String sql = "SELECT NVL(MAX(ROWNUM), 0) AS movie_idx FROM movie_info WHERE movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%'";
-         pstmt = conn.prepareStatement(sql);
-         // ¹ÙÀÎµù
-         pstmt.setString(1, dto.getMovie_title_eng());
-         pstmt.setString(2, dto.getMovie_title_kr());
-         pstmt.setString(3, dto.getMovie_director());
-         
-         rs = pstmt.executeQuery();
-         if( rs.next()) count = rs.getInt("movie_idx");
-         
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-         try {
-            if(rs != null) rs.close();
-            if (pstmt != null)
-               pstmt.close();
-            if (conn != null)
-               conn.close();
-         } catch (Exception e) {
-            e.printStackTrace();
-         }
-      }
-      return count;
+	   int count = 0;
+	   	Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			// ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
+	
+			String sql = "SELECT NVL(MAX(ROWNUM), 0) AS movie_idx FROM movie_info WHERE movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%'";
+			pstmt = conn.prepareStatement(sql);
+			// ë°”ì¸ë”©
+			pstmt.setString(1, dto.getMovie_title_eng());
+			pstmt.setString(2, dto.getMovie_title_kr());
+			pstmt.setString(3, dto.getMovie_director());
+			
+			rs = pstmt.executeQuery();
+			if( rs.next()) count = rs.getInt("movie_idx");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
    }
    
-   //¿µÈ­ Á¦¸ñ/°¨µ¶ °Ë»ö ¸®½ºÆ®
+   //ì˜í™” ì œëª©/ê°ë… ê²€ìƒ‰ ë¦¬ìŠ¤íŠ¸
    public List<MovieDto> getListTD(MovieDto dto){
-         Connection conn = null;
-      PreparedStatement pstmt = null;
-      ResultSet rs = null;
-      List<MovieDto> list = new ArrayList<>();
-      
-      try {
-         conn = new DbcpBean().getConn();
-         // ½ÇÇàÇÒ sql ¹® ÀÛ¼º
-   
-         String sql = "SELECT * FROM (select result1.* , rownum as rnum" + 
-               " from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
-               " movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
-               " from movie_info " + 
-               " where movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%' order by movie_num desc) result1) " + 
-               " where rnum between ? and ?";
-         pstmt = conn.prepareStatement(sql);
-         // ¹ÙÀÎµù
-         pstmt.setString(1, dto.getMovie_title_eng());
-         pstmt.setString(2, dto.getMovie_title_kr());
-         pstmt.setString(3, dto.getMovie_director());
-         pstmt.setInt(4, dto.getStartRowNum());
-         pstmt.setInt(5, dto.getEndRowNum());
-         System.out.println(sql);
-         rs = pstmt.executeQuery();
-         while(rs.next()) {
-            MovieDto tmp = new MovieDto();
-            tmp.setMovie_director(rs.getString("movie_director"));
-            tmp.setMovie_genre(rs.getString("movie_genre"));
-            tmp.setMovie_image(rs.getString("movie_image")); 
-            tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
-            tmp.setMovie_title_eng(rs.getString("movie_title_eng"));
-            tmp.setMovie_story(rs.getString("movie_story"));
-            tmp.setMovie_rating(rs.getString("movie_rating"));
-            tmp.setMovie_year(rs.getString("movie_year"));
-            tmp.setMovie_nation(rs.getString("movie_nation"));
-            tmp.setMovie_time(rs.getString("movie_time"));
-            tmp.setMovie_num(rs.getInt("movie_num"));
-            list.add(tmp);
-         }
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-         try {
-            if(rs != null) rs.close();
-            if (pstmt != null)
-               pstmt.close();
-            if (conn != null)
-               conn.close();
-         } catch (Exception e) {
-            e.printStackTrace();
-         }
-      }
-      return list;
+	   	Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MovieDto> list = new ArrayList<>();
+		
+		try {
+			conn = new DbcpBean().getConn();
+			// ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
+	
+			String sql = "SELECT * FROM (select result1.* , rownum as rnum" + 
+					" from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
+					" movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
+					" from movie_info " + 
+					" where movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%' order by movie_num desc) result1) " + 
+					" where rnum between ? and ?";
+			pstmt = conn.prepareStatement(sql);
+			// ë°”ì¸ë”©
+			pstmt.setString(1, dto.getMovie_title_eng());
+			pstmt.setString(2, dto.getMovie_title_kr());
+			pstmt.setString(3, dto.getMovie_director());
+			pstmt.setInt(4, dto.getStartRowNum());
+			pstmt.setInt(5, dto.getEndRowNum());
+			System.out.println(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MovieDto tmp = new MovieDto();
+				tmp.setMovie_director(rs.getString("movie_director"));
+				tmp.setMovie_genre(rs.getString("movie_genre"));
+				tmp.setMovie_image(rs.getString("movie_image")); 
+				tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
+				tmp.setMovie_title_eng(rs.getString("movie_title_eng"));
+				tmp.setMovie_story(rs.getString("movie_story"));
+				tmp.setMovie_rating(rs.getString("movie_rating"));
+				tmp.setMovie_year(rs.getString("movie_year"));
+				tmp.setMovie_nation(rs.getString("movie_nation"));
+				tmp.setMovie_time(rs.getString("movie_time"));
+				tmp.setMovie_num(rs.getInt("movie_num"));
+				list.add(tmp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
    }
    
-   // ÃÖ½Å °øÆ÷,¾×¼Ç ¿µÈ­ 4°³ 
+   // ìµœì‹  ê³µí¬,ì•¡ì…˜ ì˜í™” 4ê°œ 
    public List<MovieDto> getNewHAList(){
          Connection conn = null;
       PreparedStatement pstmt = null;
@@ -174,13 +174,13 @@ public class MovieDao {
       ResultSet rs = null;
       try {
          conn = new DbcpBean().getConn();
-         // ½ÇÇàÇÒ sql ¹® ÀÛ¼º
+         // ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
    
          String sql = "select result1.*, rownum from " + 
                "(select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng, substr(movie_story,1,120) movie_story, movie_company,movie_image," + 
                "movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer " + 
                "from movie_info " + 
-               "where (movie_genre like '%¾×¼Ç%' or movie_genre like '%°øÆ÷%') " + 
+               "where (movie_genre like '%ì•¡ì…˜%' or movie_genre like '%ê³µí¬%') " + 
                "order by movie_year desc) result1 " + 
                "where rownum < 5 " + 
                "order by rownum asc";
@@ -217,26 +217,26 @@ public class MovieDao {
    }
    
    
-   //¿µÈ­ ÇÏ³ªÀÇ Á¤º¸¸¦ ¸®ÅÏÇÏ´Â ¸Ş¼Òµå
+   //ì˜í™” í•˜ë‚˜ì˜ ì •ë³´ë¥¼ ë¦¬í„´í•˜ëŠ” ë©”ì†Œë“œ
    public MovieDto getData(int num) {
       MovieDto dto=null;
       Connection conn = null;
       PreparedStatement pstmt = null;
       ResultSet rs = null;
       try {
-         //Connection °´Ã¼ÀÇ ÂüÁ¶°ª ¾ò¾î¿À±â 
+         //Connection ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸° 
          conn = new DbcpBean().getConn();
-         //½ÇÇàÇÒ sql ¹® ÀÛ¼º
+         //ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
          String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer"
                + " FROM movie_info"
                + " WHERE movie_num=?";
-         //PreparedStatement °´Ã¼ÀÇ ÂüÁ¶°ª ¾ò¾î¿À±â
+         //PreparedStatement ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸°
          pstmt = conn.prepareStatement(sql);
-         //? ¿¡ ¹ÙÀÎµùÇÒ ³»¿ëÀÌ ÀÖÀ¸¸é ¿©±â¼­ ¹ÙÀÎµù
+         //? ì— ë°”ì¸ë”©í•  ë‚´ìš©ì´ ìˆìœ¼ë©´ ì—¬ê¸°ì„œ ë°”ì¸ë”©
          pstmt.setInt(1, num);
-         //select ¹® ¼öÇàÇÏ°í °á°ú¸¦ ResultSet À¸·Î ¹Ş¾Æ¿À±â
+         //select ë¬¸ ìˆ˜í–‰í•˜ê³  ê²°ê³¼ë¥¼ ResultSet ìœ¼ë¡œ ë°›ì•„ì˜¤ê¸°
          rs = pstmt.executeQuery();
-         //¹İº¹¹® µ¹¸é¼­ ResultSet °´Ã¼¿¡ ÀÖ´Â ³»¿ëÀ» ÃßÃâÇØ¼­ ¿øÇÏ´Â Data type À¸·Î Æ÷ÀåÇÏ±â
+         //ë°˜ë³µë¬¸ ëŒë©´ì„œ ResultSet ê°ì²´ì— ìˆëŠ” ë‚´ìš©ì„ ì¶”ì¶œí•´ì„œ ì›í•˜ëŠ” Data type ìœ¼ë¡œ í¬ì¥í•˜ê¸°
          if (rs.next()) {
             dto = new MovieDto();
             dto.setMovie_num(num);
@@ -271,7 +271,7 @@ public class MovieDao {
       return dto;
    }
    
-   // ÇÑ´ŞÀÌ³» ÆòÁ¡ÀÌ °¡Àå ³ôÀ½ 4°³ÀÇ ¿µÈ­ ¸®½ºÆ® ±¸ÇÏ±â
+   // í•œë‹¬ì´ë‚´ í‰ì ì´ ê°€ì¥ ë†’ìŒ 4ê°œì˜ ì˜í™” ë¦¬ìŠ¤íŠ¸ êµ¬í•˜ê¸°
    public List<MovieDto> getTop4ResList(){
       Connection conn = null;
       PreparedStatement pstmt = null;
@@ -279,10 +279,10 @@ public class MovieDao {
       List<MovieDto> list = new ArrayList<>();
       try {
          conn = new DbcpBean().getConn();
-         // ½ÇÇàÇÒ sql ¹® ÀÛ¼º
+         // ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
          
          String sql = "select result01.*,rownum from " + 
-               "(select movie_num,movie_title_kr,movie_nation, movie_time, substr(movie_story,1,120) movie_story, movie_genre,movie_image,movie_rating, movie_year, to_char(sysdate,'yyyymmdd') \"¿À´Ã³¯Â¥\"" + 
+               "(select movie_num,movie_title_kr,movie_nation, movie_time, substr(movie_story,1,120) movie_story, movie_genre,movie_image,movie_rating, movie_year, to_char(sysdate,'yyyymmdd') \"ì˜¤ëŠ˜ë‚ ì§œ\"" + 
                " from movie_info where sysdate-30 <= movie_year order by movie_year desc) result01" + 
                " where rownum < 5" + 
                " order by movie_rating desc";
@@ -326,13 +326,13 @@ public class MovieDao {
       int flag = 0;
       try {
          conn = new DbcpBean().getConn();
-         // ½ÇÇàÇÒ sql ¹® ÀÛ¼º
+         // ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
 
          String sql = "insert into movie_info ("+
                "movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director,movie_writer" 
                + ") values (movie_info_seq.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,'admin@admin.com')";
          pstmt = conn.prepareStatement(sql);
-         // ¹ÙÀÎµù
+         // ë°”ì¸ë”©
          pstmt.setString(1,dto.getMovie_title_kr());
          pstmt.setString(2, dto.getMovie_title_eng());
          pstmt.setString(3, dto.getMovie_story());
@@ -375,14 +375,14 @@ public class MovieDao {
       List<MovieDto> list = new ArrayList<>();
       try {
          conn = new DbcpBean().getConn();
-         // ½ÇÇàÇÒ sql ¹® ÀÛ¼º
+         // ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
 
          String sql = "select result.* from "
                + "(select movie_num,movie_title_kr,movie_title_eng,movie_year,"
                + "movie_genre,movie_image from movie_info order by movie_year desc) result "
                + "where rownum <= 3";
          pstmt = conn.prepareStatement(sql);
-         // ¹ÙÀÎµù
+         // ë°”ì¸ë”©
 
           rs = pstmt.executeQuery();
           
@@ -420,16 +420,16 @@ public class MovieDao {
          ResultSet rs = null;
          List<MovieDto> list = new ArrayList<>();
          try {
-            //Connection °´Ã¼ÀÇ ÂüÁ¶°ª ¾ò¾î¿À±â 
+            //Connection ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸° 
             conn = new DbcpBean().getConn();
-            //½ÇÇàÇÒ sql ¹® ÀÛ¼º
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
+            //ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
                   + " FROM movie_info"
                   + " where sysdate-30 <= movie_year order by movie_rating desc"; 
-            //PreparedStatement °´Ã¼ÀÇ ÂüÁ¶°ª ¾ò¾î¿À±â
+            //PreparedStatement ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸°
             pstmt = conn.prepareStatement(sql);
-            //? ¿¡ ¹ÙÀÎµùÇÒ ³»¿ëÀÌ ÀÖÀ¸¸é ¿©±â¼­ ¹ÙÀÎµù
-            //select ¹® ¼öÇàÇÏ°í °á°ú¸¦ ResultSet À¸·Î ¹Ş¾Æ¿À±â
+            //? ì— ë°”ì¸ë”©í•  ë‚´ìš©ì´ ìˆìœ¼ë©´ ì—¬ê¸°ì„œ ë°”ì¸ë”©
+            //select ë¬¸ ìˆ˜í–‰í•˜ê³  ê²°ê³¼ë¥¼ ResultSet ìœ¼ë¡œ ë°›ì•„ì˜¤ê¸°
             rs = pstmt.executeQuery();
              
              while(rs.next()) {
@@ -466,7 +466,7 @@ public class MovieDao {
          }
          return list;
       }
-
+   
 
          public List<MovieDto> getSummerList() {
          Connection conn = null;
@@ -474,17 +474,18 @@ public class MovieDao {
          ResultSet rs = null;
          List<MovieDto> list = new ArrayList<>();
          try {
-            //Connection °´Ã¼ÀÇ ÂüÁ¶°ª ¾ò¾î¿À±â 
+            //Connection ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸° 
             conn = new DbcpBean().getConn();
-            //½ÇÇàÇÒ sql ¹® ÀÛ¼º
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
+            //ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
                   + " FROM movie_info"
-                  + " where (movie_genre like '%¾×¼Ç%' or movie_genre like '%°øÆ÷%' or movie_genre like '%½º¸±·¯%' or movie_genre like '%¹Ì½ºÅÍ¸®%')";
-            //PreparedStatement °´Ã¼ÀÇ ÂüÁ¶°ª ¾ò¾î¿À±â
+                  + " where (movie_genre like '%ì•¡ì…˜%' or movie_genre like '%ê³µí¬%' or movie_genre like '%ìŠ¤ë¦´ëŸ¬%' or movie_genre like '%ë¯¸ìŠ¤í„°ë¦¬%')"
+                  + " AND  rnum BETWEEN ? AND ?";
+            //PreparedStatement ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸°
             pstmt = conn.prepareStatement(sql);
-            //? ¿¡ ¹ÙÀÎµùÇÒ ³»¿ëÀÌ ÀÖÀ¸¸é ¿©±â¼­ ¹ÙÀÎµù
+            //? ì— ë°”ì¸ë”©í•  ë‚´ìš©ì´ ìˆìœ¼ë©´ ì—¬ê¸°ì„œ ë°”ì¸ë”©
             
-            //select ¹® ¼öÇàÇÏ°í °á°ú¸¦ ResultSet À¸·Î ¹Ş¾Æ¿À±â
+            //select ë¬¸ ìˆ˜í–‰í•˜ê³  ê²°ê³¼ë¥¼ ResultSet ìœ¼ë¡œ ë°›ì•„ì˜¤ê¸°
             rs = pstmt.executeQuery();
              
             while(rs.next()) {
@@ -521,4 +522,45 @@ public class MovieDao {
          }
          return list;
       }
+         
+   //ì¹´í…Œê³ ë¦¬ì— í•´ë‹¹í•˜ëŠ” ì˜í™” ê°¯ìˆ˜ë¥¼ ë¦¬í„´í•˜ëŠ” ë©”ì†Œë“œ
+ 	public int getCount() {
+ 		int count=0;
+ 		Connection conn = null;
+ 		PreparedStatement pstmt = null;
+ 		ResultSet rs = null;
+ 		try {
+ 			//Connection ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸° 
+ 			conn = new DbcpBean().getConn();
+ 			//ì‹¤í–‰í•  sql ë¬¸ ì‘ì„±
+ 			String sql = "SELECT NVL(MAX(ROWNUM), 0) AS count "
+ 					+ " FROM movie_info"
+ 					+ " where (movie_genre like '%ì•¡ì…˜%' or movie_genre like '%ê³µí¬%' or movie_genre like '%ìŠ¤ë¦´ëŸ¬%' or movie_genre like '%ë¯¸ìŠ¤í„°ë¦¬%')";
+ 			//PreparedStatement ê°ì²´ì˜ ì°¸ì¡°ê°’ ì–»ì–´ì˜¤ê¸°
+ 			pstmt = conn.prepareStatement(sql);
+ 			//? ì— ë°”ì¸ë”©í•  ë‚´ìš©ì´ ìˆìœ¼ë©´ ì—¬ê¸°ì„œ ë°”ì¸ë”©
+ 			
+ 			//select ë¬¸ ìˆ˜í–‰í•˜ê³  ê²°ê³¼ë¥¼ ResultSet ìœ¼ë¡œ ë°›ì•„ì˜¤ê¸°
+ 			rs = pstmt.executeQuery();
+ 			//ResultSet ê°ì²´ì— ìˆëŠ” ë‚´ìš©ì„ ì¶”ì¶œí•´ì„œ ì›í•˜ëŠ” Data type ìœ¼ë¡œ í¬ì¥í•˜ê¸°
+ 			if (rs.next()) {
+ 				count=rs.getInt("count");
+ 			}
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		} finally {
+ 			try {
+ 				if (rs != null)
+ 					rs.close();
+ 				if (pstmt != null)
+ 					pstmt.close();
+ 				if (conn != null)
+ 					conn.close();
+ 			} catch (Exception e) {
+ 			}
+ 		}
+ 		return count;
+ 	}
+ 	
+ 
 }

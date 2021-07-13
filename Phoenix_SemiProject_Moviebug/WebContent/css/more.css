@@ -3,6 +3,10 @@ a {
   color: white;
 }
 
+body{
+	color: #212529;
+}
+
 a:active,
 a:hover {
   outline: 0;
