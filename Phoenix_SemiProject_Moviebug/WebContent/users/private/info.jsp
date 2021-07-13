@@ -181,6 +181,11 @@
       font-size: 12px;
    }
    
+   a{
+     text-decoration: none;
+     color:black; 
+   }
+   
 </style>
 </head>
     <jsp:include page="../../include/navbar.jsp"> 
@@ -218,20 +223,19 @@
 				<div class="col-10">
 					<div class="tab-content" id="nav-tabContent">
 						<div class="tab-pane fade show active" id="list-qna" role="tabpanel" aria-labelledby="list-qna-list">
-							<table class="table table-striped row-3">
+							<table class="table">
 								<thead>
 									<tr>
 										<th>번호</th>
-										<th>작성자</th>
 										<th>제목</th>
+										<th>작성자</th>
 										<th>작성일</th>
 									</tr>
 								</thead>
 								<tbody>
 									<%for(CafeDto tmp:list) {%>
 									<tr>
-										<td><%=tmp.getQna_idx() %></td>
-										<td><%=tmp.getQna_writer() %></td>
+										<td><%=tmp.getQna_idx() %></td>									
 										<td><%if(tmp.getQna_file() != null){ %>
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image-fill" viewBox="0 0 16 16">
 								  				<path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
@@ -241,7 +245,8 @@
 										<a href="<%=request.getContextPath()%>/cafe/detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
 									<%} %>
 										</td>
-										<td><%=tmp.getQna_regdate() %></td>
+										<td><%=tmp.getQna_writer() %></td>
+										<td style="color:gray"><%=tmp.getQna_regdate() %></td>
 									</tr>
 									<%} %>
 								</tbody>

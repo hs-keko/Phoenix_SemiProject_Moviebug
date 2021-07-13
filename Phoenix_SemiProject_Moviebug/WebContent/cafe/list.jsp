@@ -281,12 +281,9 @@ html, body {
          <%} %>
       </div>
      </div>
-<<<<<<< HEAD
-=======
+
 <div class="footer clearfix">
->>>>>>> refs/heads/master
-
    	<jsp:include page="../include/footer.jsp"></jsp:include>
-
+</div>
 </body>
 </html>

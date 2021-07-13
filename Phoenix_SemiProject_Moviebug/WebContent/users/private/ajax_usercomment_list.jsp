@@ -51,60 +51,24 @@
 	commentList=CafeCommentDao.getInstance().userCommentList(dto3);
 	//키워드가 없을때 호출하는 메소드를 이용해서 전제 row 의 갯수를 얻어온다.
 	cmtTotalRow=CafeCommentDao.getInstance().userCommentCount(dto3);
-	
-	//하단 시작 페이지 번호 
-	int cmtStartPageNum = 1 + ((cmtPageNum-1)/CMT_PAGE_DISPLAY_COUNT)*CMT_PAGE_DISPLAY_COUNT;
-	//하단 끝 페이지 번호
-	int cmtEndPageNum=cmtStartPageNum+CMT_PAGE_DISPLAY_COUNT-1;
-	
-	int cmtTotalPageCount=(int)Math.ceil(cmtTotalRow/(double)CMT_PAGE_ROW_COUNT);
-	//끝 페이지 번호가 전체 페이지 갯수보다 크다면 잘못된 값이다.
-	if(cmtEndPageNum > cmtTotalPageCount){
-	  cmtEndPageNum=cmtTotalPageCount; //보정해 준다.
-	}
-
 %>		   
-							<table class="table table-striped">
+							<table class="table">
 								<thead>
 									<tr>
 										<th>번호</th>
-										<th>작성자</th>
 										<th>내용</th>
+										<th>작성자</th>									
 										<th>작성일</th>
 									</tr>
 								</thead>
 								<tbody>
 								<%for(CafeCommentDto tmpC:commentList) {%>
 									<tr>
-										<td><%=tmpC.getQna_comment_ref_group()%></td>
-										<td><%=dto.getName() %></td>
+										<td><%=tmpC.getQna_comment_ref_group()%></td>										
 										<td><%=tmpC.getQna_comment_content() %></td>
-										<td><%=tmpC.getQna_comment_regdate() %></td>
+										<td><%=dto.getName() %></td>
+										<td style="color:gray"><%=tmpC.getQna_comment_regdate() %></td>
 									</tr>
 								<%} %>
 								</tbody>
 							</table>
-							<div class="page-ui clearfix">
-				      			<ul>
-						         <%if(cmtStartPageNum != 1){ %>
-						            <li>
-						               <a href="info.jsp?cmtPageNum=<%=cmtStartPageNum-1 %>">Prev</a>
-						            </li>   
-						         <%} %>
-						         
-						         <%for(int e=cmtStartPageNum; e<=cmtEndPageNum; e++){ %>
-						            <li>
-						               <%if(cmtPageNum == e){ %>
-						                  <a class="active" href="info.jsp?cmtPageNum=<%=e %>"><%=e %></a>
-						               <%}else{ %>
-						                  <a href="info.jsp?cmtPageNum=<%=e %>"><%=e %></a>
-						               <%} %>
-						            </li>   
-						         <%} %>
-						         <%if(cmtEndPageNum < cmtTotalPageCount){ %>
-						            <li>
-						               <a href="info.jsp?cmtPageNum=<%=cmtEndPageNum+1 %>">Next</a>	
-									</li>
-						         <%} %>
-						      	</ul>
-							</div>
