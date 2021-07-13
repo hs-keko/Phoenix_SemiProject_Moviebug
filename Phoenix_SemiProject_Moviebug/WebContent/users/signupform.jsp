@@ -14,13 +14,22 @@
 <head>
 <meta charset="UTF-8" />
 <title>/users/signup_form.jsp</title>
-<jsp:include page="../include/resource.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+<!-- navbar 필수 import -->
+    <jsp:include page="../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
+    <!-- import css -->
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
+    
+    <!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 
- <!-- 웹폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
 <style>
 
 	html, body {
@@ -40,6 +49,7 @@
 		padding-top: 40px;
 		padding-bottom: 40px;
 		border: 1px solid #cecece;
+		height: 100%;
 	}
 	
 	.signupform_container .container--form {
@@ -61,10 +71,11 @@
 </style>
 </head>
 <body>
-
  <jsp:include page="../include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
+<div class="container">
+    
 <div class="container">
     
 	<div class= "signupform_container">
@@ -149,9 +160,20 @@
 				  </label>
 		      </div>
 	          <button class="btn btn-primary mb-3" type="submit" id="signBtn">가입</button>
-	   </form>
-  	 </div>
+	    </form>
+  	  </div>
+  	</div>
   </div>
+ 
+  
+        <script src="<%= request.getContextPath()%>/js/index.js"></script>
+
+      <!-- navbar 필수 import -->
+      <!-- import navbar.js -->
+      <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+
+		<!-- import footer.jsp -->
+      	<jsp:include page="../include/footer.jsp"></jsp:include>
 
 <script src="<%=request.getContextPath() %>/js/gura_util.js"></script>
 <script type="text/javascript">
