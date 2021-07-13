@@ -230,7 +230,7 @@
 				<td><%=tmp.getMovie_num()%></td>
 				<td><%=tmp.getMovie_director() != null ? tmp.getMovie_director():"알수없음" %></td>
 				<td>
-					<a href="detail.jsp?num=<%=tmp.getMovie_num()%>"><%=tmp.getMovie_title_kr() %> 
+					<a href="<%=request.getContextPath() %>/movieinfo/movieinfo.jsp?movie_num=<%=tmp.getMovie_num()%>"><%=tmp.getMovie_title_kr() %> 
 					<%=tmp.getMovie_title_eng() != null ? "( "+tmp.getMovie_title_eng()+" )":"" %></a>
 				</td>
 				<td><%=tmp.getMovie_year() %></td>
@@ -292,9 +292,9 @@
 					  <path d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
 					  <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 					</svg>
-					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+					<a href="<%=request.getContextPath() %>/cafe/detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
 				<%}else{ %>
-					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+					<a href="<%=request.getContextPath() %>/cafe/detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
 				<%} %>
 				</td>
 				<td><%=tmp.getQna_regdate() %></td>
