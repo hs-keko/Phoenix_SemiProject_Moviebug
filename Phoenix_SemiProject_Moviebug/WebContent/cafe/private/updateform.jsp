@@ -13,51 +13,45 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/private/updateform.jsp</title>
-   <jsp:include page="../../include/resource.jsp"></jsp:include>
+    <!-- navbar 필수 import -->
+    <jsp:include page="../../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
-    
-    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
-    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- import css -->
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
 	
-	<!-- 웹폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
-
-	<!-- 웹폰트 test -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
-  
-	<!-- 웹폰트 댓글  -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 <style>
+	.footer_inner a {
+	   color:white;
+	}
+	#qna_content{
+		height: 500px;
+	}
 	html, body {
 		width: 100%;
 		height: 100%;
+		margin-top: 30px;
 	}
 	
 	.container {
 		width: 100%;
 		height: 100%;	
+		margin-bottom:150px
 	}
 	.footer {
 		  height: 50px;
 		  margin-top: -50px;
 	}
+	
 	a{
 	text-decoration: none; 
 	}
 </style>
 </head>
 <body>
-<div class="container">
 <jsp:include page="../../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
+<div class="container">
 	<br>
 	<br>
 	<form action="update.jsp" method="post">
