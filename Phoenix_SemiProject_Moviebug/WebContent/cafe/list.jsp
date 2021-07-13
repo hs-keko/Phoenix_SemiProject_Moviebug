@@ -282,5 +282,9 @@ html, body {
 
    	<jsp:include page="../include/footer.jsp"></jsp:include>
 </div>
+<script>
+	let footer = document.querySelector("footer")
+	let contentt = document.querySelector(".cafe_list_content")
+</script>
 </body>
 </html>
