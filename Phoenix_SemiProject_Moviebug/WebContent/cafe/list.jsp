@@ -91,7 +91,7 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/list.jsp</title>
-<<!-- navbar 필수 import -->
+<!-- navbar 필수 import -->
     <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
 
@@ -111,13 +111,13 @@
 	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
   
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
 }
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 	
 	.font-do{
 	   	font-family: 'Nanum Gothic', sans-serif;
@@ -131,11 +131,11 @@ html, body {
 		padding-bottom: 90px;
 		height: 800px;
 	}
+	
 	.content {
 	  min-height: 100%;
 	}
 	.content-inside {
-	  padding: 20px;
 	  padding-bottom: 20px;
 	}
 
@@ -173,22 +173,21 @@ html, body {
    		margin-bottom: 30px;
    }
    .cafe_list_content{
-   margin-top: 65px;
+   	margin-top: 65px;
     height: auto;
     min-height: 100%;
    }
-   #footer{
-       transform: translateY(-100%);
-  }
+  
    .font-gray{
    		color: gray
    }
    a{
-   text-decoration: none; 
+   		text-decoration: none; 
    }
 
 </style>
 </head>
+
 <body>
 <div class="content">
     <div class="content-inside">
@@ -196,7 +195,7 @@ html, body {
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
 
-<div class="container">
+<div class="container cafe_list_content">
 	<h1 id="one"><a class= "font-qa link-dark" href="<%=request.getContextPath() %>/cafe/list.jsp"> Q&A </a></h1>
 	<div id="two">
 		<button type="button" class="btn btn-secondary">
