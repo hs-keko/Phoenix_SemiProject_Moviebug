@@ -122,6 +122,7 @@
 
 	.container.movieinfo{
 		width: 720px;
+		margin-top: 65px;
 	}
 	
 	.movie_trailer{
