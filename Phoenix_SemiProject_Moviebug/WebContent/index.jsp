@@ -83,7 +83,10 @@
               <img src="<%=dto.getMovie_image() != null ? dto.getMovie_image():"images/bigdata.jpg" %>" class="d-block" alt="..." />
               <div class="carousel-caption d-none d-md-block">
               <button type="button" class="btn btn-white rounded-pill index_carousel_btn">
+
+	              <a href="<%=request.getContextPath() %>/movieinfo//movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>">
 	              <a href="<%=request.getContextPath() %>/movieinfo/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>">
+
 	                <h5><%=dto.getMovie_title_kr() %></h5>
 	                <p>
 	                  	정보보기
@@ -119,6 +122,7 @@
       </div>
 
  <div class="container-xl index_content">
+ 
       <div class="row index_content02">
       	 <div class="row">
 	        <div class="col flex_box index_category">
@@ -156,6 +160,45 @@
           <a href="<%=request.getContextPath() %>/more.jsp?category=resent" title="" class="moreanchor">더보기</a>
         </div>
       </div>
+      
+       		<div class="row index_event_content">
+ 			<div class="row">
+ 				<div class="col">
+ 					<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+					  <div class="carousel-indicators">
+					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					  </div>
+					  <div class="carousel-inner">
+					    <div class="carousel-item active">
+					      <a href="http://www.cgv.co.kr/culture-event/event/detailViewUnited.aspx?seq=32640&menu=001">
+					      <img src="https://img.cgv.co.kr/Front/Main/2021/0706/16255375399870.jpg" class="d-block w-100" alt="...">
+					      </a>
+					    </div>
+					    <div class="carousel-item">
+					    <a href="http://www.cgv.co.kr/culture-event/event/detailViewUnited.aspx?seq=32651&menu=001">
+					      <img src="https://img.cgv.co.kr/Front/Main/2021/0707/16256253501280.jpg" class="d-block w-100" alt="...">
+					    </a>
+					    </div>
+					    <div class="carousel-item">
+					    <a href="http://www.cgv.co.kr/culture-event/event/detailViewUnited.aspx?seq=32625&menu=001">
+					      <img src="https://img.cgv.co.kr/Front/Main/2021/0709/16257922117860.jpg" class="d-block w-100" alt="...">
+					    </a>
+					    </div>
+					  </div>
+					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Previous</span>
+					  </button>
+					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Next</span>
+					  </button>
+					</div>
+ 				</div>
+ 			</div>
+ 		</div>
 
       <div class="row index_content03">
         <div class="row">
@@ -168,7 +211,11 @@
             <div class="row movie_list">
               		 <%for(MovieDto dto: NewHAmovies){ %>
 		              <div class="col-6 col-lg-3 movie_list">
+
+              		 		<a href="<%=request.getContextPath() %>/movieinfo//movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
+
               		 		<a href="<%=request.getContextPath() %>/movieinfo/movieinfo.jsp?movie_num=<%=dto.getMovie_num() %>" class="poster_link">
+
 		                <div class="card border-0">
 		                  <div class="card-body poster_info">
 		                    <h5 class="card-title"><%=dto.getMovie_title_kr() %></h5>

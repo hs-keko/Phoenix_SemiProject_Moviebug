@@ -1,3 +1,5 @@
+<%@page import="test.cafe.dao.CafeCommentDao"%>
+<%@page import="test.cafe.dto.CafeCommentDto"%>
 <%@page import="test.cafe.dao.CafeDao"%>
 <%@page import="java.util.List"%>
 <%@page import="test.cafe.dto.CafeDto"%>
@@ -11,14 +13,15 @@
    String email=(String)session.getAttribute("email");
    //2. UsersDao 객체를 이용해서 가입된 정보를 얻어온다.
    UsersDto dto=UsersDao.getInstance().getData(email);
-   
+   // QNA 게시판의 이름과 유저정보 이름 확인
    String qna_writer = dto.getName();
+  
    
    // 로그인 상태 확인
    boolean isLogin = false;
    if(email != null) isLogin = true;
    
- //한 페이지에 몇개씩 표시할 것인지
+   //한 페이지에 몇개씩 표시할 것인지
    final int PAGE_ROW_COUNT=10;
    //하단 페이지를 몇개씩 표시할 것인지
    final int PAGE_DISPLAY_COUNT=10;
@@ -59,25 +62,36 @@
    //하단 끝 페이지 번호
    int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
    
-   //전체 페이지의 갯수
    int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
    //끝 페이지 번호가 전체 페이지 갯수보다 크다면 잘못된 값이다.
    if(endPageNum > totalPageCount){
       endPageNum=totalPageCount; //보정해 준다.
    }
+   
+  
+    
 %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/users/private/update.jsp</title>
-<jsp:include page="../../include/resource.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/navbar.css" />
+ <!-- navbar 필수 import -->
+    <jsp:include page="../../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
+    <!-- import css -->
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
+    
+    <!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 
- <!-- 웹폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
 <style>
    
    /* 프로필 이미지를 작은 원형으로 만든다 */
@@ -104,16 +118,19 @@
 			
 	.updateform_container {
 		align-items: center;
-		padding-top: 40px;
+		padding-top: 100px;
 		padding-bottom: 40px;
 		border: 1px solid #cecece;
+		transform: translateY(0%);
+		height: 100%;
 	}
    
    .updateform_container .container--form {
 		width: 100%;
-		max-width: 600px;
+		max-width: 1000px;
 		padding: 15px;	
 		margin: auto;
+		
 	}
     
    .container--image {
@@ -160,6 +177,15 @@
       padding: 5px;
    }
    
+   .list-group > a {
+      font-size: 12px;
+   }
+   
+   a{
+     text-decoration: none;
+     color:black; 
+   }
+   
 </style>
 </head>
     <jsp:include page="../../include/navbar.jsp"> 
@@ -174,83 +200,130 @@
 						<path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
 					</svg>
 	            </a>
-				<div class="container--image">
-	                <%if(dto.getProfile()==null){ %>
-	                           <svg id="profileImage" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-	                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-	                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-	                           </svg>
-	                        <%}else{ %>
-	                           <img id="profileImage" 
-	                              src="<%=request.getContextPath() %><%=dto.getProfile() %>" />
-	                        <%} %>
-	                        <span id="nick"><%=dto.getName() %></span>	                        
-	                </div>       
+			<div class="container--image">
+	             <%if(dto.getProfile()==null){ %>
+	                 <svg id="profileImage" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+	                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+	                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+	                 </svg>
+	              <%}else{ %>
+	              <img id="profileImage" 
+	                 src="<%=request.getContextPath() %><%=dto.getProfile() %>" />
+	              <%} %>
+	              <span id="nick"><%=dto.getName() %></span>	                        
+	         </div>       
 	            
-				  <div class="row align-items">
-					    <div class="col text-center">
-					      	<a href="">내가 쓴 게시글 보기</a>
-					    </div>
-					    <div class="col text-center">
-					        <a href="">내가 쓴 댓글 보기</a>
-					    </div>
-				  </div>
-				  
-	<table>
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>작성자</th>
-				<th>제목</th>
-				<th>작성일</th>
-			</tr>
-		</thead>
-		<tbody>
-		<%for(CafeDto tmp:list) {%>
-			<tr>
-				<td><%=tmp.getQna_idx() %></td>
-				<td><%=tmp.getQna_writer() %></td>
-				<td><%if(tmp.getQna_file() != null){ %>
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image-fill" viewBox="0 0 16 16">
-					  <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
-					</svg>
-					<a href="<%=request.getContextPath()%>/cafe/detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
-				<%}else{ %>
-					<a href="<%=request.getContextPath()%>/cafe/detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
-				<%} %>
-				</td>
-				<td><%=tmp.getQna_regdate() %></td>
-			</tr>
-		<%} %>
-		</tbody>
-	</table>
-	<div class="page-ui clearfix">
-	      <ul>
-	         <%if(startPageNum != 1){ %>
-	            <li>
-	               <a href="info.jsp?pageNum=<%=startPageNum-1 %>">Prev</a>
-	            </li>   
-	         <%} %>
-	         
-	         <%for(int i=startPageNum; i<=endPageNum ; i++){ %>
-	            <li>
-	               <%if(pageNum == i){ %>
-	                  <a class="active" href="info.jsp?pageNum=<%=i %>"><%=i %></a>
-	               <%}else{ %>
-	                  <a href="info.jsp?pageNum=<%=i %>"><%=i %></a>
-	               <%} %>
-	            </li>   
-	         <%} %>
-	         <%if(endPageNum < totalPageCount){ %>
-	            <li>
-	               <a href="info.jsp?pageNum=<%=endPageNum+1 %>">Next</a>
-	            </li>
-	         <%} %>
-	      </ul>
-	   			</div>
+			 <div class="my_qna_comment row">
+  			 	<div class="my_qna_comment_wrapper col-2">
+					<div class="list-group" id="list-tab" role="tablist">
+					    <a class="list-group-item list-group-item-action active" id="list-qna-list" data-bs-toggle="list" href="#list-qna" role="tab" aria-controls="list-qna">내 게시물</a>
+					    <a class="list-group-item list-group-item-action" id="list-comment-list" data-bs-toggle="list" href="#list-comment" role="tab" aria-controls="list-comment">내 댓글</a>
+					</div>
+				</div>
+				<div class="col-10">
+					<div class="tab-content" id="nav-tabContent">
+						<div class="tab-pane fade show active" id="list-qna" role="tabpanel" aria-labelledby="list-qna-list">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>번호</th>
+										<th>제목</th>
+										<th>작성자</th>
+										<th>작성일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%for(CafeDto tmp:list) {%>
+									<tr>
+										<td><%=tmp.getQna_idx() %></td>									
+										<td><%if(tmp.getQna_file() != null){ %>
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image-fill" viewBox="0 0 16 16">
+								  				<path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
+											</svg>
+											<a href="<%=request.getContextPath()%>/cafe/detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+									<%}else{ %>
+										<a href="<%=request.getContextPath()%>/cafe/detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+									<%} %>
+										</td>
+										<td><%=tmp.getQna_writer() %></td>
+										<td style="color:gray"><%=tmp.getQna_regdate() %></td>
+									</tr>
+									<%} %>
+								</tbody>
+							</table>
+							<div class="page-ui clearfix">
+				      			<ul>
+				         		<%if(startPageNum != 1){ %>
+				            		<li>
+				              			 <a href="info.jsp?pageNum=<%=startPageNum-1 %>">Prev</a>
+				            		</li>   
+				         		<%} %>
+				         
+				         		<%for(int i=startPageNum; i<=endPageNum ; i++){ %>
+				            		<li>
+				              		<%if(pageNum == i){ %>
+				                  		<a class="active" href="info.jsp?pageNum=<%=i %>"><%=i %></a>
+				               		<%}else{ %>
+				                  		<a href="info.jsp?pageNum=<%=i %>"><%=i %></a>
+				              		<%} %>
+				           			</li>   
+				        			<%} %>
+				         			<%if(endPageNum < totalPageCount){ %>
+				            		<li>
+				               			<a href="info.jsp?pageNum=<%=endPageNum+1 %>">Next</a>
+				           			</li>
+				         			<%} %>
+				      			</ul>
+							</div>
+					   </div>
+					   <div class="tab-pane fade list-comment-users" id="list-comment" role="tabpanel" aria-labelledby="list-comment-list">		   
+							
+						</div>						
+					</div>	
+				</div>				
       		</div>
 		</div>
 	</div>
+</div>
+      <script src="<%= request.getContextPath()%>/js/index.js"></script>
+
+      <!-- navbar 필수 import -->
+      <!-- import navbar.js -->
+      <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+
+		<!-- import footer.jsp -->
+      	<jsp:include page="../../include/footer.jsp"></jsp:include>
+      	<script src="${pageContext.request.contextPath}/js/gura_util.js"></script>
+<script>
+	//댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
+	let currentPage=1;
+	//마지막 페이지는 totalPageCount 이다.  
+	
+	document.querySelector("#list-comment-list").addEventListener("click", function(){
+		
+		/*
+		해당 페이지의 내용을 ajax 요청을 통해서 받아온다.
+		"pageNum=xxx&num=xxx" 형식으로 GET 방식 파라미터를 전달한다. 
+		*/
+		ajaxPromise("ajax_usercomment_list.jsp","get",
+		   "pageNum="+currentPage)
+		.then(function(response){
+		//json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
+		return response.text();
+		})
+		.then(function(data){
+			//data 는 html 형식의 문자열이다. 
+			console.log(data);
+			// beforebegin | afterbegin | beforeend | afterend
+			document.querySelector(".list-comment-users")
+			   .insertAdjacentHTML("beforeend", data);
+			});
+		
+		}, {once : true});
+	
+	
+
+</script>
 </body>
 </html>
 

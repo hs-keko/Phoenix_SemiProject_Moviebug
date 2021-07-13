@@ -17,13 +17,22 @@
 <head>
 <meta charset="UTF-8">
 <title>/users/private/update.jsp</title>
-<jsp:include page="../../include/resource.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/navbar.css" />
+<!-- navbar 필수 import -->
+    <jsp:include page="../../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
+    <!-- import css -->
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
+    
+    <!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 
- <!-- 웹폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
 <style>
    
    /* 프로필 이미지를 작은 원형으로 만든다 */
@@ -50,9 +59,12 @@
 			
 	.updateform_container {
 		align-items: center;
-		padding-top: 40px;
+		padding-top: 100px;
 		padding-bottom: 40px;
 		border: 1px solid #cecece;
+		transform: translateY(0%);
+		justify--content: center;
+		height: 100%;
 	}
    
    .updateform_container .container--form {
@@ -60,6 +72,7 @@
 		max-width: 600px;
 		padding: 15px;	
 		margin: auto;
+		height: 100%;
 	}
     
    .container--image {
@@ -154,7 +167,7 @@
                </form>
       
       
-               <form action="pwd_update.jsp" method="post" id="myForm">
+               <form class="update_pwdForm row-3" action="pwd_update.jsp" method="post" id="myForm">
                   <div class="p-2 bd-highlight col-12">
                      <p class="float-start">비밀번호</p>
                      <p>
@@ -189,6 +202,16 @@
             </div>
          </div>   
    </div>
+   
+     <script src="<%= request.getContextPath()%>/js/index.js"></script>
+
+      <!-- navbar 필수 import -->
+      <!-- import navbar.js -->
+      <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+
+		<!-- import footer.jsp -->
+      	<jsp:include page="../../include/footer.jsp"></jsp:include>
+      	
 <script src="<%=request.getContextPath() %>/js/gura_util.js"></script>
 <script>
 
