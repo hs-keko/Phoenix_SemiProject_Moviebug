@@ -57,15 +57,7 @@
 	        Mlist=MovieDao.getInstance().getListTD(Mdto);
 	         //제목+내용 검색일때 호출하는 메소드를 이용해서 row  의 갯수 얻어오기
 	         MtotalRow=MovieDao.getInstance().getCountTD(Mdto);
-	      }/* else if(condition.equals("movie_title")){ //제목 검색인 경우
-	    	  Mdto.setMovie_title_kr(keyword);
-	         Mlist=MovieDao.getInstance().getListT(Mdto);
-	         MtotalRow=MovieDao.getInstance().getCountT(Mdto);
-	      }else if(condition.equals("movie_char")){ //작성자 검색인 경우
-	         Mdto.setMovie_character(keyword);
-	         Mlist=MovieDao.getInstance().getListW(Mdto);
-	         MtotalRow=MovieDao.getInstance().getCountW(Mdto);
-	      } // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다. */
+	      }
 	   }else{//검색 키워드가 넘어오지 않는다면
 	      //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
 	      Mlist=MovieDao.getInstance().getList(Mdto);
@@ -94,21 +86,14 @@
 	         list=CafeDao.getInstance().getListTC(dto);
 	         //제목+내용 검색일때 호출하는 메소드를 이용해서 row  의 갯수 얻어오기
 	         totalRow=CafeDao.getInstance().getCountTC(dto);
-	      }else if(condition.equals("qna_title")){ //제목 검색인 경우
-	         dto.setQna_title(keyword);
-	         list=CafeDao.getInstance().getListT(dto);
-	         totalRow=CafeDao.getInstance().getCountT(dto);
-	      }else if(condition.equals("qna_writer")){ //작성자 검색인 경우
-	         dto.setQna_writer(keyword);
-	         list=CafeDao.getInstance().getListW(dto);
-	         totalRow=CafeDao.getInstance().getCountW(dto);
-	      }else if(condition.equals("movie_title_direc")){
+	      }if(condition.equals("movie_title_direc")){
 	    	  // navbar 검색 처리중
 		         //검색 키워드를 CafeDto 에 담아서 전달한다.
 		         dto.setQna_title(keyword);
 		         dto.setQna_content(keyword);
 		         //제목+내용 검색일때 호출하는 메소드를 이용해서 목록 얻어오기 
 		         list=CafeDao.getInstance().getListTC(dto);
+		         totalRow=CafeDao.getInstance().getCountTC(dto);
 	      }
 	   }else{//검색 키워드가 넘어오지 않는다면
 	      //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
@@ -117,17 +102,9 @@
 	      totalRow=CafeDao.getInstance().getCount();
 	   }
    
-   //하단 시작 페이지 번호 
-   int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
-   //하단 끝 페이지 번호
-   int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
    
-   //전체 페이지의 갯수
-   int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
-   //끝 페이지 번호가 전체 페이지 갯수보다 크다면 잘못된 값이다.
-   if(endPageNum > totalPageCount){
-      endPageNum=totalPageCount; //보정해 준다.
-   }
+   
+   
    String email=(String)session.getAttribute("email");
 
 %>
@@ -146,44 +123,71 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 <style>
-   .page-ui a{
-      text-decoration: none;
-      color: #000;
-   }
-   
-   .page-ui a:hover{
-      text-decoration: underline;
-   }
-   
-   .page-ui a.active{
-      color: red;
-      font-weight: bold;
-      text-decoration: underline;
-   }
-   .page-ui ul{
-      list-style-type: none;
-      padding: 0;
-   }
-   
-   .page-ui ul > li{
-      float: left;
-      padding: 5px;
-   }
-   #one{
-   		text-align: center;
-   		margin-top: 15px;
-   }
-   #two{
-   		float: right;
-   }
-   #three{
-   		margin-bottom: 30px;
-   }
-   
-   .searchlist_container{
-   	margin-top: 65px;
-   }
+html, body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
 
+.page-ui a {
+	text-decoration: none;
+	color: #000;
+}
+
+.page-ui a:hover {
+	text-decoration: underline;
+}
+
+.page-ui a.active {
+	color: red;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.page-ui ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.page-ui ul>li {
+	float: left;
+	padding: 5px;
+}
+
+#one {
+	text-align: center;
+}
+
+#two {
+	float: right;
+}
+
+
+
+.searchlist_container {
+	margin-top: 65px;
+	height: auto;
+	min-height: 100%;
+}
+
+.searchlist_form form{
+	margin: 30px 0;
+	width: 80%;
+}
+.searchlist_form form input{
+}
+
+.search_title{
+	align-items: center;
+}
+
+#condition{
+	display: none;
+}
+
+#footer{
+	transform: translateY(-100%);
+}
 </style>
 </head>
 <body>
@@ -191,87 +195,76 @@
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
 <div class="container searchlist_container">
-	<h1 id="one"> 영화 검색 결과 </h1>
-	<div id="two" class="btn btn-outline-primary">
-		<a href="private/insertform.jsp">새글 작성하기</a>
-	</div>
-	
-		   <div id="three" style="float:right;">
-         <form action="searchall.jsp" method="get">
-         	<label for="condition">검색 조건</label>
+	<div class="row d-felx searchlist_form">
+		<div class="col d-flex justify-content-center">
+         <form action="searchall.jsp" method="get" class="input-group mb-3">
          	<select name="condition" id="condition">
-    			 <option value="movie_title_direc" <%=condition.equals("qna_title_content") ? "selected" : ""%>>영화 제목/감독</option>
-         		<option value="qna_title_content" <%=condition.equals("qna_title_content") ? "selected" : ""%>>제목+내용</option>
-		         <option value="qna_title" <%=condition.equals("qna_title") ? "selected" : ""%>>제목</option>
-		         <option value="qna_writer" <%=condition.equals("qna_writer") ? "selected" : ""%>>작성자</option>
+    			 <option class="condition" value="movie_title_direc" <%=condition.equals("movie_title_direc") ? "selected" : ""%>>영화 제목/감독</option>
     		</select>
-    		<input type="text" name="keyword" placeholder="검색어를 입력하세요..." value="<%=keyword%>"/>
-    		<button type="submit">검색</button>
+    		<input type="text" name="keyword" class="form-control" placeholder="검색어를 입력하세요..." aria-describedby="button-addon2" value="<%=keyword%>"/>
+    		<button id="button-addon2" type="submit" class="btn btn-outline-secondary">검색</button>
          </form> 
-         <%if(!condition.equals("")){ %>
-         	<p>
-         		<strong><%=totalRow %></strong>개의 글이 검색되었습니다.
-         	</p>
-         <%} %>
-      </div>
-	
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>감독</th>
-				<th>제목</th>
-				<th>개봉일</th>
-			</tr>
-		</thead>
-		<tbody>
-		<%for(MovieDto tmp:Mlist) {%>
-			<tr>
-				<td><%=tmp.getMovie_num()%></td>
-				<td><%=tmp.getMovie_director() != null ? tmp.getMovie_director():"알수없음" %></td>
-				<td>
-					<a href="<%=request.getContextPath() %>/movieinfo/movieinfo.jsp?movie_num=<%=tmp.getMovie_num()%>"><%=tmp.getMovie_title_kr() %> 
-					<%=tmp.getMovie_title_eng() != null ? "( "+tmp.getMovie_title_eng()+" )":"" %></a>
-				</td>
-				<td><%=tmp.getMovie_year() %></td>
-			</tr>
-		<%} %>
-		</tbody>
-	</table>
-	<div id="three" class="page-ui clearfix" style="float: left;">
-	      <ul>
-	         <%if(startPageNum != 1){ %>
-	            <li>
-	               <a href="list.jsp?pageNum=<%=startPageNum-1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Prev</a>
-	            </li>   
+		</div>
+	</div>
+	<div class="row search_title">
+		<div class="col">
+			<h1 id="one"> 영화 검색 결과 </h1>
+		</div>
+		<div class="col d-flex">
+		         <%if(!condition.equals("")){ %>
+	         	<span>
+	         		<strong><%=MtotalRow %></strong>개의 글이 검색되었습니다.
+	         	</span>
 	         <%} %>
-	         
-	         <%for(int i=startPageNum; i<=endPageNum ; i++){ %>
-	            <li>
-	               <%if(pageNum == i){ %>
-	                  <a class="active" href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
-	               <%}else{ %>
-	                  <a href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
-	               <%} %>
-	            </li>   
-	         <%} %>
-	         <%if(endPageNum < totalPageCount){ %>
-	            <li>
-	               <a href="list.jsp?pageNum=<%=endPageNum+1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Next</a>
-	            </li>
-	         <%} %>
-	      </ul>
-	   </div>
+		</div>
+	</div>
+	<div class="row">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>감독</th>
+					<th>제목</th>
+					<th>개봉일</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%for(MovieDto tmp:Mlist) {%>
+				<tr>
+					<td><%=tmp.getMovie_num()%></td>
+					<td><%=tmp.getMovie_director() != null ? tmp.getMovie_director():"알수없음" %></td>
+					<td>
+						<a href="<%=request.getContextPath() %>/movieinfo/movieinfo.jsp?movie_num=<%=tmp.getMovie_num()%>"><%=tmp.getMovie_title_kr() %> 
+						<%=tmp.getMovie_title_eng() != null ? "( "+tmp.getMovie_title_eng()+" )":"" %></a>
+					</td>
+					<td><%=tmp.getMovie_year() %></td>
+				</tr>
+			<%} %>
+			</tbody>
+		</table>
 
-
-
-
-
-	<h1 id="one"> Q&A 검색 결과 </h1>
-	<div id="two" class="btn btn-outline-primary">
-		<a href="private/insertform.jsp">새글 작성하기</a>
+	</div>
+	<div class="row">
+		<div class="col d-flex justify-content-end">
+			<a href="<%= request.getContextPath()%>/more.jsp?keyword=<%= keyword%>">
+			<button type="button" class="btn btn-secondary btn-lg mb-4">영화 검색결과 더보기</button>
+			</a>
+		</div>
 	</div>
 	
+	<div class="row search_title">
+		<div class="col">
+			<h1 id="one"> Q&A 검색 결과 </h1>
+		</div>
+		<div class="col d-flex">
+		         <%if(!condition.equals("")){ %>
+	         	<span>
+	         		<strong><%=totalRow %></strong>개의 글이 검색되었습니다.
+	         	</span>
+	         <%} %>
+		</div>
+	</div>
+	<div class="row">
 	
 	<table class="table table-striped">
 		<thead>
@@ -302,50 +295,34 @@
 		<%} %>
 		</tbody>
 	</table>
-	<div id="three" class="page-ui clearfix" style="float: left;">
-	      <ul>
-	         <%if(startPageNum != 1){ %>
-	            <li>
-	               <a href="list.jsp?pageNum=<%=startPageNum-1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Prev</a>
-	            </li>   
-	         <%} %>
-	         
-	         <%for(int i=startPageNum; i<=endPageNum ; i++){ %>
-	            <li>
-	               <%if(pageNum == i){ %>
-	                  <a class="active" href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
-	               <%}else{ %>
-	                  <a href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
-	               <%} %>
-	            </li>   
-	         <%} %>
-	         <%if(endPageNum < totalPageCount){ %>
-	            <li>
-	               <a href="list.jsp?pageNum=<%=endPageNum+1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Next</a>
-	            </li>
-	         <%} %>
-	      </ul>
-	   </div>
-	   
-		   <div id="three" style="float:right;">
-         
-         <%if(!condition.equals("")){ %>
-         	<p>
-         		<strong><%=totalRow %></strong>개의 글이 검색되었습니다.
-         	</p>
-         <%} %>
-      </div>
 
+		</div>
+			<div class="row">
+		<div class="col d-flex justify-content-end">
+			<a href="<%=request.getContextPath()%>/cafe/list.jsp?condition=qna_title_content&keyword=<%=keyword%>">
+			<button type="button" class="btn btn-secondary btn-lg mb-4">Q&A 검색결과 더보기</button>
+			</a>
+		</div>
+	</div>
+	</div>
 
-
-
-
-     </div>
-     <div style="clear:both;"></div>
 	<!-- footer  -->
 	
 <div id=footer>
    	<jsp:include page="/include/footer.jsp"></jsp:include>
 </div>
+
+      <!-- navbar 필수 import -->
+      <!-- import navbar.js -->
+      <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+	<script>
+		let content = document.querySelector(".searchlist_container")
+		let footer = document.querySelector("#footer")
+		content.style.paddingBottom = footer.offsetHeight+"px"	
+		
+	window.onresize = ()=>{
+		content.style.paddingBottom = footer.offsetHeight+"px"	
+	}
+	</script>
 </body>
 </html>

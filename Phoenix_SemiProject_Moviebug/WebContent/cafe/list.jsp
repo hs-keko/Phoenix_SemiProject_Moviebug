@@ -111,6 +111,11 @@
 	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
   
 <style>
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 	
@@ -120,10 +125,12 @@
 	.font-qa {
 		font-family: 'Dancing Script', cursive;
 	}
+
 	html, body {
     width: 100%;
     height: 100%;
 	}
+  
    .page-ui a{
       text-decoration: none;
       color: #000;
@@ -160,6 +167,14 @@
    #three{
    		margin-bottom: 30px;
    }
+   .cafe_list_content{
+   margin-top: 65px;
+    height: auto;
+    min-height: 100%;
+   }
+   #footer{
+       transform: translateY(-100%);
+  }
    .font-gray{
    		color: gray
    }
@@ -184,6 +199,7 @@
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
+
 <div class="container cafe_list_content">
 	<h1 id="one"><a class= "font-qa link-dark" href="<%=request.getContextPath() %>/cafe/list.jsp"> Q&A </a></h1>
 	<div id="two">
@@ -262,8 +278,8 @@
          <%} %>
       </div>
      </div>
-     
 <div class="footer clearfix">
+
    	<jsp:include page="../include/footer.jsp"></jsp:include>
 </div>
 </body>
