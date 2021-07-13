@@ -161,7 +161,7 @@
            <div class="row row-cols-1 row-cols-md-4 g-4"> 
             <%for(MovieDto tmp: ResentList) {%>
                 <div class="col col-6 col-lg-3 movie_list">
-                  <a href="<%=request.getContextPath() %>/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>" class="poster_link">
+                  <a href="<%=request.getContextPath() %>/movieinfo/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>" class="poster_link">
                   <div class="card border-0">
                   <div class="card-body poster_info">
                     <h5 class="card-title"><%=tmp.getMovie_title_kr() %></h5>
