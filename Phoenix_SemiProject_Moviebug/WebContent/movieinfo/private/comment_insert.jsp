@@ -38,5 +38,5 @@
 	MovieCommentDao.getInstance().insert(dto);
 	//응답하기 (원글 자세히 보기로 다시 리다일렉트 시킨다)
 	String cPath=request.getContextPath();
-	response.sendRedirect(cPath+"/movieinfo.jsp?movie_num="+comment_ref_group);
+	response.sendRedirect(cPath+"/movieinfo/movieinfo.jsp?movie_num="+comment_ref_group);
 %>
