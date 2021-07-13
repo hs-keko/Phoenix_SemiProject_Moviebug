@@ -17,6 +17,8 @@ public class MovieDto {
    private String movie_nation;
    private String movie_director;
    private String movie_writer;
+	private int startRowNum;
+	private int endRowNum;
    
    public MovieDto() {}
 
@@ -42,6 +44,24 @@ public class MovieDto {
 		this.movie_writer = movie_writer;
 	}
 	
+	
+	
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+
 	public int getMovie_num() {
 		return movie_num;
 	}

@@ -78,15 +78,18 @@ public class CafeCommentDao {
 	         //Connection 객체의 참조값 얻어오기 
 	         conn = new DbcpBean().getConn();
 	         //실행할 sql 문 작성
-	         String sql = "SELECT *"
-	         		+ " FROM "
-	         		+ " (SELECT result1.*, ROWNUM as rnum"
-	         		+ " FROM"
-	         		+ " (SELECT qna_comment_idx, qna_comment_ref_group, qna_comment_writer, qna_comment_content, qna_comment_regdate" + 
+	         String sql = "SELECT *" + 
+	         		" FROM" + 
+	         		" (SELECT result1.*, ROWNUM AS rnum" + 
+	         		" FROM" + 
+	         		" (SELECT qna_comment_writer, qna_comment_content, qna_comment_ref_group," + 
+	         		" board_qna_comment.qna_comment_regdate" + 
 	         		" FROM board_qna_comment" + 
-	         		" WHERE qna_comment_writer = ? " +
-	         		" ORDER BY board_qna_comment.qna_comment_idx DESC) result1)"
-	         		+ " WHERE rnum BETWEEN ? AND ?";
+	         		" INNER JOIN users" + 
+	         		" ON board_qna_comment.qna_comment_writer = users.email" + 
+	         		" WHERE board_qna_comment.qna_comment_writer = ? " + 
+	         		" ORDER BY qna_comment_ref_group DESC) result1)" + 
+	         		" WHERE rnum BETWEEN ? AND ?";
 	         //PreparedStatement 객체의 참조값 얻어오기
 	         pstmt = conn.prepareStatement(sql);
 	         //? 에 바인딩할 내용이 있으면 여기서 바인딩
@@ -97,12 +100,11 @@ public class CafeCommentDao {
 	         rs = pstmt.executeQuery();
 	         //반복문 돌면서 ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
 	         while (rs.next()) {
-	            CafeCommentDto dto2=new CafeCommentDto();
-	            dto2.setQna_comment_idx(rs.getInt("qna_comment_idx"));
-	            dto2.setQna_comment_ref_group(rs.getInt("qna_comment_ref_group"));
-	            dto2.setQna_comment_writer(rs.getString("qna_comment_writer"));
-	            dto2.setQna_comment_content(rs.getString("qna_comment_content"));
-	            dto2.setQna_comment_regdate(rs.getString("qna_comment_regdate"));
+	        	 CafeCommentDto dto2=new CafeCommentDto();
+		            dto2.setQna_comment_writer(rs.getString("qna_comment_writer"));
+		            dto2.setQna_comment_content(rs.getString("qna_comment_content"));
+		            dto2.setQna_comment_ref_group(rs.getInt("qna_comment_ref_group"));
+		            dto2.setQna_comment_regdate(rs.getString("qna_comment_regdate"));
 	            list.add(dto2);
 	         }
 	      } catch (Exception e) {
