@@ -91,7 +91,7 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/list.jsp</title>
-<<!-- navbar 필수 import -->
+<!-- navbar 필수 import -->
     <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
 
@@ -111,13 +111,13 @@
 	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
   
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
 }
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 	
 	.font-do{
 	   	font-family: 'Nanum Gothic', sans-serif;
@@ -168,33 +168,36 @@ html, body {
    		margin-bottom: 30px;
    }
    .cafe_list_content{
-   margin-top: 65px;
+   	margin-top: 65px;
     height: auto;
     min-height: 100%;
    }
-   #footer{
-       transform: translateY(-100%);
-  }
+  
    .font-gray{
    		color: gray
    }
-   a{
-   text-decoration: none;
-   color:black; 
+   
+  a{
+     text-decoration: none;
+     color:black; 
    }
-   .cafe_list_content{
-   margin-top: 65px;
-    height: auto;
-    min-height: 100%;
+  
+  .cafe_list_content{
+      margin-top: 65px;
+      height: auto;
+      min-height: 100%;
    }
+  
    .footer{
        transform: translateY(-100%);
        position:absolute;
        width:100%;
    	   height:100px;
    }
+  
 </style>
 </head>
+
 <body>
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>

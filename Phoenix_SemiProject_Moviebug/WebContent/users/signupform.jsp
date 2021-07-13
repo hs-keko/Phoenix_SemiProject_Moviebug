@@ -62,10 +62,10 @@
 </head>
 <body>
 
-<div class="container">
  <jsp:include page="../include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
+<div class="container">
     
 	<div class= "signupform_container">
    	 	<div class="container--form">
