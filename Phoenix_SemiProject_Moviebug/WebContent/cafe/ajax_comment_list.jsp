@@ -5,6 +5,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+
+	//테스트로 응답을 1초 지연 시키기
+	Thread.sleep(1000);
+
 	//로그인된 아이디
 	String email = (String)session.getAttribute("email");
 	//ajax 요청 파라미터로 넘어오는 댓글의 페이지 번호를 읽어낸다
@@ -95,7 +99,7 @@
 	              </dd>
 	               </dl>
 					<form id="reForm<%=tmp.getQna_comment_idx() %>" class="animate__animated comment-form re-insert-form" 
-                  action="private/comment_insert.jsp" method="post">
+                  action="<%=request.getContextPath() %>/cafe/private/comment_insert.jsp" method="post">
                   <input type="hidden" name="qna_comment_ref_group"
                      value="<%=qna_idx%>"/>
                   <input type="hidden" name="qna_comment_target_id"
@@ -103,14 +107,14 @@
                   <input type="hidden" name="qna_comment_group"
                      value="<%=tmp.getQna_comment_group()%>"/>
                   <textarea name="qna_comment_content"></textarea>
-                  <button type="submit">등록</button>
+                  <button type="submit" class="btn btn-secondary">등록</button>
                </form>   
                <%if(tmp.getQna_comment_writer().equals(email)){ %>   
                <form id="updateForm<%=tmp.getQna_comment_idx() %>" class="comment-form update-form" 
-                  action="private/comment_update.jsp" method="post">
+                  action="<%=request.getContextPath() %>/cafe/private/comment_update.jsp" method="post">
                   <input type="hidden" name="qna_comment_idx" value="<%=tmp.getQna_comment_idx() %>" />
                   <textarea name="qna_comment_content"><%=tmp.getQna_comment_content() %></textarea>
-                  <button type="submit">수정</button>
+                  <button type="submit" class="btn btn-outline-secondary">수정</button>
                </form>
 					<%} %>						
             	</li>

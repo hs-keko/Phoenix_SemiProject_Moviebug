@@ -118,28 +118,24 @@
 	   
 		html, body {
 		  height: 100%;
+		  width: 100%;
 		  margin: 0;
 		}
 		
-		.container {
-		width: 100%;
-		height: 100%;
-		padding-top: 40px;
-		padding-bottom: 40px;
-		}
-		
-		
+
+		.cafe_list_content{
+  		 margin-top: 35px;
+   		 height: auto;
+   		 min-height: 100%;
+   		 margin-bottom: 50px;
+		  }	
+		   
 		.content-inside {
 		  padding: 20px;
 		  padding-bottom: 50px;
 		  transform: translateY(0%);
 		}
-		
-		.footer {
-		  height: 50px;
-		  margin-top: -50px;
-		}
-	
+
 		.content {
 		width: 100%;
 		height: 100%;
@@ -179,6 +175,7 @@
 	.comment-form textarea{
 		width: 84%;
 		height: 100px;
+		margin-bottom: 50px;
 	}
 	.comment-form button{
 		width: 14%;
@@ -233,7 +230,14 @@
 	text-decoration: none; 
 	}
 	
-
+   #footer{
+       transform: translateY(-100%);
+       position:absolute;
+       width:100%;
+   	   height:100px;
+   	   height: 50px;
+	   margin-top: 50px;
+   }
 
 
 </style>
@@ -242,7 +246,7 @@
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
-<div class="container">
+<div class="container cafe_list_content">
 	<%if(dto.getPrevNum()!=0) {%>
    		<div id="prev" style="float: left;">
    		<a href="detail.jsp?num=<%=dto.getPrevNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">
@@ -593,7 +597,7 @@
 			   }
 </script>
 	<!-- footer  -->
-<div id=footer>
+<div id="footer clearfix">
    	<jsp:include page="../include/footer.jsp"></jsp:include>
 </div>
 </body>
