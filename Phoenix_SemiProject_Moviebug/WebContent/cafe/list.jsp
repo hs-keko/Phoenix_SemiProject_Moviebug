@@ -274,8 +274,8 @@ html, body {
          <%} %>
       </div>
      </div>
-<div id=footer>
+
    	<jsp:include page="../include/footer.jsp"></jsp:include>
-</div>
+
 </body>
 </html>

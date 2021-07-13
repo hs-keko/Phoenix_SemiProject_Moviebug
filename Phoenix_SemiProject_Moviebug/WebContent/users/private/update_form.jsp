@@ -54,14 +54,17 @@
    
 	.container {
 		width: 100%;
-		height: 70%;
+		height: 100%;
 	}
 			
 	.updateform_container {
 		align-items: center;
-		padding-top: 40px;
+		padding-top: 100px;
 		padding-bottom: 40px;
 		border: 1px solid #cecece;
+		transform: translateY(0%);
+		justify--content: center;
+		height: 100%;
 	}
    
    .updateform_container .container--form {
@@ -69,6 +72,7 @@
 		max-width: 600px;
 		padding: 15px;	
 		margin: auto;
+		height: 100%;
 	}
     
    .container--image {
