@@ -57,15 +57,7 @@
 	        Mlist=MovieDao.getInstance().getListTD(Mdto);
 	         //제목+내용 검색일때 호출하는 메소드를 이용해서 row  의 갯수 얻어오기
 	         MtotalRow=MovieDao.getInstance().getCountTD(Mdto);
-	      }/* else if(condition.equals("movie_title")){ //제목 검색인 경우
-	    	  Mdto.setMovie_title_kr(keyword);
-	         Mlist=MovieDao.getInstance().getListT(Mdto);
-	         MtotalRow=MovieDao.getInstance().getCountT(Mdto);
-	      }else if(condition.equals("movie_char")){ //작성자 검색인 경우
-	         Mdto.setMovie_character(keyword);
-	         Mlist=MovieDao.getInstance().getListW(Mdto);
-	         MtotalRow=MovieDao.getInstance().getCountW(Mdto);
-	      } // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다. */
+	      }
 	   }else{//검색 키워드가 넘어오지 않는다면
 	      //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
 	      Mlist=MovieDao.getInstance().getList(Mdto);
@@ -94,15 +86,7 @@
 	         list=CafeDao.getInstance().getListTC(dto);
 	         //제목+내용 검색일때 호출하는 메소드를 이용해서 row  의 갯수 얻어오기
 	         totalRow=CafeDao.getInstance().getCountTC(dto);
-	      }else if(condition.equals("qna_title")){ //제목 검색인 경우
-	         dto.setQna_title(keyword);
-	         list=CafeDao.getInstance().getListT(dto);
-	         totalRow=CafeDao.getInstance().getCountT(dto);
-	      }else if(condition.equals("qna_writer")){ //작성자 검색인 경우
-	         dto.setQna_writer(keyword);
-	         list=CafeDao.getInstance().getListW(dto);
-	         totalRow=CafeDao.getInstance().getCountW(dto);
-	      }else if(condition.equals("movie_title_direc")){
+	      }if(condition.equals("movie_title_direc")){
 	    	  // navbar 검색 처리중
 		         //검색 키워드를 CafeDto 에 담아서 전달한다.
 		         dto.setQna_title(keyword);
@@ -118,18 +102,6 @@
 	      totalRow=CafeDao.getInstance().getCount();
 	   }
    
-   //하단 시작 페이지 번호 
-   int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
-   //하단 끝 페이지 번호
-   int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
-   
-   //전체 페이지의 갯수
-   int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
-
-   //끝 페이지 번호가 전체 페이지 갯수보다 크다면 잘못된 값이다.
-   if(endPageNum > totalPageCount){
-      endPageNum=totalPageCount; //보정해 준다.
-   }
    
    
    
@@ -270,30 +242,14 @@ html, body {
 			<%} %>
 			</tbody>
 		</table>
-		<div id="three" class="page-ui clearfix" style="float: left;">
-		      <ul>
-		         <%if(startPageNum != 1){ %>
-		            <li>
-		               <a href="searchall.jsp?pageNum=<%=startPageNum-1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Prev</a>
-		            </li>   
-		         <%} %>
-		         
-		         <%for(int i=startPageNum; i<=endPageNum ; i++){ %>
-		            <li>
-		               <%if(pageNum == i){ %>
-		                  <a class="active" href="searchall.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
-		               <%}else{ %>
-		                  <a href="searchall.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
-		               <%} %>
-		            </li>   
-		         <%} %>
-		         <%if(endPageNum < totalPageCount){ %>
-		            <li>
-		               <a href="searchall.jsp?pageNum=<%=endPageNum+1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Next</a>
-		            </li>
-		         <%} %>
-		      </ul>
-		   </div>
+
+	</div>
+	<div class="row">
+		<div class="col d-flex justify-content-end">
+			<a href="<%= request.getContextPath()%>/more.jsp?keyword=<%= keyword%>">
+			<button type="button" class="btn btn-secondary btn-lg mb-4">영화 검색결과 더보기</button>
+			</a>
+		</div>
 	</div>
 	
 	<div class="row search_title">
@@ -339,31 +295,15 @@ html, body {
 		<%} %>
 		</tbody>
 	</table>
-	<div id="three" class="page-ui clearfix" style="float: left;">
-	      <ul>
-	         <%if(startPageNum != 1){ %>
-	            <li>
-	               <a href="searchall.jsp?pageNum=<%=startPageNum-1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Prev</a>
-	            </li>   
-	         <%} %>
-	         
-	         <%for(int i=startPageNum; i<=endPageNum ; i++){ %>
-	            <li>
-	               <%if(pageNum == i){ %>
-	                  <a class="active" href="searchall.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
-	               <%}else{ %>
-	                  <a href="searchall.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
-	               <%} %>
-	            </li>   
-	         <%} %>
-	         <%if(endPageNum < totalPageCount){ %>
-	            <li>
-	               <a href="searchall.jsp?pageNum=<%=endPageNum+1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Next</a>
-	            </li>
-	         <%} %>
-	      </ul>
-		   </div>
+
 		</div>
+			<div class="row">
+		<div class="col d-flex justify-content-end">
+			<a href="<%=request.getContextPath()%>/cafe/list.jsp?condition=qna_title_content&keyword=<%=keyword%>">
+			<button type="button" class="btn btn-secondary btn-lg mb-4">Q&A 검색결과 더보기</button>
+			</a>
+		</div>
+	</div>
 	</div>
 
 	<!-- footer  -->
