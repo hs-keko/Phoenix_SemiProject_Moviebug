@@ -7,7 +7,7 @@
     pageEncoding="UTF-8"%>
 <%
    //한 페이지에 몇개씩 표시할 것인지
-   final int PAGE_ROW_COUNT=15;
+   final int PAGE_ROW_COUNT=10;
    //하단 페이지를 몇개씩 표시할 것인지
    final int PAGE_DISPLAY_COUNT=10;
    
@@ -121,22 +121,9 @@
 		font-family: 'Dancing Script', cursive;
 	}
 	html, body {
-	  height: 100%;
-	  margin: 0;
+    width: 100%;
+    height: 100%;
 	}
-	.container{
-		padding-top: 60px;
-		padding-bottom: 90px;
-		height: 800px;
-	}
-	.content {
-	  min-height: 100%;
-	}
-	.content-inside {
-	  padding: 20px;
-	  padding-bottom: 20px;
-	}
-
    .page-ui a{
       text-decoration: none;
       color: #000;
@@ -176,16 +163,24 @@
    a{
    text-decoration: none; 
    }
-
+   .cafe_list_content{
+   margin-top: 65px;
+    height: auto;
+    min-height: 100%;
+   }
+   .footer{
+       transform: translateY(-100%);
+       position:absolute;
+       width:100%;
+   	   height:100px;
+   }
 </style>
 </head>
 <body>
-<div class="content">
-    <div class="content-inside">
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
-<div class="container">
+<div class="container cafe_list_content">
 	<h1 id="one"><a class= "font-qa link-dark" href="<%=request.getContextPath() %>/cafe/list.jsp"> Q&A </a></h1>
 	<div id="two">
 		<button type="button" class="btn btn-secondary">
@@ -263,10 +258,9 @@
          <%} %>
       </div>
      </div>
-     <div style="clear:both;"></div>
-     </div>
-  </div>
-	<!-- footer  -->
+     
+<div class="footer clearfix">
    	<jsp:include page="../include/footer.jsp"></jsp:include>
+</div>
 </body>
 </html>
