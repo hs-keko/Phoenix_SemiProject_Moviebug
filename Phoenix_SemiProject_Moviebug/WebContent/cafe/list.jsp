@@ -7,7 +7,7 @@
     pageEncoding="UTF-8"%>
 <%
    //한 페이지에 몇개씩 표시할 것인지
-   final int PAGE_ROW_COUNT=10;
+   final int PAGE_ROW_COUNT=12;
    //하단 페이지를 몇개씩 표시할 것인지
    final int PAGE_DISPLAY_COUNT=10;
    
@@ -132,6 +132,9 @@
    .page-ui a:hover{
       text-decoration: underline;
    }
+   .footer_inner a {
+	   	color:white;
+	}
    
    .page-ui a.active{
       color: black;
@@ -161,7 +164,8 @@
    		color: gray
    }
    a{
-   text-decoration: none; 
+   text-decoration: none;
+   color:black; 
    }
    .cafe_list_content{
    margin-top: 65px;

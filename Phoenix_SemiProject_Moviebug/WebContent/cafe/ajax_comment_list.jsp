@@ -5,6 +5,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+
+	
+	
 	//로그인된 아이디
 	String email = (String)session.getAttribute("email");
 	//ajax 요청 파라미터로 넘어오는 댓글의 페이지 번호를 읽어낸다
@@ -88,7 +91,6 @@
 							</svg>
 							</a>							
 						<%} %>
-						<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link float-end">답글</a>
 	                  </div>
 	                  </dt>
 	              <dd>
@@ -97,6 +99,11 @@
 	              <dd>
 	              	<span class="font-small"><%=tmp.getQna_comment_regdate () %></span>
 	              </dd>
+	              <dd>
+                  <button type="button" class="btn btn-outline-secondary">
+                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
+                  </button>
+                  </dd>
 	               </dl>
 					<form id="reForm<%=tmp.getQna_comment_idx() %>" class="animate__animated comment-form re-insert-form" 
                   action="private/comment_insert.jsp" method="post">

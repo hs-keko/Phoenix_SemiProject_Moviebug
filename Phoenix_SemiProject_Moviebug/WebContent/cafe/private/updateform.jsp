@@ -20,6 +20,9 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
 	
 <style>
+	.footer_inner a {
+	   color:white;
+	}
 	#qna_content{
 		height: 500px;
 	}

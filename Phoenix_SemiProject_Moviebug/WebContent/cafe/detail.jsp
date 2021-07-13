@@ -115,11 +115,15 @@
 	   		font-size: small; 
 	   		color: gray
 	   }
+	   .footer_inner a {
+	   		color:white;
+	    }
 	   
 		html, body {
 		  height: 100%;
 		  weight: 100%
 		  margin: 0;
+		  padding-top: 30px;
 		}
 		
 		.container {
@@ -151,9 +155,8 @@
 		.content {
 		width: 100%;
 		height: 100%;
-		border: 3px solid #cecece;
-		margin-bottom: 20px;
-		margin-top: 15px;
+		margin-bottom: 50px;
+		margin-top: 50px;
 		min-height: 100%;
 			
 	}
@@ -239,6 +242,7 @@
 	
 	a { 
 	text-decoration: none; 
+	color:black;
 	}
 	.cafe_list_content{
     margin-top: 65px;
@@ -249,10 +253,18 @@
    
 	a{
 	text-decoration: none; 
-	color:black;
 	}
 
-
+	.detail_container{
+		align-items: center;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		padding-left:30px;
+		padding-right:30px;
+		margin-bottom:40px;
+		border: 1px solid #cecece;
+		height: auto;
+	}
 </style>
 </head>
 <body>
@@ -260,6 +272,8 @@
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
 <div class="container cafe_list_content">
+	<div class="detail_container">
+	<dl>
 	<%if(dto.getPrevNum()!=0) {%>
    		<div id="prev" style="float: left;">
    		<a href="detail.jsp?num=<%=dto.getPrevNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">
@@ -277,9 +291,9 @@
 		</svg>
    		</a>
    		</div>
-   		<div style="clear:both;"></div>
-   		<br>
    	<%} %>
+   	<div style="clear:both;"></div>
+   	</dl>
    	<%if(!keyword.equals("")){ %>
    	<p>
    		<strong><%=condition %></strong> 조건,
@@ -331,6 +345,7 @@
       <a class="btn btn-outline-secondary" href="list.jsp">목록</a>
       <br>
       <br>
+   </div>
    <!-- 여기서부터 댓글 목록 입니다. -->
    <div id="one" class="comments">
    		<ul>
@@ -384,7 +399,7 @@
 								</svg>
 								</a>							
 							<%} %>
-							<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link float-end">답글</a>
+
 	                 	</div>
 	                  </dt>
 	              <dd>
@@ -392,6 +407,11 @@
                   </dd>
                   <dd>
                   	<span class="font-small"><%=tmp.getQna_comment_regdate () %></span>
+                  </dd>
+                  <dd>
+                  <button type="button" class="btn btn-outline-secondary">
+                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
+                  </button>
                   </dd>
 	               </dl>
 					<form id="reForm<%=tmp.getQna_comment_idx() %>" class="animate__animated comment-form re-insert-form" 
