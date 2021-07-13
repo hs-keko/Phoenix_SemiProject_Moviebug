@@ -167,7 +167,7 @@
                </form>
       
       
-               <form action="pwd_update.jsp" method="post" id="myForm">
+               <form class="update_pwdForm row-3" action="pwd_update.jsp" method="post" id="myForm">
                   <div class="p-2 bd-highlight col-12">
                      <p class="float-start">비밀번호</p>
                      <p>

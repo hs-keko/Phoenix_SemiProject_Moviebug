@@ -218,7 +218,7 @@
 				<div class="col-10">
 					<div class="tab-content" id="nav-tabContent">
 						<div class="tab-pane fade show active" id="list-qna" role="tabpanel" aria-labelledby="list-qna-list">
-							<table class="table table-striped">
+							<table class="table table-striped row-3">
 								<thead>
 									<tr>
 										<th>번호</th>
