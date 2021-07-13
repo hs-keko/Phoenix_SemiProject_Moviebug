@@ -136,10 +136,6 @@
 	  padding: 20px;
 	  padding-bottom: 20px;
 	}
-	.footer {
-	  height: 20px;
-	  margin-top: -20px;
-	}
 
    .page-ui a{
       text-decoration: none;
@@ -271,8 +267,6 @@
      </div>
   </div>
 	<!-- footer  -->
-<div id=footer>
    	<jsp:include page="../include/footer.jsp"></jsp:include>
-</div>
 </body>
 </html>
