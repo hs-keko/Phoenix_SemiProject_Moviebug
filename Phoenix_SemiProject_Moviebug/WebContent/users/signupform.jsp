@@ -71,10 +71,6 @@
 </style>
 </head>
 <body>
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/heads/master
  <jsp:include page="../include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
