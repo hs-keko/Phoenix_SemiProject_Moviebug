@@ -73,7 +73,7 @@ public class CafeDao {
       return list;
    }
    
-// 특정유저가 쓴 게시글 전체 row의 갯수 리턴
+   // 특정유저가 쓴 게시글 전체 row의 갯수 리턴
    public int userGetCount(CafeDto dto) {
 	 //글의 갯수를 담을 지역변수 
       int count=0;
