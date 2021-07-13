@@ -22,148 +22,148 @@ public class MovieDao {
    }
    // 모든 영화 리스트 불러오기
    public List<MovieDto> getList(MovieDto dto){
-	   List<MovieDto> list=new ArrayList<MovieDto>();
-	      Connection conn = null;
-	      PreparedStatement pstmt = null;
-	      ResultSet rs = null;
-	      try {
-	         //Connection 객체의 참조값 얻어오기 
-	         conn = new DbcpBean().getConn();
-	         //실행할 sql 문 작성
-	         String sql = "select * " + 
-	         		"from (select result1.*, rownum as rnum" + 
-	         		" from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
-	         		" movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
-	         		" from movie_info order by movie_year desc) result1)" + 
-	         		" where rnum between ? and ?";
-	         //PreparedStatement 객체의 참조값 얻어오기
-	         pstmt = conn.prepareStatement(sql);
-	         //? 에 바인딩할 내용이 있으면 여기서 바인딩
-	         pstmt.setInt(1, dto.getStartRowNum());
-	         pstmt.setInt(2, dto.getEndRowNum());
-	         //select 문 수행하고 결과를 ResultSet 으로 받아오기
-	         rs = pstmt.executeQuery();
-	         //반복문 돌면서 ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
-	         while (rs.next()) {
-	        	 MovieDto tmp=new MovieDto();
-					tmp.setMovie_genre(rs.getString("movie_genre"));
-					tmp.setMovie_image(rs.getString("movie_image")); 
-					tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
-					tmp.setMovie_story(rs.getString("movie_story"));
-					tmp.setMovie_rating(rs.getString("movie_rating"));
-					tmp.setMovie_year(rs.getString("movie_year"));
-					tmp.setMovie_nation(rs.getString("movie_nation"));
-					tmp.setMovie_time(rs.getString("movie_time"));
-					tmp.setMovie_num(rs.getInt("movie_num"));
-	            list.add(tmp);
-	         }
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	      } finally {
-	         try {
-	            if (rs != null)
-	               rs.close();
-	            if (pstmt != null)
-	               pstmt.close();
-	            if (conn != null)
-	               conn.close();
-	         } catch (Exception e) {
-	         }
-	      }
-	      return list;
+      List<MovieDto> list=new ArrayList<MovieDto>();
+         Connection conn = null;
+         PreparedStatement pstmt = null;
+         ResultSet rs = null;
+         try {
+            //Connection 객체의 참조값 얻어오기 
+            conn = new DbcpBean().getConn();
+            //실행할 sql 문 작성
+            String sql = "select * " + 
+                  "from (select result1.*, rownum as rnum" + 
+                  " from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
+                  " movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
+                  " from movie_info order by movie_year desc) result1)" + 
+                  " where rnum between ? and ?";
+            //PreparedStatement 객체의 참조값 얻어오기
+            pstmt = conn.prepareStatement(sql);
+            //? 에 바인딩할 내용이 있으면 여기서 바인딩
+            pstmt.setInt(1, dto.getStartRowNum());
+            pstmt.setInt(2, dto.getEndRowNum());
+            //select 문 수행하고 결과를 ResultSet 으로 받아오기
+            rs = pstmt.executeQuery();
+            //반복문 돌면서 ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
+            while (rs.next()) {
+               MovieDto tmp=new MovieDto();
+               tmp.setMovie_genre(rs.getString("movie_genre"));
+               tmp.setMovie_image(rs.getString("movie_image")); 
+               tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
+               tmp.setMovie_story(rs.getString("movie_story"));
+               tmp.setMovie_rating(rs.getString("movie_rating"));
+               tmp.setMovie_year(rs.getString("movie_year"));
+               tmp.setMovie_nation(rs.getString("movie_nation"));
+               tmp.setMovie_time(rs.getString("movie_time"));
+               tmp.setMovie_num(rs.getInt("movie_num"));
+               list.add(tmp);
+            }
+         } catch (Exception e) {
+            e.printStackTrace();
+         } finally {
+            try {
+               if (rs != null)
+                  rs.close();
+               if (pstmt != null)
+                  pstmt.close();
+               if (conn != null)
+                  conn.close();
+            } catch (Exception e) {
+            }
+         }
+         return list;
    }
    
    //영화 제목/감독 검색 리스트 목록 개수
    public int getCountTD(MovieDto dto){
-	   int count = 0;
-	   	Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			conn = new DbcpBean().getConn();
-			// 실행할 sql 문 작성
-	
-			String sql = "SELECT NVL(MAX(ROWNUM), 0) AS movie_idx FROM movie_info WHERE movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%'";
-			pstmt = conn.prepareStatement(sql);
-			// 바인딩
-			pstmt.setString(1, dto.getMovie_title_eng());
-			pstmt.setString(2, dto.getMovie_title_kr());
-			pstmt.setString(3, dto.getMovie_director());
-			
-			rs = pstmt.executeQuery();
-			if( rs.next()) count = rs.getInt("movie_idx");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(rs != null) rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return count;
+      int count = 0;
+         Connection conn = null;
+      PreparedStatement pstmt = null;
+      ResultSet rs = null;
+      try {
+         conn = new DbcpBean().getConn();
+         // 실행할 sql 문 작성
+   
+         String sql = "SELECT NVL(MAX(ROWNUM), 0) AS movie_idx FROM movie_info WHERE movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%'";
+         pstmt = conn.prepareStatement(sql);
+         // 바인딩
+         pstmt.setString(1, dto.getMovie_title_eng());
+         pstmt.setString(2, dto.getMovie_title_kr());
+         pstmt.setString(3, dto.getMovie_director());
+         
+         rs = pstmt.executeQuery();
+         if( rs.next()) count = rs.getInt("movie_idx");
+         
+      } catch (Exception e) {
+         e.printStackTrace();
+      } finally {
+         try {
+            if(rs != null) rs.close();
+            if (pstmt != null)
+               pstmt.close();
+            if (conn != null)
+               conn.close();
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
+      }
+      return count;
    }
    
    //영화 제목/감독 검색 리스트
    public List<MovieDto> getListTD(MovieDto dto){
-	   	Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<MovieDto> list = new ArrayList<>();
-		
-		try {
-			conn = new DbcpBean().getConn();
-			// 실행할 sql 문 작성
-	
-			String sql = "SELECT * FROM (select result1.* , rownum as rnum" + 
-					" from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
-					" movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
-					" from movie_info " + 
-					" where movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%' order by movie_num desc) result1) " + 
-					" where rnum between ? and ?";
-			pstmt = conn.prepareStatement(sql);
-			// 바인딩
-			pstmt.setString(1, dto.getMovie_title_eng());
-			pstmt.setString(2, dto.getMovie_title_kr());
-			pstmt.setString(3, dto.getMovie_director());
-			pstmt.setInt(4, dto.getStartRowNum());
-			pstmt.setInt(5, dto.getEndRowNum());
-			System.out.println(sql);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				MovieDto tmp = new MovieDto();
-				tmp.setMovie_director(rs.getString("movie_director"));
-				tmp.setMovie_genre(rs.getString("movie_genre"));
-				tmp.setMovie_image(rs.getString("movie_image")); 
-				tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
-				tmp.setMovie_title_eng(rs.getString("movie_title_eng"));
-				tmp.setMovie_story(rs.getString("movie_story"));
-				tmp.setMovie_rating(rs.getString("movie_rating"));
-				tmp.setMovie_year(rs.getString("movie_year"));
-				tmp.setMovie_nation(rs.getString("movie_nation"));
-				tmp.setMovie_time(rs.getString("movie_time"));
-				tmp.setMovie_num(rs.getInt("movie_num"));
-				list.add(tmp);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(rs != null) rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return list;
+         Connection conn = null;
+      PreparedStatement pstmt = null;
+      ResultSet rs = null;
+      List<MovieDto> list = new ArrayList<>();
+      
+      try {
+         conn = new DbcpBean().getConn();
+         // 실행할 sql 문 작성
+   
+         String sql = "SELECT * FROM (select result1.* , rownum as rnum" + 
+               " from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
+               " movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
+               " from movie_info " + 
+               " where movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%' order by movie_num desc) result1) " + 
+               " where rnum between ? and ?";
+         pstmt = conn.prepareStatement(sql);
+         // 바인딩
+         pstmt.setString(1, dto.getMovie_title_eng());
+         pstmt.setString(2, dto.getMovie_title_kr());
+         pstmt.setString(3, dto.getMovie_director());
+         pstmt.setInt(4, dto.getStartRowNum());
+         pstmt.setInt(5, dto.getEndRowNum());
+         System.out.println(sql);
+         rs = pstmt.executeQuery();
+         while(rs.next()) {
+            MovieDto tmp = new MovieDto();
+            tmp.setMovie_director(rs.getString("movie_director"));
+            tmp.setMovie_genre(rs.getString("movie_genre"));
+            tmp.setMovie_image(rs.getString("movie_image")); 
+            tmp.setMovie_title_kr(rs.getString("movie_title_kr"));
+            tmp.setMovie_title_eng(rs.getString("movie_title_eng"));
+            tmp.setMovie_story(rs.getString("movie_story"));
+            tmp.setMovie_rating(rs.getString("movie_rating"));
+            tmp.setMovie_year(rs.getString("movie_year"));
+            tmp.setMovie_nation(rs.getString("movie_nation"));
+            tmp.setMovie_time(rs.getString("movie_time"));
+            tmp.setMovie_num(rs.getInt("movie_num"));
+            list.add(tmp);
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      } finally {
+         try {
+            if(rs != null) rs.close();
+            if (pstmt != null)
+               pstmt.close();
+            if (conn != null)
+               conn.close();
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
+      }
+      return list;
    }
    
    // 최신 공포,액션 영화 4개 
@@ -423,7 +423,7 @@ public class MovieDao {
             //Connection 객체의 참조값 얻어오기 
             conn = new DbcpBean().getConn();
             //실행할 sql 문 작성
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
                   + " FROM movie_info"
                   + " where sysdate-30 <= movie_year order by movie_rating desc"; 
             //PreparedStatement 객체의 참조값 얻어오기
@@ -466,7 +466,7 @@ public class MovieDao {
          }
          return list;
       }
-   
+
 
          public List<MovieDto> getSummerList() {
          Connection conn = null;
@@ -477,10 +477,9 @@ public class MovieDao {
             //Connection 객체의 참조값 얻어오기 
             conn = new DbcpBean().getConn();
             //실행할 sql 문 작성
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
+            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
                   + " FROM movie_info"
-                  + " where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')"
-                  + " AND  rnum BETWEEN ? AND ?";
+                  + " where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')";
             //PreparedStatement 객체의 참조값 얻어오기
             pstmt = conn.prepareStatement(sql);
             //? 에 바인딩할 내용이 있으면 여기서 바인딩
@@ -522,45 +521,4 @@ public class MovieDao {
          }
          return list;
       }
-         
-   //카테고리에 해당하는 영화 갯수를 리턴하는 메소드
- 	public int getCount() {
- 		int count=0;
- 		Connection conn = null;
- 		PreparedStatement pstmt = null;
- 		ResultSet rs = null;
- 		try {
- 			//Connection 객체의 참조값 얻어오기 
- 			conn = new DbcpBean().getConn();
- 			//실행할 sql 문 작성
- 			String sql = "SELECT NVL(MAX(ROWNUM), 0) AS count "
- 					+ " FROM movie_info"
- 					+ " where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')";
- 			//PreparedStatement 객체의 참조값 얻어오기
- 			pstmt = conn.prepareStatement(sql);
- 			//? 에 바인딩할 내용이 있으면 여기서 바인딩
- 			
- 			//select 문 수행하고 결과를 ResultSet 으로 받아오기
- 			rs = pstmt.executeQuery();
- 			//ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
- 			if (rs.next()) {
- 				count=rs.getInt("count");
- 			}
- 		} catch (Exception e) {
- 			e.printStackTrace();
- 		} finally {
- 			try {
- 				if (rs != null)
- 					rs.close();
- 				if (pstmt != null)
- 					pstmt.close();
- 				if (conn != null)
- 					conn.close();
- 			} catch (Exception e) {
- 			}
- 		}
- 		return count;
- 	}
- 	
- 
 }
