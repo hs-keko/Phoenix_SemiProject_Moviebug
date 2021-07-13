@@ -54,10 +54,10 @@
    				<%if(tmp.getQna_comment_idx()==tmp.getQna_comment_group()){ %>
    				<li id="reli<%=tmp.getQna_comment_idx() %>" class="page-<%=pageNum %>">
    				<%}else{ %>
-   				<li id="reli<%=tmp.getQna_comment_idx() %>" class="page-<%=pageNum %>" style="padding-left:50px;">
-	   				<svg class="reply-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
-						  <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>
-					</svg>
+   				<li id="reli<%=tmp.getQna_comment_idx()%>" style="padding-left:50px;">
+	               <svg class="reply-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+	                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+	               </svg>
    				<%} %>
 	               <dl>
 	                  <dt>
@@ -73,16 +73,26 @@
 		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
 		                  	[<%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %>]님에게
 		                  <%} %>
-		                  	<span><%=tmp.getQna_comment_regdate () %></span>
-		                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
-						<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
-							<a data-num="<%=tmp.getQna_comment_idx() %>" class="update-link" href="javascript:">수정</a>
-							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link" href="javascript:">삭제</a>
-						<%} %>
 	                  </dt>
-	                  <dd>
-                     <pre id="pre<%=tmp.getQna_comment_idx()%>"><%=tmp.getQna_comment_content() %></pre>                  
+	              <dd>
+                     <pre class="font-do" id="pre<%=tmp.getQna_comment_idx()%>"><%=tmp.getQna_comment_content() %></pre>                  
                   </dd>
+	              <dd>
+	              	<span class="font-small"><%=tmp.getQna_comment_regdate () %></span>
+	              </dd>
+	              <dd>
+	              <button type="button" class="btn btn-outline-secondary">
+	               <a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link link-secondary">답글</a>
+				  </button>
+						<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
+							<button type="button" class="btn btn-outline-secondary">
+							<a data-num="<%=tmp.getQna_comment_idx() %>" class="update-link link-secondary" href="javascript:">수정</a>
+							</button>
+							<button type="button" class="btn btn-outline-secondary">
+							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link link-secondary" href="javascript:">삭제</a>
+							</button>
+						<%} %>
+	              </dd>
 	               </dl>
 					<form id="reForm<%=tmp.getQna_comment_idx() %>" class="animate__animated comment-form re-insert-form" 
                   action="private/comment_insert.jsp" method="post">
