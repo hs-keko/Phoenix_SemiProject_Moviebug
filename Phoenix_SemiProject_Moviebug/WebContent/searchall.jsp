@@ -200,7 +200,7 @@
          <form action="searchall.jsp" method="get">
          	<label for="condition">검색 조건</label>
          	<select name="condition" id="condition">
-    			 <option value="movie_title_direc" <%=condition.equals("qna_title_content") ? "selected" : ""%>>영화 제목/감독</option>
+    			 <option value="movie_title_direc" <%=condition.equals("movie_title_direc") ? "selected" : ""%>>영화 제목/감독</option>
          		<option value="qna_title_content" <%=condition.equals("qna_title_content") ? "selected" : ""%>>제목+내용</option>
 		         <option value="qna_title" <%=condition.equals("qna_title") ? "selected" : ""%>>제목</option>
 		         <option value="qna_writer" <%=condition.equals("qna_writer") ? "selected" : ""%>>작성자</option>
