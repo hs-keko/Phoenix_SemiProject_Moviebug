@@ -84,47 +84,69 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/detail.jsp</title>
-<jsp:include page="../include/resource.jsp"></jsp:include>
+   <jsp:include page="../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
     <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="../css/footer.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	
 	<!-- 웹폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
+  
+	<!-- 웹폰트 댓글  -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 	
+	   .font-do{
+	   		font-family: 'Nanum Gothic', sans-serif;
+	   }
+	   .font-small { 
+	   		font-size: small; 
+	   		color: gray
+	   }
+	   
 		html, body {
-		width: 100%;
-		height: 100%;
+		  height: 100%;
+		  margin: 0;
 		}
-		.detail_container .container {
-		width: 100%;
-		height: 100%;	
-		}					
-	
-	.container {
+		
+		.container {
 		width: 100%;
 		height: 100%;
-			
-	}
-	.container--formborder {
-		display: flex;
-		border: 1px solid #cecece;
-	}
+		padding-top: 40px;
+		padding-bottom: 40px;
+		}
+		
+		
+		.content-inside {
+		  padding: 20px;
+		  padding-bottom: 50px;
+		  transform: translateY(0%);
+		}
+		
+		.footer {
+		  height: 50px;
+		  margin-top: -50px;
+		}
 	
-	.detail_container .container--form {
-		width: 600px;
-		height: auto;	
-		margin: auto;
-	}
-	
-	.content {
+		.content {
 		width: 100%;
 		height: 100%;
-		border: 1px solid #cecece;
+		border: 3px solid #cecece;
 		margin-bottom: 20px;
 		margin-top: 15px;
+		min-height: 100%;
 			
 	}
 	.profile-image{
@@ -174,7 +196,6 @@
 		position: absolute;
 		top: 1em;
 		left: 1em;
-		color: pink;
 	}
 	pre {
 	  display: block;
@@ -186,8 +207,6 @@
 	  word-break: break-all;
 	  word-wrap: break-word;
 	  background-color: #f5f5f5;
-	  border: 1px solid #ccc;
-	  border-radius: 4px;
 	}	
 	
 	.loader{
@@ -210,6 +229,12 @@
 		}
 	}
 	
+	a { 
+	text-decoration: none; 
+	}
+	
+
+
 
 </style>
 </head>
@@ -221,7 +246,7 @@
 	<%if(dto.getPrevNum()!=0) {%>
    		<div id="prev" style="float: left;">
    		<a href="detail.jsp?num=<%=dto.getPrevNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">
-		<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+		<svg class="prev-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
 	  		<path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
 		</svg>
 		</a>
@@ -230,7 +255,7 @@
    	<%if(dto.getNextNum()!=0) {%>
    		<div id="prev" style="float: right;">
    		<a href="detail.jsp?num=<%=dto.getNextNum() %>&keyword=<%=encodedK %>&condition=<%=condition%>">
-   		<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+   		<svg class="next-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
 		  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
 		</svg>
    		</a>
@@ -281,12 +306,12 @@
       if(email != null){
       %>
       <%if(dto.getQna_writer().equals(UsersDao.getInstance().getData(email).getName())){ %>
-      <a class="btn btn-success btn-sm" href="private/updateform.jsp?num=<%=dto.getQna_idx() %>">수정</a>
-      <a class="btn btn-danger btn-sm" href="private/delete.jsp?num=<%=dto.getQna_idx() %>">삭제</a>
+      <a class="btn btn-outline-secondary" href="private/updateform.jsp?num=<%=dto.getQna_idx() %>">수정</a>
+      <a class="btn btn-outline-secondary" href="private/delete.jsp?num=<%=dto.getQna_idx() %>">삭제</a>
       <% } 
       }
       %>
-      <a class="btn btn-primary btn-sm" href="list.jsp">목록</a>
+      <a class="btn btn-outline-secondary" href="list.jsp">목록</a>
       <br>
       <br>
    <!-- 여기서부터 댓글 목록 입니다. -->
@@ -309,10 +334,10 @@
    				<%if(tmp.getQna_comment_idx()==tmp.getQna_comment_group()){ %>
    				<li id="reli<%=tmp.getQna_comment_idx() %>">
    				<%}else{ %>
-   				<li id="reli<%=tmp.getQna_comment_idx() %>" style="padding-left:50px;">
-	   				<svg class="reply-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
-						  <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>
-					</svg>
+				<li id="reli<%=tmp.getQna_comment_idx()%>" style="padding-left:50px;">
+	               <svg class="reply-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+	                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+	               </svg>
    				<%} %>
 	               <dl>
 	                  <dt>
@@ -328,15 +353,26 @@
 		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
 		                  	[<%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %>]님에게
 		                  <%} %>
-		                  	<span><%=tmp.getQna_comment_regdate () %></span>
-		                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
-						<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
-							<a data-num="<%=tmp.getQna_comment_idx() %>" class="update-link" href="javascript:">수정</a>
-							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link" href="javascript:">삭제</a>
-						<%} %>
+		                 
 	                  </dt>
-	                  <dd>
-                     <pre id="pre<%=tmp.getQna_comment_idx()%>"><%=tmp.getQna_comment_content() %></pre>                  
+	              <dd>
+                     <pre class="font-do" id="pre<%=tmp.getQna_comment_idx()%>"><%=tmp.getQna_comment_content() %></pre>                  
+                  </dd>
+                  <dd>
+                  	<span class="font-small"><%=tmp.getQna_comment_regdate () %></span>
+                  </dd>
+                  <dd>
+                  <button type="button" class="btn btn-outline-secondary">
+                   	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link link-secondary">답글</a>
+				  </button>	
+						<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
+							<button type="button" class="btn btn-outline-secondary">
+							<a data-num="<%=tmp.getQna_comment_idx() %>" class="update-link link-secondary" href="javascript:">수정</a>
+							</button>
+							<button type="button" class="btn btn-outline-secondary">
+							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link link-secondary" href="javascript:">삭제</a>
+							</button>
+						<%} %>
                   </dd>
 	               </dl>
 					<form id="reForm<%=tmp.getQna_comment_idx() %>" class="animate__animated comment-form re-insert-form" 
@@ -348,14 +384,14 @@
                   <input id="two" type="hidden" name="qna_comment_group"
                      value="<%=tmp.getQna_comment_group()%>"/>
                   <textarea name="qna_comment_content"></textarea>
-                  <button type="submit">등록</button>
+                  <button type="submit" class="btn btn-secondary">등록</button>
                </form>   
                <%if(tmp.getQna_comment_writer().equals(email)){ %>   
                <form id="updateForm<%=tmp.getQna_comment_idx() %>" class="comment-form update-form" 
                   action="private/comment_update.jsp" method="post">
                   <input type="hidden" name="qna_comment_idx" value="<%=tmp.getQna_comment_idx() %>" />
                   <textarea name="qna_comment_content"><%=tmp.getQna_comment_content() %></textarea>
-                  <button type="submit">수정</button>
+                  <button type="submit" class="btn btn-outline-secondary">수정</button>
                </form>
 					<%} %>						
             	</li>
@@ -377,7 +413,7 @@
    		<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
    		<input type="hidden" name="qna_comment_target_id" value="<%=dto.getQna_writer() %>"/>
    		<textarea name="qna_comment_content"></textarea>
-   		<button class="btn btn-primary" type="submit">등록</button>
+   		<button class="btn btn-secondary" type="submit">등록</button>
    </form>
    </div>
    <div style="clear:both;"></div>
@@ -556,6 +592,9 @@
 
 			   }
 </script>
+	<!-- footer  -->
+<div id=footer>
+   	<jsp:include page="../include/footer.jsp"></jsp:include>
+</div>
 </body>
-<jsp:include page="../include/footer.jsp"></jsp:include>
 </html>
