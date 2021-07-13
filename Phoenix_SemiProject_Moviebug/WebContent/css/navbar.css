@@ -185,7 +185,7 @@ nav button, .search_form_btn{
 	border: none;
 }
 
-.nav_search_input:focus {
+#nav_search_input:focus {
 	outline: none;
 }
 

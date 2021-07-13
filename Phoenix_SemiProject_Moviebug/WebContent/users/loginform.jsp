@@ -23,13 +23,22 @@
 <head>
 <meta charset="UTF-8">
 <title>/users/loginform.jsp</title>
-<jsp:include page="../include/resource.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+<!-- navbar 필수 import -->
+    <jsp:include page="../include/resource.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    
+    <!-- import css -->
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
+    
+    <!-- 웹폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 
- <!-- 웹폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
+	<!-- 웹폰트 test -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
 <style>
 
 	html, body {
@@ -49,7 +58,7 @@
 		padding-bottom: 40px;
 		transform: translateY(0%);
 		border: 1px solid #cecece;
-		height: 800px;
+		height: 100%;
 	}
 	
 	.loginform_container .container--form {
@@ -84,7 +93,6 @@
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
 	<div class="container">
-    
 		<div class="loginform_container">
 			<div class="container--form">	
 			
@@ -111,8 +119,15 @@
 			</div>
 		</div>
 	</div>
-	  <!-- navbar 필수 import -->
+      
+      <script src="<%= request.getContextPath()%>/js/index.js"></script>
+
+      <!-- navbar 필수 import -->
       <!-- import navbar.js -->
       <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+
+		<!-- import footer.jsp -->
+      	<jsp:include page="../include/footer.jsp"></jsp:include>
+      
 </body>
 </html>
