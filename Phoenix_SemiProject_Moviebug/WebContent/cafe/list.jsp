@@ -101,6 +101,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 <style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
    .page-ui a{
       text-decoration: none;
       color: #000;
@@ -134,6 +139,14 @@
    #three{
    		margin-bottom: 30px;
    }
+   .cafe_list_content{
+   margin-top: 65px;
+    height: auto;
+    min-height: 100%;
+   }
+   #footer{
+       transform: translateY(-100%);
+   }
 
 </style>
 </head>
@@ -141,7 +154,7 @@
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
-<div class="container">
+<div class="container cafe_list_content">
 	<h1 id="one"> Q&A </h1>
 	<div id="two" class="btn btn-outline-primary">
 		<a href="private/insertform.jsp">새글 작성하기</a>
@@ -217,11 +230,8 @@
          <%} %>
       </div>
      </div>
-     <div style="clear:both;"></div>
-	<!-- footer  -->
-	
-</body>
 <div id=footer>
    	<jsp:include page="../include/footer.jsp"></jsp:include>
 </div>
+</body>
 </html>
