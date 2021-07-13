@@ -414,7 +414,83 @@ public class MovieDao {
       
    }
    
-   public List<MovieDto> getResentList() {
+   public int getCountResent() {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			//Connection 객체의 참조값 얻어오기 
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM), 0) AS count "
+					+ " FROM movie_info"
+					+ " where sysdate-30 <= movie_year order by movie_rating desc";
+			//PreparedStatement 객체의 참조값 얻어오기
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩할 내용이 있으면 여기서 바인딩
+			
+			//select 문 수행하고 결과를 ResultSet 으로 받아오기
+			rs = pstmt.executeQuery();
+			//ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
+			if (rs.next()) {
+				count=rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return count;
+	}
+   
+   
+   public int getCountClassic() {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			//Connection 객체의 참조값 얻어오기 
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM), 0) AS count "
+					+ " FROM movie_info"
+					+ " where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')";
+			//PreparedStatement 객체의 참조값 얻어오기
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩할 내용이 있으면 여기서 바인딩
+			
+			//select 문 수행하고 결과를 ResultSet 으로 받아오기
+			rs = pstmt.executeQuery();
+			//ResultSet 객체에 있는 내용을 추출해서 원하는 Data type 으로 포장하기
+			if (rs.next()) {
+				count=rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return count;
+	}
+   public List<MovieDto> getResentList(MovieDto movieDto2) {
          Connection conn = null;
          PreparedStatement pstmt = null;
          ResultSet rs = null;
@@ -423,14 +499,24 @@ public class MovieDao {
             //Connection 객체의 참조값 얻어오기 
             conn = new DbcpBean().getConn();
             //실행할 sql 문 작성
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
-                  + " FROM movie_info"
-                  + " where sysdate-30 <= movie_year order by movie_rating desc"; 
+            
+            String sql = "SELECT *" + 
+					"		FROM" + 
+					"		    (SELECT result1.*, ROWNUM AS rnum" + 
+					"		    FROM" + 
+					"		        (SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director" + 
+					"		        FROM movie_info"+ 
+					"			    where sysdate-30 <= movie_year"+					
+					"		         order by movie_rating desc) result1)" + 
+					"		WHERE rnum BETWEEN ? AND ?";
             //PreparedStatement 객체의 참조값 얻어오기
             pstmt = conn.prepareStatement(sql);
             //? 에 바인딩할 내용이 있으면 여기서 바인딩
+            pstmt.setInt(1, movieDto2.getStartRowNum());
+			pstmt.setInt(2, movieDto2.getEndRowNum());
             //select 문 수행하고 결과를 ResultSet 으로 받아오기
             rs = pstmt.executeQuery();
+            
              
              while(rs.next()) {
                 MovieDto tmp = new MovieDto();
@@ -468,7 +554,7 @@ public class MovieDao {
       }
 
 
-         public List<MovieDto> getSummerList() {
+         public List<MovieDto> getSummerList(MovieDto movieDto2) {
          Connection conn = null;
          PreparedStatement pstmt = null;
          ResultSet rs = null;
@@ -477,13 +563,21 @@ public class MovieDao {
             //Connection 객체의 참조값 얻어오기 
             conn = new DbcpBean().getConn();
             //실행할 sql 문 작성
-            String sql = "SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director"
-                  + " FROM movie_info"
-                  + " where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')";
+            
+            String sql = "SELECT *" + 
+					"		FROM" + 
+					"		    (SELECT result1.*, ROWNUM AS rnum" + 
+					"		    FROM" + 
+					"		        (SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director" + 
+					"		        FROM movie_info"+ 
+					"			    where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')"+					
+					"		         ) result1)" + 
+					"		WHERE rnum BETWEEN ? AND ?";
             //PreparedStatement 객체의 참조값 얻어오기
             pstmt = conn.prepareStatement(sql);
             //? 에 바인딩할 내용이 있으면 여기서 바인딩
-            
+            pstmt.setInt(1, movieDto2.getStartRowNum());
+			pstmt.setInt(2, movieDto2.getEndRowNum());
             //select 문 수행하고 결과를 ResultSet 으로 받아오기
             rs = pstmt.executeQuery();
              

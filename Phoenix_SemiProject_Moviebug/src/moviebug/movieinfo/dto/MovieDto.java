@@ -13,10 +13,11 @@ public class MovieDto {
    private String movie_image;
    private String movie_trailer;
    private String movie_time;
-   private String movie_rating;
+   private String movie_rating; 
    private String movie_nation;
    private String movie_director;
    private String movie_writer;
+   private String movie_category;
 	private int startRowNum;
 	private int endRowNum;
    
@@ -25,7 +26,7 @@ public class MovieDto {
 	public MovieDto(int movie_num, String movie_title_kr, String movie_title_eng, String movie_story,
 			String movie_character, String movie_year, String movie_genre, String movie_company, String movie_image,
 			String movie_trailer, String movie_time, String movie_rating, String movie_nation, String movie_director,
-			String movie_writer) {
+			String movie_writer, String movie_category) {
 		super();
 		this.movie_num = movie_num;
 		this.movie_title_kr = movie_title_kr;
@@ -42,6 +43,7 @@ public class MovieDto {
 		this.movie_nation = movie_nation;
 		this.movie_director = movie_director;
 		this.movie_writer = movie_writer;
+		this.movie_category = movie_category;
 	}
 	
 	
@@ -181,7 +183,16 @@ public class MovieDto {
 	public void setMovie_writer(String movie_writer) {
 		this.movie_writer = movie_writer;
 	}
+
+	public String getMovie_category() {
+		return movie_category;
+	}
+
+	public void setMovie_category(String movie_category) {
+		this.movie_category = movie_category;
+	}
    
+	
    
    
 }
