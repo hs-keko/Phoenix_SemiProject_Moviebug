@@ -150,18 +150,7 @@ pageEncoding="UTF-8"%>
 						      <div class="d-flex flex-row search_btns justify-content-start">
 								
 						      </div>
-						      <div class="row">
-						      	인기 검색어
-						      </div>
-						      <div class="row">
-						      	1위
-						      </div>
-						      <div class="row">
-						      	2위
-						      </div>
-						      <div class="row">
-						      	3위
-						      </div>
+						  
 						     </div>
 					    </div>
 					  </div>
