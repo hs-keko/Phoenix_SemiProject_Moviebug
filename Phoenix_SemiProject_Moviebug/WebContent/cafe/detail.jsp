@@ -384,7 +384,7 @@
 		                  <%} %>
 		                  	<span><strong><%=UsersDao.getInstance().getData(tmp.getQna_comment_writer()).getName() %></strong></span>
 		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
-		                  	@<i><%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %>]</i>
+		                  	@<i><%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %></i>
 		                  <%} %>
 		                	<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
 							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link float-end ms-3" href="javascript:">
