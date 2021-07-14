@@ -83,7 +83,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>more.jsp</title>
+<title>영화리스트</title>
    <!-- more css -->
    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/more.css" />
 

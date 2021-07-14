@@ -109,7 +109,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/cafe/list.jsp</title>
+<title>검색결과</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
@@ -229,7 +229,7 @@ html, body {
 	</div>
 	<div class="row">
 		<div class="col d-flex justify-content-end">
-			<a href="<%= request.getContextPath()%>/search/more.jsp?keyword=<%= keyword%>">
+			<a href="<%= request.getContextPath()%>/search/more_search.jsp?keyword=<%= keyword%>">
 			<button type="button" class="btn btn-secondary btn-lg mb-4">영화 검색결과 더보기</button>
 			</a>
 		</div>
