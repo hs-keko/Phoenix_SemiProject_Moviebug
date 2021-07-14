@@ -12,7 +12,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
    String category = request.getParameter("category");
    
    if(category==null){
@@ -25,7 +24,6 @@
    //List<MovieDto> ResentList = MovieDao.getInstance().getResentList();
    //여름 특선
    //List<MovieDto> SummerList = MovieDao.getInstance().getSummerList();
-
    //로그인된 아이디 (로그인을 하지 않았으면 null 이다)
    String email=(String)session.getAttribute("email");
    //로그인 여부
@@ -90,7 +88,7 @@
    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/more.css" />
 
     <!-- navbar 필수 import -->
-    <jsp:include page="include/resource.jsp"></jsp:include>
+    <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
     
     <link rel="stylesheet" type="text/css" href="css/footer.css" />
@@ -150,7 +148,7 @@
 <body>
 
    <!-- navbar 필수 import -->
-    <jsp:include page="include/navbar.jsp"> 
+    <jsp:include page="../include/navbar.jsp"> 
        <jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
 
@@ -296,8 +294,7 @@
 		}
 	});
 	
-
 </script>     
-   <jsp:include page="include/footer.jsp"></jsp:include>
+   <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -32,7 +32,9 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/index.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
     
-  
+  <link rel="icon" 
+	href="${pageContext.request.contextPath}/images/dy_cat.png" 
+	type="image/x-icon" />
   </head>
   <body>
 
@@ -157,7 +159,7 @@
           </div>
         </div>
         <div class="row align-self-center justify-content-center morewrapper">
-          <a href="<%=request.getContextPath() %>/more.jsp?category=resent" title="" class="moreanchor">더보기</a>
+          <a href="<%=request.getContextPath() %>/search/more.jsp?category=resent" title="" class="moreanchor">더보기</a>
         </div>
       </div>
       
@@ -237,7 +239,7 @@
           </div>
         </div>
         <div class="row align-self-center justify-content-center morewrapper">
-          <a href="<%=request.getContextPath() %>/more.jsp?category=classic" title="" class="moreanchor">더보기</a>
+          <a href="<%=request.getContextPath() %>/search/more.jsp?category=classic" title="" class="moreanchor">더보기</a>
         </div>
       </div>
 

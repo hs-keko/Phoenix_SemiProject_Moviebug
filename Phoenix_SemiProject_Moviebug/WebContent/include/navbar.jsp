@@ -129,7 +129,7 @@ pageEncoding="UTF-8"%>
 				      <div class="modal-header search_bar">
 				        <div class="modal-title flex_box search_bar_wrapper" id="exampleModalLabel">
         
-        		            <form action="<%=request.getContextPath() %>/searchall.jsp" id="search_form" class="search_bar_form" method="get">
+        		            <form action="<%=request.getContextPath() %>/search/searchall.jsp" id="search_form" class="search_bar_form" method="get">
         		            		<input type="hidden" id="condition" name="condition" value="movie_title_direc" />
 					            	<button type="submit" class="search_form_btn">
 						            	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -150,18 +150,7 @@ pageEncoding="UTF-8"%>
 						      <div class="d-flex flex-row search_btns justify-content-start">
 								
 						      </div>
-						      <div class="row">
-						      	인기 검색어
-						      </div>
-						      <div class="row">
-						      	1위
-						      </div>
-						      <div class="row">
-						      	2위
-						      </div>
-						      <div class="row">
-						      	3위
-						      </div>
+						  
 						     </div>
 					    </div>
 					  </div>
