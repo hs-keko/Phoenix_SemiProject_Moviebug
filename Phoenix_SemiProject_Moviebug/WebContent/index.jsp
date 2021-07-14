@@ -62,7 +62,7 @@
               type="button"
               data-bs-target="#carouselExampleCaptions"
               data-bs-slide-to="1"
-              aria-label="Slide 2"구글
+              aria-label="Slide 2"
             ></button>
             <button
               type="button"
