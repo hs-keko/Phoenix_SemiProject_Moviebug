@@ -32,7 +32,9 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/index.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
     
-  
+  <link rel="icon" 
+	href="${pageContext.request.contextPath}/images/dy_cat.png" 
+	type="image/x-icon" />
   </head>
   <body>
 
