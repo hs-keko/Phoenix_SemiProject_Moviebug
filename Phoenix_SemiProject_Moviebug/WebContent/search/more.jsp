@@ -90,7 +90,7 @@
    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/more.css" />
 
     <!-- navbar 필수 import -->
-    <jsp:include page="include/resource.jsp"></jsp:include>
+    <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
     
     <link rel="stylesheet" type="text/css" href="css/footer.css" />
@@ -150,7 +150,7 @@
 <body>
 
    <!-- navbar 필수 import -->
-    <jsp:include page="include/navbar.jsp"> 
+    <jsp:include page="../include/navbar.jsp"> 
        <jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
 
@@ -298,6 +298,6 @@
 	
 
 </script>     
-   <jsp:include page="include/footer.jsp"></jsp:include>
+   <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>
