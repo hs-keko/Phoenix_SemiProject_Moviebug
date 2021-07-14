@@ -129,6 +129,10 @@
 		width: 720px;
 	}
 	
+	.movieinfo{
+		margin-left: 1.5rem;
+	}
+	
 	.movie_trailer{
 		position: relative;
 	    margin-bottom: 11px;
@@ -458,7 +462,7 @@
 	<jsp:include page="../include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
-    <div class="container" id="movieinfo_container">
+    <div class="container mb-5" id="movieinfo_container">
 	<div class="row movieinfo">
 		<!-- 영화 정보 카드 -->
 		<div class="row movie_primary_info">
@@ -613,6 +617,9 @@
    </form>
    </div>
 </div>
+
+<!-- import footer.jsp -->
+<jsp:include page="../include/footer.jsp"></jsp:include>
 
 <script src="${pageContext.request.contextPath}/js/gura_util.js"></script>
 <script>

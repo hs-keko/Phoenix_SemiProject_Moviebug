@@ -88,7 +88,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/cafe/list.jsp</title>
+<title>Q&A</title>
 <!-- navbar 필수 import -->
     <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
@@ -108,14 +108,22 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
   
+    <!-- tap icon -->
+    <link rel="icon" 
+	href="${pageContext.request.contextPath}/images/dy_cat.png" 
+	type="image/x-icon" />
+	<!-- Custom styles for this template -->
+<link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-html, body {
+	
+	html, body {
     width: 100%;
     height: 100%;
     margin: 0;
-}
+	}
 	
 	.font-do{
 	   	font-family: 'Nanum Gothic', sans-serif;
@@ -139,7 +147,7 @@ html, body {
    .footer_inner a {
 	   	color:white;
 	}
-   
+ 
    .page-ui a.active{
       color: black;
       font-weight: bold;
@@ -157,9 +165,11 @@ html, body {
    #one{
    		text-align: center;
    		margin-top: 15px;
+   		padding-top: 30px;
    }
    #two{
    		float: right;
+   		
    }
    #three{
    		margin-bottom: 30px;

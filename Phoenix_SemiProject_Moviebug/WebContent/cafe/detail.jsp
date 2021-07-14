@@ -81,27 +81,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/cafe/detail.jsp</title>
-   <jsp:include page="../include/resource.jsp"></jsp:include>
+<title>Q&A</title>
+    <!-- navbar 필수 import -->
+    <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
-    
-    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
-    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-	
-	<!-- 웹폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
-	<!-- 웹폰트 test -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
-  
-	<!-- 웹폰트 댓글  -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <!-- import css -->
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
+    <!-- tap icon -->
+    <link rel="icon" 
+	href="${pageContext.request.contextPath}/images/dy_cat.png" 
+	type="image/x-icon" />
+	<!-- Custom styles for this template -->
+<link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 	
@@ -112,7 +103,7 @@
 	   		font-size: small; 
 	   		color: gray
 	   }
-	   .footer_inner a {
+/* 	   .footer_inner a { */
 	   		color:white;
 	    }
 	   
@@ -127,14 +118,17 @@
 		width: 100%;
 		height: 100%;
 		padding-top: 10px;
-		padding-bottom: 10px;
 		}
 		
+		.detail_container{
+		margin-top: 30px;
+		}
 		
 		.content-inside {
 		  padding: 20px;
 		  padding-bottom: 50px;
 		  transform: translateY(0%);
+
 		}
 		
 		.footer {
@@ -187,6 +181,7 @@
 	.comment-form textarea{
 		width: 84%;
 		height: 100px;
+		margin-bottom: 35px;
 	}
 	.comment-form button{
 		width: 14%;
@@ -241,6 +236,7 @@
 	text-decoration: none; 
 	color:black;
 	}
+
 	.cafe_list_content{
     margin-top: 65px;
     height: auto;
@@ -248,9 +244,6 @@
     margin-bottom: 40px;
    }
    
-	a{
-	text-decoration: none; 
-	}
 	.detail_container{
 		align-items: center;
 		padding-top: 20px;
@@ -261,12 +254,25 @@
 		border: 1px solid #cecece;
 		height: auto;
 	}
+	#footer {
+	  height: 50px;
+	  transform: translateY(-100%);
+      position:absolute;
+      width: 100%;
+	 }
+	 
+   .footer_inner a {
+   		color:white;
+    }
+
+
 </style>
 </head>
 <body>
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
+<div class="wrapper">
 <div class="container cafe_list_content">
 	<div class="detail_container">
 	<dl>
@@ -342,11 +348,28 @@
       <br>
       <br>
    </div>
+   
    <!-- 여기서부터 댓글 목록 입니다. -->
+
+   <!-- 원글에 댓글을 작성할 폼 -->
+   <div>
+   <form class="comment-form insert-form" action="private/comment_insert.jsp" method="post">
+   		<!-- 원글의 글번호가 댓글의 ref_group 번호가 된다. -->
+   		<input type="hidden" name="qna_comment_ref_group" value="<%=qna_idx %>" />
+   		<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
+   		<input type="hidden" name="qna_comment_target_id" value="<%=dto.getQna_writer() %>"/>
+   		<textarea name="qna_comment_content"></textarea>
+   		<button class="btn btn-secondary" type="submit">등록</button>
+   </form>
+   </div>
+   
+   <br>
+   <br>
+   
    <div id="one" class="comments">
    		<ul>
    			<%for(CafeCommentDto tmp: commentList){ 
-   				System.out.println(tmp.getQna_comment_ref_group());
+   			System.out.println(tmp.getQna_comment_ref_group());
    			System.out.println(tmp.getEndRowNum());
    			System.out.println(tmp.getStartRowNum());
    			%>
@@ -436,19 +459,9 @@
 	   	<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-hourglass-bottom" viewBox="0 0 16 16">
 		  <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5zm2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702s.18.149.5.149.5-.15.5-.15v-.7c0-.701.478-1.236 1.011-1.492A3.5 3.5 0 0 0 11.5 3V2h-7z"/>
 		</svg>
-   </div>
-    <div style="clear:both;"></div>
-   <!-- 원글에 댓글을 작성할 폼 -->
-   <form class="comment-form insert-form" action="private/comment_insert.jsp" method="post">
-   		<!-- 원글의 글번호가 댓글의 ref_group 번호가 된다. -->
-   		<input type="hidden" name="qna_comment_ref_group" value="<%=qna_idx %>" />
-   		<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
-   		<input type="hidden" name="qna_comment_target_id" value="<%=dto.getQna_writer() %>"/>
-   		<textarea name="qna_comment_content"></textarea>
-   		<button class="btn btn-secondary" type="submit">등록</button>
-   </form>
-   </div>
+	</div>
    <div style="clear:both;"></div>
+   </div>
 <script src="${pageContext.request.contextPath}/js/gura_util.js"></script>
 <script>
 	addUpdateFormListener(".update-form");
@@ -623,9 +636,11 @@
 			      }
 			   }
 </script>
-	<!-- footer  -->
-<div id=footer>
+<script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+<!-- footer  -->
+<div id="footer">
    	<jsp:include page="../include/footer.jsp"></jsp:include>
+</div>
 </div>
 </body>
 </html>

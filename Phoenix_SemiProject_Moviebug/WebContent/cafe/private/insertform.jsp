@@ -7,13 +7,20 @@ String email=(String)session.getAttribute("email");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/cafe/private/insertform.jsp</title>
+<title>Q&A</title>
     <!-- navbar 필수 import -->
     <jsp:include page="../../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
     <!-- import css -->
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
     
+    <!-- tap icon -->
+    <link rel="icon" 
+	href="${pageContext.request.contextPath}/images/dy_cat.png" 
+	type="image/x-icon" />
+	<!-- Custom styles for this template -->
+<link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
+
 <style>
    .footer_inner a {
    		color:white;
@@ -34,6 +41,14 @@ String email=(String)session.getAttribute("email");
 	.footer {
 		  height: 50px;
 		  margin-top: -50px;
+		  
+	}
+		a{
+	text-decoration: none; 
+	}
+	
+	footer{
+	    margin-top: 30px;
 	}
 	
 
@@ -49,7 +64,8 @@ String email=(String)session.getAttribute("email");
 	<form action="insert.jsp" method="post">
 		<div class="mb-3">
 			<label class="form-label" for="qna_title">제목</label>
-			<input class="form-control" type="text" name="qna_title" id="qna_title"/>
+			<input class="form-control" type="text" name="qna_title" id="qna_title"
+				onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)"/>
 		</div>	
 		<div>
 	         <label class="form-label" for="qna_file">첨부파일</label>
@@ -60,7 +76,10 @@ String email=(String)session.getAttribute("email");
 			<label class="form-label" for="qna_content">내용</label>
 			<textarea class="form-control" name="qna_content" id="qna_content"></textarea>
 		</div>
-		<button class="btn btn-outline-secondary float-end" type="submit" onclick="submitContents(this);">저장</button>
+		<div class="w-100 clearfix">
+			<button class="btn btn-outline-secondary float-end ms-2" type="submit" onclick="submitContents(this);">등록</button>
+			<button class="btn btn-outline-secondary float-end" type="reset"><a class="link-secondary" href=../list.jsp>취소</a></button>
+		</div>
 	</form>
 	<br>
 	<br>
@@ -119,6 +138,16 @@ String email=(String)session.getAttribute("email");
       oEditors.getById["qna_content"].setDefaultFont(sDefaultFont, nFontSize);
    }
    
+   function noSpaceForm(obj) 
+   {                        
+       if(obj.value == " ") // 공백 체크
+       {              
+           alert("해당 항목에는 공백을 사용할 수 없습니다.\n\n공백 제거됩니다.");
+           obj.focus();
+           obj.value = obj.value.replace(' ','');  // 공백 제거
+           return false;
+       }
+   }
 </script>
 <script src="<%= request.getContextPath()%>/js/navbar.js"></script>
 	<!-- footer  -->
