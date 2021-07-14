@@ -78,7 +78,7 @@
  
    //boolean isSearch = false;
   
-   
+  
   
 %>
 <!DOCTYPE html>
@@ -179,8 +179,8 @@
             <p>
                <strong><%=totalRow %></strong>개의 글이 검색되었습니다.
             </p>
-         <%} 
-           }%>
+         <%}
+         }%>
         
 
 
