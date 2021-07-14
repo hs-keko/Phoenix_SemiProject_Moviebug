@@ -1,4 +1,5 @@
-<%@page import="moviebug.users.dao.UsersDao"%>
+<%@page import="moviebug.movieinfo.dao.MovieDao"%>
+<%@page import="moviebug.movieinfo.dto.MovieDto"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="test.cafe.dao.CafeDao"%>
 <%@page import="test.cafe.dto.CafeDto"%>
@@ -7,7 +8,7 @@
     pageEncoding="UTF-8"%>
 <%
    //한 페이지에 몇개씩 표시할 것인지
-   final int PAGE_ROW_COUNT=12;
+   final int PAGE_ROW_COUNT=10;
    //하단 페이지를 몇개씩 표시할 것인지
    final int PAGE_DISPLAY_COUNT=10;
    
@@ -36,10 +37,49 @@
    //특수기호를 인코딩한 키워드
    String encodedK=URLEncoder.encode(keyword);
    
+   
+   // 영화 검색 목록
+   MovieDto Mdto=new MovieDto();
+   Mdto.setStartRowNum(startRowNum);
+   Mdto.setEndRowNum(endRowNum);
+
+	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
+	   List<MovieDto> Mlist=null;
+	   //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
+	   int MtotalRow=0;
+	   //만일 검색 키워드가 넘어온다면 
+	   if(!keyword.equals("")){
+	      //검색 조건이 무엇이냐에 따라 분기 하기
+	      if(condition.equals("movie_title_content")){//제목 + 내용 검색인 경우
+	         //검색 키워드를 CafeDto 에 담아서 전달한다.
+	         Mdto.setMovie_title_kr(keyword);
+	         Mdto.setMovie_character(keyword);
+	         //제목+내용 검색일때 호출하는 메소드를 이용해서 목록 얻어오기 
+	         Mlist=MovieDao.getInstance().getListTD(Mdto);
+	         //제목+내용 검색일때 호출하는 메소드를 이용해서 row  의 갯수 얻어오기
+	         MtotalRow=MovieDao.getInstance().getCountTD(Mdto);
+	      }/* else if(condition.equals("movie_title")){ //제목 검색인 경우
+	    	  Mdto.setMovie_title_kr(keyword);
+	         Mlist=MovieDao.getInstance().getListT(Mdto);
+	         MtotalRow=CafeDao.getInstance().getCountT(Mdto);
+	      }else if(condition.equals("movie_char")){ //작성자 검색인 경우
+	         Mdto.setMovie_character(keyword);
+	         Mlist=MovieDao.getInstance().getListW(Mdto);
+	         MtotalRow=CafeDao.getInstance().getCountW(Mdto);
+	      } // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다. */
+	   }else{//검색 키워드가 넘어오지 않는다면
+	      //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
+	      Mlist=MovieDao.getInstance().getList(Mdto);
+	      //키워드가 없을때 호출하는 메소드를 이용해서 전제 row 의 갯수를 얻어온다.
+	      MtotalRow=CafeDao.getInstance().getCount();
+	   }
+   
+   
    //CafeDto 객체에 startRowNum 과 endRowNum 을 담는다.
    CafeDto dto=new CafeDto();
    dto.setStartRowNum(startRowNum);
    dto.setEndRowNum(endRowNum);
+
 	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
 	   List<CafeDto> list=null;
 	   //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
@@ -83,51 +123,23 @@
       endPageNum=totalPageCount; //보정해 준다.
    }
    String email=(String)session.getAttribute("email");
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/cafe/list.jsp</title>
-<!-- navbar 필수 import -->
-    <jsp:include page="../include/resource.jsp"></jsp:include>
+<jsp:include page="/include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-	<link rel="stylesheet" type="text/css" href="../css/navbar.css" />
-    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-
-    <!-- 웹폰트 -->
+<!-- 웹폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
-
-	<!-- 웹폰트 test -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
-  
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-}
-	
-	.font-do{
-	   	font-family: 'Nanum Gothic', sans-serif;
-	}
-	.font-qa {
-		font-family: 'Dancing Script', cursive;
-	}
-	html, body {
-    width: 100%;
-    height: 100%;
-	}
-  
    .page-ui a{
       text-decoration: none;
       color: #000;
@@ -136,12 +148,9 @@ html, body {
    .page-ui a:hover{
       text-decoration: underline;
    }
-   .footer_inner a {
-	   	color:white;
-	}
    
    .page-ui a.active{
-      color: black;
+      color: red;
       font-weight: bold;
       text-decoration: underline;
    }
@@ -164,74 +173,66 @@ html, body {
    #three{
    		margin-bottom: 30px;
    }
-   .cafe_list_content{
-   	margin-top: 65px;
-    height: auto;
-    min-height: 100%;
-   }
-  
-   .font-gray{
-   		color: gray
-   }
    
-  a{
-     text-decoration: none;
-     color:black; 
+   .searchlist_container{
+   	margin-top: 65px;
    }
-  
-  .cafe_list_content{
-      margin-top: 65px;
-      height: auto;
-      min-height: 100%;
-   }
-  
-   .footer{
-       transform: translateY(-100%);
-       position:absolute;
-       width:100%;
-   	   height:100px;
-   }
-  
+
 </style>
 </head>
-
 <body>
-<jsp:include page="../include/navbar.jsp">
+<jsp:include page="include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
-
-<div class="container cafe_list_content">
-	<h1 id="one"><a class= "font-qa link-dark" href="<%=request.getContextPath() %>/cafe/list.jsp"> Q&A </a></h1>
-	<div id="two">
-		<button type="button" class="btn btn-secondary">
-			<a class="link-light" href="private/insertform.jsp">새글 작성하기</a>
-		</button>
+<div class="container searchlist_container">
+	<h1 id="one"> 영화 검색 결과 </h1>
+	<div id="two" class="btn btn-outline-primary">
+		<a href="private/insertform.jsp">새글 작성하기</a>
 	</div>
-	<table class="table">
+	
+		   <div id="three" style="float:right;">
+         <form action="list.jsp" method="get">
+         	<label for="condition">검색 조건</label>
+         	<select name="condition" id="condition">
+    			 <option value="qna_title_content" <%=condition.equals("qna_title_content") ? "selected" : ""%>>제목+내용</option>
+		         <option value="qna_title" <%=condition.equals("qna_title") ? "selected" : ""%>>제목</option>
+		         <option value="qna_writer" <%=condition.equals("qna_writer") ? "selected" : ""%>>작성자</option>
+    		</select>
+    		<input type="text" name="keyword" placeholder="검색어를 입력하세요..." value="<%=keyword%>"/>
+    		<button type="submit">검색</button>
+         </form> 
+         <%if(!condition.equals("")){ %>
+         	<p>
+         		<strong><%=totalRow %></strong>개의 글이 검색되었습니다.
+         	</p>
+         <%} %>
+      </div>
+	
+	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th scope="col">번호</th>
-				<th scope="col">제목</th>
-				<th scope="col">작성자</th>
-				<th scope="col">작성일</th>
+				<th>번호</th>
+				<th>작성자</th>
+				<th>제목</th>
+				<th>작성일</th>
 			</tr>
 		</thead>
 		<tbody>
 		<%for(CafeDto tmp:list) {%>
 			<tr>
 				<td><%=tmp.getQna_idx() %></td>
+				<td><%=tmp.getQna_writer() %></td>
 				<td><%if(tmp.getQna_file() != null){ %>
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-arrow-up" viewBox="0 0 16 16">
 					  <path d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
 					  <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 					</svg>
-					<a class="font-do link-dark" href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
 				<%}else{ %>
-					<a class="font-do link-dark" href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
 				<%} %>
 				</td>
-				<td><%=tmp.getQna_writer() %></td>
-				<td class="font-gray"><%=tmp.getQna_regdate() %></td>
+				<td><%=tmp.getQna_regdate() %></td>
 			</tr>
 		<%} %>
 		</tbody>
@@ -260,31 +261,90 @@ html, body {
 	         <%} %>
 	      </ul>
 	   </div>
-	   <div id="three" style="float:right;">
-         <form action="list.jsp" method="get">
-         	<label for="condition">검색 조건</label>
-         	<select class="font-do" name="condition" id="condition">
-    			 <option value="qna_title_content" <%=condition.equals("qna_title_content") ? "selected" : ""%>>제목+내용</option>
-		         <option value="qna_title" <%=condition.equals("qna_title") ? "selected" : ""%>>제목</option>
-		         <option value="qna_writer" <%=condition.equals("qna_writer") ? "selected" : ""%>>작성자</option>
-    		</select>
-    		<input type="text" name="keyword" placeholder="검색어를 입력하세요..." value="<%=keyword%>"/>
-    		<button type="submit" class="btn btn-outline-dark">검색</button>
-         </form> 
+
+
+
+
+
+	<h1 id="one"> Q&A 검색 결과 </h1>
+	<div id="two" class="btn btn-outline-primary">
+		<a href="private/insertform.jsp">새글 작성하기</a>
+	</div>
+	
+	
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>작성자</th>
+				<th>제목</th>
+				<th>작성일</th>
+			</tr>
+		</thead>
+		<tbody>
+		<%for(CafeDto tmp:list) {%>
+			<tr>
+				<td><%=tmp.getQna_idx() %></td>
+				<td><%=tmp.getQna_writer() %></td>
+				<td><%if(tmp.getQna_file() != null){ %>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-arrow-up" viewBox="0 0 16 16">
+					  <path d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
+					  <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+					</svg>
+					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+				<%}else{ %>
+					<a href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+				<%} %>
+				</td>
+				<td><%=tmp.getQna_regdate() %></td>
+			</tr>
+		<%} %>
+		</tbody>
+	</table>
+	<div id="three" class="page-ui clearfix" style="float: left;">
+	      <ul>
+	         <%if(startPageNum != 1){ %>
+	            <li>
+	               <a href="list.jsp?pageNum=<%=startPageNum-1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Prev</a>
+	            </li>   
+	         <%} %>
+	         
+	         <%for(int i=startPageNum; i<=endPageNum ; i++){ %>
+	            <li>
+	               <%if(pageNum == i){ %>
+	                  <a class="active" href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
+	               <%}else{ %>
+	                  <a href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a>
+	               <%} %>
+	            </li>   
+	         <%} %>
+	         <%if(endPageNum < totalPageCount){ %>
+	            <li>
+	               <a href="list.jsp?pageNum=<%=endPageNum+1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Next</a>
+	            </li>
+	         <%} %>
+	      </ul>
+	   </div>
+	   
+		   <div id="three" style="float:right;">
+         
          <%if(!condition.equals("")){ %>
          	<p>
          		<strong><%=totalRow %></strong>개의 글이 검색되었습니다.
          	</p>
          <%} %>
       </div>
-     </div>
 
-<div class="footer clearfix">
-   	<jsp:include page="../include/footer.jsp"></jsp:include>
+
+
+
+
+     </div>
+     <div style="clear:both;"></div>
+	<!-- footer  -->
+	
+<div id=footer>
+   	<jsp:include page="/include/footer.jsp"></jsp:include>
 </div>
-<script>
-	let footer = document.querySelector("footer")
-	let contentt = document.querySelector(".cafe_list_content")
-</script>
 </body>
 </html>
