@@ -174,13 +174,13 @@ html, body {
 </style>
 </head>
 <body>
-<jsp:include page="include/navbar.jsp">
+<jsp:include page="../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
 </jsp:include>
 <div class="container searchlist_container">
 	<div class="row d-felx searchlist_form">
 		<div class="col d-flex justify-content-center">
-         <form action="searchall.jsp" method="get" class="input-group mb-3">
+         <form action="<%=request.getContextPath() %>/search/searchall.jsp" method="get" class="input-group mb-3">
          	<select name="condition" id="condition">
     			 <option class="condition" value="movie_title_direc" <%=condition.equals("movie_title_direc") ? "selected" : ""%>>영화 제목/감독</option>
     		</select>
