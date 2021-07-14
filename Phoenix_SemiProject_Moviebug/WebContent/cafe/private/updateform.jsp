@@ -12,13 +12,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/cafe/private/updateform.jsp</title>
+<title>Q&A</title>
     <!-- navbar 필수 import -->
     <jsp:include page="../../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
     <!-- import css -->
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
 	
+	<!-- tap icon -->
+    <link rel="icon" 
+	href="${pageContext.request.contextPath}/images/dy_cat.png" 
+	type="image/x-icon" />
+	<!-- Custom styles for this template -->
+<link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
+
 <style>
 	.footer_inner a {
 	   color:white;
