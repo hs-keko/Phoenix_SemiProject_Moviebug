@@ -11,7 +11,6 @@
 <%
 	//자세히 보여줄 글번호 가져오기
 	int qna_idx=Integer.parseInt(request.getParameter("num"));
-
 	String keyword=request.getParameter("keyword");
 	String condition=request.getParameter("condition");
 	
@@ -77,7 +76,6 @@
     int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
     System.out.println(totalPageCount);
     String email=(String)session.getAttribute("email");
-
 %>
 <!DOCTYPE html>
 <html>
@@ -233,9 +231,6 @@
 	text-decoration: none; 
 	}
 	
-
-
-
 </style>
 </head>
 <body>
@@ -590,7 +585,6 @@
 			            });
 			         });
 			      }
-
 			   }
 </script>
 	<!-- footer  -->
