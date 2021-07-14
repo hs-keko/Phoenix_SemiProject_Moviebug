@@ -42,7 +42,6 @@
    MovieDto Mdto=new MovieDto();
    Mdto.setStartRowNum(startRowNum);
    Mdto.setEndRowNum(endRowNum);
-
 	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
 	   List<MovieDto> Mlist=null;
 	   //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
@@ -70,7 +69,6 @@
    CafeDto dto=new CafeDto();
    dto.setStartRowNum(startRowNum);
    dto.setEndRowNum(endRowNum);
-
 	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
 	   List<CafeDto> list=null;
 	   //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
@@ -106,7 +104,6 @@
    
    
    String email=(String)session.getAttribute("email");
-
 %>
 <!DOCTYPE html>
 <html>
@@ -128,63 +125,49 @@ html, body {
 	width: 100%;
 	height: 100%;
 }
-
 .page-ui a {
 	text-decoration: none;
 	color: #000;
 }
-
 .page-ui a:hover {
 	text-decoration: underline;
 }
-
 .page-ui a.active {
 	color: red;
 	font-weight: bold;
 	text-decoration: underline;
 }
-
 .page-ui ul {
 	list-style-type: none;
 	padding: 0;
 }
-
 .page-ui ul>li {
 	float: left;
 	padding: 5px;
 }
-
 #one {
 	text-align: center;
 }
-
 #two {
 	float: right;
 }
-
-
-
 .searchlist_container {
 	margin-top: 65px;
 	height: auto;
 	min-height: 100%;
 }
-
 .searchlist_form form{
 	margin: 30px 0;
 	width: 80%;
 }
 .searchlist_form form input{
 }
-
 .search_title{
 	align-items: center;
 }
-
 #condition{
 	display: none;
 }
-
 #footer{
 	transform: translateY(-100%);
 }

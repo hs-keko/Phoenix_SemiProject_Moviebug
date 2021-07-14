@@ -40,7 +40,6 @@
    CafeDto dto=new CafeDto();
    dto.setStartRowNum(startRowNum);
    dto.setEndRowNum(endRowNum);
-
 	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
 	   List<CafeDto> list=null;
 	   //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
@@ -84,14 +83,13 @@
       endPageNum=totalPageCount; //보정해 준다.
    }
    String email=(String)session.getAttribute("email");
-
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/cafe/list.jsp</title>
-<<!-- navbar 필수 import -->
+<!-- navbar 필수 import -->
     <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
 
@@ -111,13 +109,13 @@
 	<link href="https://fonts.googleapis.com/css2?family=Girassol&family=Major+Mono+Display&display=swap" rel="stylesheet">
   
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
 }
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 	
 	.font-do{
 	   	font-family: 'Nanum Gothic', sans-serif;
@@ -125,7 +123,6 @@ html, body {
 	.font-qa {
 		font-family: 'Dancing Script', cursive;
 	}
-
 	html, body {
     width: 100%;
     height: 100%;
@@ -168,33 +165,36 @@ html, body {
    		margin-bottom: 30px;
    }
    .cafe_list_content{
-   margin-top: 65px;
+   	margin-top: 65px;
     height: auto;
     min-height: 100%;
    }
-   #footer{
-       transform: translateY(-100%);
-  }
+  
    .font-gray{
    		color: gray
    }
-   a{
-   text-decoration: none;
-   color:black; 
+   
+  a{
+     text-decoration: none;
+     color:black; 
    }
-   .cafe_list_content{
-   margin-top: 65px;
-    height: auto;
-    min-height: 100%;
+  
+  .cafe_list_content{
+      margin-top: 65px;
+      height: auto;
+      min-height: 100%;
    }
+  
    .footer{
        transform: translateY(-100%);
        position:absolute;
        width:100%;
    	   height:100px;
    }
+  
 </style>
 </head>
+
 <body>
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
@@ -278,9 +278,13 @@ html, body {
          <%} %>
       </div>
      </div>
-<div class="footer clearfix">
 
+<div class="footer clearfix">
    	<jsp:include page="../include/footer.jsp"></jsp:include>
 </div>
+<script>
+	let footer = document.querySelector("footer")
+	let contentt = document.querySelector(".cafe_list_content")
+</script>
 </body>
 </html>
