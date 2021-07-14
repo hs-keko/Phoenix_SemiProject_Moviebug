@@ -40,7 +40,6 @@
    CafeDto dto=new CafeDto();
    dto.setStartRowNum(startRowNum);
    dto.setEndRowNum(endRowNum);
-
 	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
 	   List<CafeDto> list=null;
 	   //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
@@ -84,7 +83,6 @@
       endPageNum=totalPageCount; //보정해 준다.
    }
    String email=(String)session.getAttribute("email");
-
 %>
 <!DOCTYPE html>
 <html>
@@ -125,7 +123,6 @@ html, body {
 	.font-qa {
 		font-family: 'Dancing Script', cursive;
 	}
-
 	html, body {
     width: 100%;
     height: 100%;
@@ -285,5 +282,9 @@ html, body {
 <div class="footer clearfix">
    	<jsp:include page="../include/footer.jsp"></jsp:include>
 </div>
+<script>
+	let footer = document.querySelector("footer")
+	let contentt = document.querySelector(".cafe_list_content")
+</script>
 </body>
 </html>
