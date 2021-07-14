@@ -12,15 +12,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-   String category = request.getParameter("category");
-   
-   if(category==null){
-	   category="";
-   }
-   
-
+    String keyword = request.getParameter("keyword");
+	String condition=request.getParameter("condition");	   
+	if(keyword==null){
+		   keyword="";
+		   condition="";
+	}
    //특수기호를 인코딩한 키워드
-   String encodedK=URLEncoder.encode(category);
+   String encodedK=URLEncoder.encode(keyword);
    
    //최신 인기
    //List<MovieDto> ResentList = MovieDao.getInstance().getResentList();
@@ -58,20 +57,43 @@
    List<MovieDto> movieList= new ArrayList<>();
          
    int totalRow = 0;
-   //1페이지에 해당하는 댓글 목록만 select 되도록 한다. 
-   if (category.equals("resent")) {
-      movieList =  MovieDao.getInstance().getResentList(movieDto);
-      totalRow=MovieDao.getInstance().getCountResent();
-   } else if (category.equals("classic")) {
-      movieList =  MovieDao.getInstance().getSummerList(movieDto);
-      totalRow=MovieDao.getInstance().getCountClassic();
-   } 
+   
+// 영화 검색 목록
+   MovieDto Mdto=new MovieDto();
+   Mdto.setStartRowNum(startRowNum);
+   Mdto.setEndRowNum(endRowNum);
+	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
+	   List<MovieDto> Mlist=null;
+	   //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
+	   int MtotalRow=0;
+	   //만일 검색 키워드가 넘어온다면 
+	   if(!keyword.equals("")){
+	      //검색 조건이 무엇이냐에 따라 분기 하기
+	      
+	        Mdto.setMovie_title_eng(keyword);
+	        Mdto.setMovie_title_kr(keyword);
+	        Mdto.setMovie_director(keyword);
+	        Mlist=MovieDao.getInstance().getListTD(Mdto);
+	         //제목+내용 검색일때 호출하는 메소드를 이용해서 row  의 갯수 얻어오기
+	         MtotalRow=MovieDao.getInstance().getCountTD(Mdto);
+	     
+	   }else{//검색 키워드가 넘어오지 않는다면
+	      //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
+	      Mlist=MovieDao.getInstance().getList(Mdto);
+	      //키워드가 없을때 호출하는 메소드를 이용해서 전제 row 의 갯수를 얻어온다.
+	      MtotalRow=CafeDao.getInstance().getCount();
+	   }
+ 
+   
    
    //원글의 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
    
    //댓글 전체 페이지의 갯수
    int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
    
+   
+   
+ 
    //boolean isSearch = false;
   
    
@@ -81,7 +103,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>영화리스트</title>
+<title>more.jsp</title>
    <!-- more css -->
    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/more.css" />
 
@@ -152,7 +174,6 @@
 
 <div class="container">
 
- 
 
 
    <div class="container-xl index_content">
@@ -160,13 +181,15 @@
          <div class="row index_content02">
              <div class="row">
               <div class="col flex_box index_category">
-               <h1>최신 인기작</h1>
+               <span>
+	         		<strong><%=MtotalRow %></strong> 개의 글이 검색되었습니다.
+	         	</span>
               </div>
             </div>
             
             <div class="movie_row">
 	           <div class="row row-cols-1 row-cols-md-4 g-4 "> 
-	            <%for(MovieDto tmp: movieList) {%>
+	            <%for(MovieDto tmp: Mlist) {%>
 	                <div class="col col-6 col-lg-3 movie_list">
 	                  <a href="<%=request.getContextPath() %>/movieinfo/movieinfo.jsp?movie_num=<%=tmp.getMovie_num() %>" class="poster_link">
 	                  <div class="card border-0">
@@ -246,7 +269,7 @@
 				"pageNum=xxx&num=xxx" 형식으로 GET 방식 파라미터를 전달한다. 
 			*/
 			ajaxPromise("ajax_more_list.jsp","get",
-					"pageNum="+currentPage+"&category=<%=category%>")
+					"pageNum="+currentPage+"&keyword=<%=keyword%>")
 			.then(function(response){
 				//json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
 				return response.text();
