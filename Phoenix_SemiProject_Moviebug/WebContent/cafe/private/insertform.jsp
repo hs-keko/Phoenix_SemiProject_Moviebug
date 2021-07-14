@@ -125,5 +125,6 @@ String email=(String)session.getAttribute("email");
 <div id="footer">
    	<jsp:include page="../../include/footer.jsp"></jsp:include>
 </div>
+
 </body>
 </html>
