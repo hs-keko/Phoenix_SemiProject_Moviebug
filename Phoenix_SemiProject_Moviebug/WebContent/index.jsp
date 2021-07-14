@@ -159,7 +159,7 @@
           </div>
         </div>
         <div class="row align-self-center justify-content-center morewrapper">
-          <a href="<%=request.getContextPath() %>/more.jsp?category=resent" title="" class="moreanchor">더보기</a>
+          <a href="<%=request.getContextPath() %>/search/more.jsp?category=resent" title="" class="moreanchor">더보기</a>
         </div>
       </div>
       
@@ -239,7 +239,7 @@
           </div>
         </div>
         <div class="row align-self-center justify-content-center morewrapper">
-          <a href="<%=request.getContextPath() %>/more.jsp?category=classic" title="" class="moreanchor">더보기</a>
+          <a href="<%=request.getContextPath() %>/search/more.jsp?category=classic" title="" class="moreanchor">더보기</a>
         </div>
       </div>
 
