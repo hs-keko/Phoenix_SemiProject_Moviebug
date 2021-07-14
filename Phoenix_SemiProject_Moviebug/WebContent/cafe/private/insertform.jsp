@@ -20,7 +20,6 @@ String email=(String)session.getAttribute("email");
 	type="image/x-icon" />
 	<!-- Custom styles for this template -->
 <link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
-
 <style>
    .footer_inner a {
    		color:white;
