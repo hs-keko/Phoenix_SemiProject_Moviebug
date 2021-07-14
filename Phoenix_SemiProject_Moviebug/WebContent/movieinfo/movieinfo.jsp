@@ -460,12 +460,7 @@
     </jsp:include>
     <div class="container" id="movieinfo_container">
 	<div class="row movieinfo">
-		<div class="row movie_trailer">
-			<video autoplay muted controls width="100%" height="100%" style="padding:0;">
-				<source src="../trailer/<%=movie_num%>.mp4" type="video/mp4">
-			</video>
-		</div>
-		
+		<!-- 영화 정보 카드 -->
 		<div class="row movie_primary_info">
 			<div class="movie_primary_info_inner">
 				<div class="movie_primary_info_inner_poster">
@@ -502,6 +497,14 @@
 			</div>
 		</div>
 		
+		<!-- 트레일러 -->
+		<div class="row movie_trailer">
+			<video autoplay muted controls width="100%" height="100%" style="padding:0;">
+				<source src="../trailer/<%=movie_num%>.mp4" type="video/mp4">
+			</video>
+		</div>
+		
+		<!-- 영화 상세 정보 -->
 		<div class="row movie_secondary_info">
 			<div class="movie_secondary_info_radio_wrapper">
 				<div class="movie_secondary_info_radio" role="group" aria-label="Basic radio toggle button group">
