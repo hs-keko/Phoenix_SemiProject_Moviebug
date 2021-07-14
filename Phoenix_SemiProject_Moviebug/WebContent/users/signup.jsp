@@ -24,17 +24,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container">
+<script>
 		<%if(isSuccess) {%>
-			<p> <strong><%=name %></strong> 회원님 가입 되었습니다.
-			<a href="loginform.jsp">로그인 하러 가기</a>
-			</p>
+			alert("회원가입에 성공하셨습니다.");
+			location.href="loginform.jsp";
+			
 		<%} else { %>
-			<p>
-				가입 실패!
-				<a href="signupform.jsp">다시 가입하기</a>
-			</p>
-		<%} %>
-	</div>
+			alert("다시 확인해주세요.");		
+		<%} %>		
+</script>
 </body>
 </html>
