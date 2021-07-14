@@ -1,3 +1,11 @@
+html {
+  background-color: black;
+}
+
+body{
+  background-color: transparent!important;
+}
+
 a {
   text-decoration: none;
   color: white;
@@ -26,11 +34,16 @@ a:hover .poster_info .card-title,
   z-index: 1;
 }
 
+
 .index_content {
   display: flex;
   flex-direction: column;
   z-index: 1;
-  margin-top: 50vh;
+  margin-top: 50px;
+}
+
+.index_content .row_row {
+    margin-top: 10px;
 }
 
 .index_content .carousel-item img {
@@ -51,6 +64,8 @@ a:hover .poster_info .card-title,
     sans-serif;
   letter-spacing: -0.025em;
   font-weight: bold;
+  padding-top: 60px;
+  margin-bottom: 0px;
 }
 
 .index_content .poster_info {
@@ -65,4 +80,5 @@ a:hover .poster_info .card-title,
   -webkit-transition: all 0.2s ease-out 0.3s;
   transition: all 0.2s ease-out 0.3s;
   overflow: hidden;
+  color: white;
 }

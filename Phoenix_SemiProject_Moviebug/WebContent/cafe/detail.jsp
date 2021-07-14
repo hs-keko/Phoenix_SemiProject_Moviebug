@@ -351,7 +351,11 @@
 		                  <%} %>
 		                  	<span><strong><%=UsersDao.getInstance().getData(tmp.getQna_comment_writer()).getName() %></strong></span>
 		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
+
+		                  	@<i><%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %></i>
+
 		                  	[<%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %>]님에게
+
 		                  <%} %>
 		                 
 	                  </dt>
