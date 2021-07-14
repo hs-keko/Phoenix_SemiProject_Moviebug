@@ -39,7 +39,7 @@ const createbtns = (keyword) => {
   searchan.setAttribute(
     "href",
     keywordbtnanpath +
-      "/searchall.jsp?condition=movie_title_direc&keyword=" +
+      "/search/searchall.jsp?condition=movie_title_direc&keyword=" +
       keyword
   )
   let searchbtns = document.createElement("button")
@@ -72,11 +72,6 @@ const searchHistory = (keyword) => {
     searchKeyword = JSON.parse(localStorage.getItem("sHistory"))
   }
 
-  // 배열이 10개이상이면 맨뒤의 값을 하나 삭제
-  if (searchKeyword.length >= 10) {
-    searchKeyword.pop()
-  }
-
   let keyidx = searchKeyword.indexOf(keyword)
   // 검색기록에 검색값이 없으면 새로 추가
   if (keyidx < 0) {
@@ -89,6 +84,10 @@ const searchHistory = (keyword) => {
     searchKeyword.unshift(keyword)
   }
 
+  // 배열이 10개이상이면 맨뒤의 값을 하나 삭제
+  if (searchKeyword.length >= 10) {
+    searchKeyword.pop()
+  }
   console.log(searchKeyword)
 
   searchKeyword.forEach((arrval) => {

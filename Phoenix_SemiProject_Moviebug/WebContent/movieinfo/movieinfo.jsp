@@ -119,10 +119,18 @@
 		background-color: black;
 	}
 	
+	
+	#movieinfo_container{
+		margin-top:100px;
+		max-width:720px;
+	}
 
 	.container.movieinfo{
 		width: 720px;
-		margin-top: 65px;
+	}
+	
+	.movieinfo{
+		margin-left: 1.5rem;
 	}
 	
 	.movie_trailer{
@@ -132,6 +140,7 @@
 	    height: 405px;
 	    display: flex;
 	    align-items: center;
+	    padding: 0;
 	}
 	
 	.movie_primary_info{
@@ -228,6 +237,7 @@
 		font-size: 16px;
 		color: black;
 		display: flex;
+		font-size: 14px;
 	}
 	
 	.movie_primary_info_inner_detail_info_one{
@@ -251,11 +261,11 @@
 		margin-bottom: 10px;
 		min-width: 0px;
 		width: 720px;
-	    height: 400px;
 	    display: flex;
 	    border: 2px solid rgb(170 170 170);
 	    border-radius: 10px;
 	    flex-direction: column;
+	    padding: 0;
 	}
 	
 	.movie_secondary_info_radio_wrapper{
@@ -265,6 +275,7 @@
 		width: 100%;
 		height: 50px;
 		display:flex;
+		padding:0;
 	}
 	
 	.movie_secondary_info_radio{
@@ -279,7 +290,7 @@
 		line-height: 30px;
 		width: 100%;
 		height: 100%;
-		border: 2px solid rgb(170 170 170);
+		border: 3px solid rgb(170 170 170);
 	}
 	
 	#btnOne{
@@ -327,7 +338,7 @@
 		flex: 1 1 0%;
 		line-height: 27px;
 		font-weight: bold;
-		color: rgb(120 120 120);
+		color: black;
 	}
 	
 	.movie_secondary_info_detail_rating_box{
@@ -451,13 +462,10 @@
 	<jsp:include page="../include/navbar.jsp"> 
     	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
     </jsp:include>
-	<div class="container movieinfo">
-		<div class="movie_trailer">
-			<video autoplay muted controls width="100%" height="100%">
-				<source src="../trailer/<%=movie_num%>.mp4" type="video/mp4">
-			</video>
-		</div>
-		<div class="movie_primary_info">
+    <div class="container mb-5" id="movieinfo_container">
+	<div class="row movieinfo">
+		<!-- 영화 정보 카드 -->
+		<div class="row movie_primary_info">
 			<div class="movie_primary_info_inner">
 				<div class="movie_primary_info_inner_poster">
 					<img class="movie_img" src="<%=dto.getMovie_image() %>"/>
@@ -486,13 +494,22 @@
 						<div class="movie_primary_info_inner_detail_info_two">
 							<div class="css-detail_txt"><%=dto.getMovie_company() %></div>
 							<div class="css-bar"></div>
-							<div class="css-detail_txt"><%=dto.getMovie_year() %> 개봉</div>
+							<div class="css-detail_txt"><%=dto.getMovie_year() %></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="movie_secondary_info">
+		
+		<!-- 트레일러 -->
+		<div class="row movie_trailer">
+			<video autoplay muted controls width="100%" height="100%" style="padding:0;">
+				<source src="../trailer/<%=movie_num%>.mp4" type="video/mp4">
+			</video>
+		</div>
+		
+		<!-- 영화 상세 정보 -->
+		<div class="row movie_secondary_info">
 			<div class="movie_secondary_info_radio_wrapper">
 				<div class="movie_secondary_info_radio" role="group" aria-label="Basic radio toggle button group">
   					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
@@ -509,9 +526,11 @@
 				
 			</div>
 		</div>
+	</div>
+		
 		
 		<!-- 댓글 목록 -->
-   <div class="comments">
+   <div class="row comments">
       <ul>
          <%for(MovieCommentDto tmp: commentList){ %>
             <%if(tmp.getComment_deleted().equals("yes")){ %>
@@ -579,13 +598,14 @@
          <%} %>
       </ul>
    </div>
-   <div class="loader">
+   <div class="row loader">
     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
   		<path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
   		<path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
 	</svg>
    </div>
    <!-- 원글에 댓글을 작성할 폼 -->
+   <div class="row">
    <form class="comment-form insert-form" action="private/comment_insert.jsp" method="post">
       <!-- 원글의 글번호가 댓글의 ref_group 번호가 된다. -->
       <input type="hidden" name="comment_ref_group" value="<%=movie_num%>"/>
@@ -595,7 +615,11 @@
       <textarea name="comment_content"><%if(!isLogin){%>댓글 작성을 위해 로그인이 필요 합니다.<%}%></textarea>
       <button type="submit">등록</button>
    </form>
-	</div>
+   </div>
+</div>
+
+<!-- import footer.jsp -->
+<jsp:include page="../include/footer.jsp"></jsp:include>
 
 <script src="${pageContext.request.contextPath}/js/gura_util.js"></script>
 <script>

@@ -11,7 +11,6 @@
 <%
 	//자세히 보여줄 글번호 가져오기
 	int qna_idx=Integer.parseInt(request.getParameter("num"));
-
 	String keyword=request.getParameter("keyword");
 	String condition=request.getParameter("condition");
 	
@@ -77,7 +76,6 @@
     int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
     System.out.println(totalPageCount);
     String email=(String)session.getAttribute("email");
-
 %>
 <!DOCTYPE html>
 <html>
@@ -95,7 +93,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@600&display=swap" rel="stylesheet">
-
 	<!-- 웹폰트 test -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -254,7 +251,6 @@
 	a{
 	text-decoration: none; 
 	}
-
 	.detail_container{
 		align-items: center;
 		padding-top: 20px;
@@ -265,6 +261,7 @@
 		border: 1px solid #cecece;
 		height: auto;
 	}
+
 </style>
 </head>
 <body>
@@ -359,10 +356,8 @@
    				<%
    					// continue 아래의 코드를 수행않고 for문으로 다시 실행순서 보내기 
    				 	continue;
-   				
-   				}%>
-   				
-   				
+   			  }%>
+
    				<%if(tmp.getQna_comment_idx()==tmp.getQna_comment_group()){ %>
    				<li id="reli<%=tmp.getQna_comment_idx() %>">
    				<%}else{ %>
@@ -384,7 +379,7 @@
 		                  <%} %>
 		                  	<span><strong><%=UsersDao.getInstance().getData(tmp.getQna_comment_writer()).getName() %></strong></span>
 		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
-		                  	@<i><%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %>]</i>
+		                  	@<i><%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %></i>
 		                  <%} %>
 		                	<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
 							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link float-end ms-3" href="javascript:">
@@ -399,7 +394,6 @@
 								</svg>
 								</a>							
 							<%} %>
-
 	                 	</div>
 	                  </dt>
 	              <dd>
@@ -628,7 +622,6 @@
 			            });
 			         });
 			      }
-
 			   }
 </script>
 	<!-- footer  -->

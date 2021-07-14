@@ -278,8 +278,8 @@ html, body {
          <%} %>
       </div>
      </div>
-<div class="footer clearfix">
 
+<div class="footer clearfix">
    	<jsp:include page="../include/footer.jsp"></jsp:include>
 </div>
 <script>
