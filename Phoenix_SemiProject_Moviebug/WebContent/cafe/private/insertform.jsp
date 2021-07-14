@@ -92,5 +92,10 @@
       oEditors.getById["qna_content"].setDefaultFont(sDefaultFont, nFontSize);
    }
 </script>
+<script src="<%= request.getContextPath()%>/js/navbar.js"></script>
+	<!-- footer  -->
+<div id="footer">
+   	<jsp:include page="../../include/footer.jsp"></jsp:include>
+</div>
 </body>
 </html>
