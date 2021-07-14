@@ -16,7 +16,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/users/private/update.jsp</title>
+<title>MovieBug</title>
 <!-- navbar 필수 import -->
     <jsp:include page="../../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
