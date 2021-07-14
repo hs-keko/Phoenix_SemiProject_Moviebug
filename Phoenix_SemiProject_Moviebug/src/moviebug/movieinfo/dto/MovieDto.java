@@ -196,7 +196,3 @@ public class MovieDto {
    
    
 }
-
-
-
-
