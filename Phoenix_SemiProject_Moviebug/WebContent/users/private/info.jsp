@@ -181,7 +181,7 @@
       font-size: 12px;
    }
    
-   a{
+   .table a{
      text-decoration: none;
      color:black; 
    }

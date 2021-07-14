@@ -73,13 +73,14 @@ CREATE TABLE movie_info(
 	movie_character VARCHAR2(300), -- 영화 감독/출연진
 	movie_year varchar2(100),-- 영화 제작년도
 	movie_genre VARCHAR2(100), -- 영화 장르
-	movie_company VARCHAR2(100), -- 제작사
+	movie_company VARCHAR2(100), -- 제작사s
 	movie_image VARCHAR2(2000), -- 영화 이미지 경로
 	movie_trailer VARCHAR2(1000), -- 영화 트레일러 경로
 	movie_time VARCHAR2(10), -- 러닝 타임
 	movie_rating VARCHAR2(10) -- 영화 평점
 	movie_nation varchar2(25) -- 제작 국가
 	movie_director varchar2(20) -- 감독
+	movie_carousel varchar2(50) -- 이미지
 );
 
 -- 영화 정보 번호를 얻어낼 시퀀스
