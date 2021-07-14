@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-String email=(String)session.getAttribute("email");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,14 +17,16 @@ String email=(String)session.getAttribute("email");
 	type="image/x-icon" />
 	<!-- Custom styles for this template -->
 <link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
+  
+<title>/cafe/private/insertform.jsp</title>
+<jsp:include page="../../include/resource.jsp"></jsp:include>
 
 <style>
-   .footer_inner a {
-   		color:white;
-    }
+
 	#qna_content{
 		height: 500px;
 	}
+
 	html, body {
 		width: 100%;
 		height: 100%;
@@ -50,14 +49,10 @@ String email=(String)session.getAttribute("email");
 	footer{
 	    margin-top: 30px;
 	}
-	
 
 </style>
 </head>
 <body>
-<jsp:include page="../../include/navbar.jsp">
-	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
-</jsp:include>
 <div class="container">
 	<br>
 	<br>
@@ -76,10 +71,14 @@ String email=(String)session.getAttribute("email");
 			<label class="form-label" for="qna_content">내용</label>
 			<textarea class="form-control" name="qna_content" id="qna_content"></textarea>
 		</div>
+
 		<div class="w-100 clearfix">
 			<button class="btn btn-outline-secondary float-end ms-2" type="submit" onclick="submitContents(this);">등록</button>
 			<button class="btn btn-outline-secondary float-end" type="reset"><a class="link-secondary" href=../list.jsp>취소</a></button>
 		</div>
+
+		<button class="btn btn-primary float-end" type="submit" onclick="submitContents(this);">저장</button>
+
 	</form>
 	<br>
 	<br>
@@ -137,6 +136,7 @@ String email=(String)session.getAttribute("email");
       var nFontSize = 24;
       oEditors.getById["qna_content"].setDefaultFont(sDefaultFont, nFontSize);
    }
+
    
    function noSpaceForm(obj) 
    {                        

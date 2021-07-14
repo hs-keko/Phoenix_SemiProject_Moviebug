@@ -93,6 +93,16 @@
 	type="image/x-icon" />
 	<!-- Custom styles for this template -->
 <link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	
+	<!-- 웹폰트 댓글  -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 	
@@ -103,7 +113,7 @@
 	   		font-size: small; 
 	   		color: gray
 	   }
-/* 	   .footer_inner a { */
+	   .footer_inner a {
 	   		color:white;
 	    }
 	   
@@ -118,6 +128,7 @@
 		width: 100%;
 		height: 100%;
 		padding-top: 10px;
+		padding-bottom: 10px;
 		}
 		
 		.detail_container{
@@ -244,6 +255,10 @@
     margin-bottom: 40px;
    }
    
+	a{
+	text-decoration: none; 
+	}
+
 	.detail_container{
 		align-items: center;
 		padding-top: 20px;
@@ -254,6 +269,7 @@
 		border: 1px solid #cecece;
 		height: auto;
 	}
+
 	#footer {
 	  height: 50px;
 	  transform: translateY(-100%);
@@ -264,7 +280,6 @@
    .footer_inner a {
    		color:white;
     }
-
 
 </style>
 </head>
@@ -348,7 +363,6 @@
       <br>
       <br>
    </div>
-   
    <!-- 여기서부터 댓글 목록 입니다. -->
 
    <!-- 원글에 댓글을 작성할 폼 -->
@@ -378,8 +392,8 @@
    				<%
    					// continue 아래의 코드를 수행않고 for문으로 다시 실행순서 보내기 
    				 	continue;
-   				
-   				}%>
+   			  }%>
+
    				<%if(tmp.getQna_comment_idx()==tmp.getQna_comment_group()){ %>
    				<li id="reli<%=tmp.getQna_comment_idx() %>">
    				<%}else{ %>
