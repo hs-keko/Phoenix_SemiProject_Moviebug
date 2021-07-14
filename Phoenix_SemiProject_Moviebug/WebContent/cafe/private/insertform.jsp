@@ -1,48 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-String email=(String)session.getAttribute("email");
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/cafe/private/insertform.jsp</title>
-    <!-- navbar 필수 import -->
-    <jsp:include page="../../include/resource.jsp"></jsp:include>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
-    <!-- import css -->
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
-    
+<jsp:include page="../../include/resource.jsp"></jsp:include>
 <style>
-   .footer_inner a {
-   		color:white;
-    }
+
 	#qna_content{
 		height: 500px;
-	}
-	html, body {
-		width: 100%;
-		height: 100%;
-		margin-top: 30px;
-	}
-	
-	.container {
-		width: 100%;
-		height: 100%;	
-	}
-	.footer {
-		  height: 50px;
-		  margin-top: -50px;
 	}
 	
 
 </style>
 </head>
 <body>
-<jsp:include page="../../include/navbar.jsp">
-	<jsp:param value="<%=email != null ? email:null %>" name="email"/>
-</jsp:include>
 <div class="container">
 	<br>
 	<br>
@@ -60,7 +33,7 @@ String email=(String)session.getAttribute("email");
 			<label class="form-label" for="qna_content">내용</label>
 			<textarea class="form-control" name="qna_content" id="qna_content"></textarea>
 		</div>
-		<button class="btn btn-outline-secondary float-end" type="submit" onclick="submitContents(this);">저장</button>
+		<button class="btn btn-primary float-end" type="submit" onclick="submitContents(this);">저장</button>
 	</form>
 	<br>
 	<br>
@@ -118,12 +91,6 @@ String email=(String)session.getAttribute("email");
       var nFontSize = 24;
       oEditors.getById["qna_content"].setDefaultFont(sDefaultFont, nFontSize);
    }
-   
 </script>
-<script src="<%= request.getContextPath()%>/js/navbar.js"></script>
-	<!-- footer  -->
-<div id="footer">
-   	<jsp:include page="../../include/footer.jsp"></jsp:include>
-</div>
 </body>
 </html>
