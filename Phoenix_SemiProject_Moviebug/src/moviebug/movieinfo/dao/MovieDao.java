@@ -181,7 +181,7 @@ public class MovieDao {
                "movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer " + 
                "from movie_info " + 
                "where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%') " + 
-               "order by movie_year desc) result1 " + 
+               "order by movie_num desc) result1 " + 
                "where rownum < 5 " + 
                "order by rownum asc";
          pstmt = conn.prepareStatement(sql);
