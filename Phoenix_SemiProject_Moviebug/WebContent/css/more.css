@@ -33,8 +33,10 @@ a:hover .poster_info .card-title,
   opacity: 1;
   z-index: 1;
 }
+
 .h1, h1{
    color: white;
+   font-weight: bold!important;
 }
 .index_content {
   display: flex;
