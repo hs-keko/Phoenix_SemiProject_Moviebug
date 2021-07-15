@@ -19,8 +19,6 @@
 
 	MovieDto dto=MovieDao.getInstance().getData(movie_num);
 	
-	
-	
 	/*
     [ 댓글 페이징 처리에 관련된 로직 ]
  	*/
