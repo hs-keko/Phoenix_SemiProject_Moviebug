@@ -1,3 +1,5 @@
+<%@page import="test.free_cafe.dao.FreeCafeDao"%>
+<%@page import="test.free_cafe.dto.FreeCafeDto"%>
 <%@page import="moviebug.movieinfo.dao.MovieDao"%>
 <%@page import="moviebug.movieinfo.dto.MovieDto"%>
 <%@page import="java.net.URLEncoder"%>
@@ -63,7 +65,9 @@ if (!keyword.equals("")) {
 	MtotalRow = CafeDao.getInstance().getCount();
 }
 
-//CafeDto 객체에 startRowNum 과 endRowNum 을 담는다.
+
+
+// qna 검색 목록
 CafeDto dto = new CafeDto();
 dto.setStartRowNum(startRowNum);
 dto.setEndRowNum(endRowNum);
@@ -98,6 +102,37 @@ if (!keyword.equals("")) {
 	//키워드가 없을때 호출하는 메소드를 이용해서 전제 row 의 갯수를 얻어온다.
 	totalRow = CafeDao.getInstance().getCount();
 }
+
+
+// 자유 게시판 검색 목록
+   FreeCafeDto Fdto=new FreeCafeDto();
+   Fdto.setStartRowNum(startRowNum);
+   Fdto.setEndRowNum(endRowNum);
+	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
+	   List<FreeCafeDto> Flist=null;
+	   //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
+	   int FtotalRow=0;
+	   //만일 검색 키워드가 넘어온다면 
+	   if(!keyword.equals("")){
+	      //검색 조건이 무엇이냐에 따라 분기 하기
+	      if(condition.equals("movie_title_direc")){//제목 + 내용 검색인 경우
+	         //검색 키워드를 FreeCafeDto 에 담아서 전달한다.
+	         Fdto.setFree_title(keyword);
+	         Fdto.setFree_content(keyword);
+	         //제목+내용 검색일때 호출하는 메소드를 이용해서 목록 얻어오기 
+	         Flist=FreeCafeDao.getInstance().getListTC(Fdto);
+	         //제목+내용 검색일때 호출하는 메소드를 이용해서 row  의 갯수 얻어오기
+	         FtotalRow=FreeCafeDao.getInstance().getCountTC(Fdto);
+	      }
+	   	}else{//검색 키워드가 넘어오지 않는다면
+	      //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
+	      Flist=FreeCafeDao.getInstance().getList(Fdto);
+	      //키워드가 없을때 호출하는 메소드를 이용해서 전제 row 의 갯수를 얻어온다.
+	      FtotalRow=FreeCafeDao.getInstance().getCount();
+	   }
+
+
+
 String email = (String) session.getAttribute("email");
 %>
 <!DOCTYPE html>
@@ -251,6 +286,68 @@ html, body {
 				</a>
 			</div>
 		</div>
+		
+				<div class="row search_title">
+			<div class="col">
+				<h1 id="one">자유게시판 검색 결과</h1>
+			</div>
+			<div class="col d-flex">
+				<%
+					if (!condition.equals("")) {
+				%>
+				<span> <strong><%=FtotalRow%></strong>개의 글이 검색되었습니다.
+				</span>
+				<%
+					}
+				%>
+			</div>
+		</div>
+		<div class="row">
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>작성자</th>
+						<th>제목</th>
+						<th>작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+					for (FreeCafeDto tmp : Flist) {
+					%>
+						<tr>
+							<td><%=tmp.getFree_idx() %></td>
+							<td><%if(tmp.getFree_file() != null){ %>
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-arrow-up" viewBox="0 0 16 16">
+								  <path d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
+								  <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+								</svg>
+								<a class="font-do link-dark" href="detail.jsp?num=<%=tmp.getFree_idx()%>"><%=tmp.getFree_title() %></a>
+							<%}else{ %>
+								<a class="font-do link-dark" href="detail.jsp?num=<%=tmp.getFree_idx()%>"><%=tmp.getFree_title() %></a>
+							<%} %>
+							</td>
+							<td><%=tmp.getFree_writer() %></td>
+							<td class="font-gray"><%=tmp.getFree_regdate() %></td>
+						</tr>
+					<%
+						}
+					%>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="row">
+			<div class="col d-flex justify-content-end">
+				<a
+					href="<%=request.getContextPath()%>/free_cafe/list.jsp?condition=free_title_content&keyword=<%=keyword%>">
+					<button type="button" class="btn btn-secondary btn-lg mb-4">자유게시판
+						검색결과 더보기</button>
+				</a>
+			</div>
+		</div>
 
 		<div class="row search_title">
 			<div class="col">
@@ -324,6 +421,9 @@ html, body {
 				</a>
 			</div>
 		</div>
+		
+
+		
 	</div>
 
 	<!-- footer  -->
