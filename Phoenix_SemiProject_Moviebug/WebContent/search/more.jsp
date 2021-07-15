@@ -12,13 +12,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-   String category = request.getParameter("category");
+    String category = request.getParameter("category");
+	String category_name= request.getParameter("category");
    
    if(category==null){
 	   category="";
    }
    
-
    //특수기호를 인코딩한 키워드
    String encodedK=URLEncoder.encode(category);
    
@@ -58,7 +58,9 @@
    List<MovieDto> movieList= new ArrayList<>();
          
    int totalRow = 0;
-   //1페이지에 해당하는 댓글 목록만 select 되도록 한다. 
+   //1페이지에 해당하는 댓글 목록만 select 되도록 한다.
+
+   
    if (category.equals("resent")) {
       movieList =  MovieDao.getInstance().getResentList(movieDto);
       totalRow=MovieDao.getInstance().getCountResent();
@@ -66,6 +68,11 @@
       movieList =  MovieDao.getInstance().getSummerList(movieDto);
       totalRow=MovieDao.getInstance().getCountClassic();
    } 
+   if(category.equals("resent")){
+	      category_name="최신 인기";
+	   }else if(category.equals("classic")){
+	      category_name="여름 추천";
+	   }
    
    //원글의 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
    
@@ -160,7 +167,7 @@
          <div class="row index_content02">
              <div class="row">
               <div class="col flex_box index_category">
-               <h1>최신 인기작</h1>
+               <h1><%=category_name %></h1>
               </div>
             </div>
             
