@@ -303,7 +303,7 @@
 	
 	.movie_secondary_info_detail_wrapper{
 		width: 100%;
-		height: 350px;
+		height: 400px;
 		padding: 20px;
 	}
 	
