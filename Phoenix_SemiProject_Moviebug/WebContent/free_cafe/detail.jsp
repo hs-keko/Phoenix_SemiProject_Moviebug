@@ -1,16 +1,16 @@
 <%@page import="moviebug.users.dto.UsersDto"%>
 <%@page import="moviebug.users.dao.UsersDao"%>
-<%@page import="test.cafe.dao.CafeCommentDao"%>
+<%@page import="test.free_cafe.dao.FreeCafeCommentDao"%>
 <%@page import="java.util.List"%>
-<%@page import="test.cafe.dto.CafeCommentDto"%>
+<%@page import="test.free_cafe.dto.FreeCafeCommentDto"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="test.cafe.dao.CafeDao"%>
-<%@page import="test.cafe.dto.CafeDto"%>
+<%@page import="test.free_cafe.dao.FreeCafeDao"%>
+<%@page import="test.free_cafe.dto.FreeCafeDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	//자세히 보여줄 글번호 가져오기
-	int qna_idx=Integer.parseInt(request.getParameter("num"));
+	int free_idx=Integer.parseInt(request.getParameter("num"));
 	String keyword=request.getParameter("keyword");
 	String condition=request.getParameter("condition");
 	
@@ -20,26 +20,26 @@
 	   keyword="";
 	   condition=""; 
 	}
-	//CafeDto 객체를 생성해서 
-	CafeDto dto=new CafeDto();
+	//FreeCafeDto 객체를 생성해서 
+	FreeCafeDto dto=new FreeCafeDto();
 	//자세히 보여줄 글번호를 넣어준다. 
-	dto.setQna_idx(qna_idx);
+	dto.setFree_idx(free_idx);
 	if(!keyword.equals("")){
 		   //검색 조건이 무엇이냐에 따라 분기 하기
-		   if(condition.equals("qna_title_content")){//제목 + 내용 검색인 경우
-		      //검색 키워드를 CafeDto 에 담아서 전달한다.
-		      dto.setQna_title(keyword);
-		      dto.setQna_content(keyword);
-		      dto=CafeDao.getInstance().getDataTC(dto);
-		   }else if(condition.equals("qna_title")){ //제목 검색인 경우
-		      dto.setQna_title(keyword);
-		      dto=CafeDao.getInstance().getDataT(dto);
-		   }else if(condition.equals("qna_writer")){ //작성자 검색인 경우
-		      dto.setQna_writer(keyword);
-		      dto=CafeDao.getInstance().getDataW(dto);
+		   if(condition.equals("free_title_content")){//제목 + 내용 검색인 경우
+		      //검색 키워드를 FreeCafeDto 에 담아서 전달한다.
+		      dto.setFree_title(keyword);
+		      dto.setFree_content(keyword);
+		      dto=FreeCafeDao.getInstance().getDataTC(dto);
+		   }else if(condition.equals("free_title")){ //제목 검색인 경우
+		      dto.setFree_title(keyword);
+		      dto=FreeCafeDao.getInstance().getDataT(dto);
+		   }else if(condition.equals("free_writer")){ //작성자 검색인 경우
+		      dto.setFree_writer(keyword);
+		      dto=FreeCafeDao.getInstance().getDataW(dto);
 		   } // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다.
 		}else{//검색 키워드가 넘어오지 않는다면
-		   dto=CafeDao.getInstance().getData(dto);
+		   dto=FreeCafeDao.getInstance().getData(dto);
 		}
 	//특수기호를 인코딩한 키워드를 미리 준비한다. 
 	String encodedK=URLEncoder.encode(keyword);
@@ -59,19 +59,19 @@
    	int endRowNum=pageNum*PAGE_ROW_COUNT;
     
     //원글의 글번호를 이용해 해당글에 달린 댓글 목록을 얻어옴
-    CafeCommentDto commentDto = new CafeCommentDto();
-	commentDto.setQna_comment_ref_group(qna_idx);
+    FreeCafeCommentDto commentDto = new FreeCafeCommentDto();
+	commentDto.setFree_comment_ref_group(free_idx);
 	
 	//1페이지에 해당하는 stratRowNum과 endRowNum을 dto에 담아
 	commentDto.setStartRowNum(startRowNum);
 	commentDto.setEndRowNum(endRowNum);
 	
 	//1페이지에 해당하는 댓글 목록만 select되도록 함
-	List<CafeCommentDto> commentList=
-			CafeCommentDao.getInstance().getList(commentDto);
+	List<FreeCafeCommentDto> commentList=
+			FreeCafeCommentDao.getInstance().getList(commentDto);
 	
 	// 원글의 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
-    int totalRow=CafeCommentDao.getInstance().getCount(qna_idx);
+    int totalRow=FreeCafeCommentDao.getInstance().getCount(free_idx);
     // 댓글 전체 페이지의 갯수
     int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
     System.out.println(totalPageCount);
@@ -81,7 +81,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Q&A</title>
+<title>자유게시판</title>
     <!-- navbar 필수 import -->
     <jsp:include page="../include/resource.jsp"></jsp:include>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/navbar.css" />
@@ -317,31 +317,31 @@
    <table>
       <tr>
          <th>글번호</th>
-         <td><%=dto.getQna_idx() %></td>
+         <td><%=dto.getFree_idx() %></td>
       </tr>
       <tr>
          <th>작성자</th>
-         <td><%=dto.getQna_writer() %></td>
+         <td><%=dto.getFree_writer() %></td>
       </tr>
       <tr>
          <th>제목</th>
-         <td><%=dto.getQna_title() %></td>
+         <td><%=dto.getFree_title() %></td>
       </tr>
       <tr>
          <th>첨부파일</th>
-         <%if(dto.getQna_file() == null){%>
+         <%if(dto.getFree_file() == null){%>
          <td> </td>
          <%}else{ %>
-         <td><%=dto.getQna_file() %></td>
+         <td><%=dto.getFree_file() %></td>
          <%} %>
       </tr>
       <tr>
          <th>등록일</th>
-         <td><%=dto.getQna_regdate() %></td>
+         <td><%=dto.getFree_regdate() %></td>
       </tr>
       <tr>
 		<td colspan="2">
-			<div class="content"><%=dto.getQna_content() %></div>
+			<div class="content"><%=dto.getFree_content() %></div>
 		</td>
 	</tr>
    </table>
@@ -350,9 +350,9 @@
       
       if(email != null){
       %>
-      <%if(dto.getQna_writer().equals(UsersDao.getInstance().getData(email).getName())){ %>
-      <a class="btn btn-outline-secondary" href="private/updateform.jsp?num=<%=dto.getQna_idx() %>">수정</a>
-      <a class="btn btn-outline-secondary" href="private/delete.jsp?num=<%=dto.getQna_idx() %>">삭제</a>
+      <%if(dto.getFree_writer().equals(UsersDao.getInstance().getData(email).getName())){ %>
+      <a class="btn btn-outline-secondary" href="private/updateform.jsp?num=<%=dto.getFree_idx() %>">수정</a>
+      <a class="btn btn-outline-secondary" href="private/delete.jsp?num=<%=dto.getFree_idx() %>">삭제</a>
       <% } 
       }
       %>
@@ -366,10 +366,10 @@
    <div>
    <form class="comment-form insert-form" action="private/comment_insert.jsp" method="post">
    		<!-- 원글의 글번호가 댓글의 ref_group 번호가 된다. -->
-   		<input type="hidden" name="qna_comment_ref_group" value="<%=qna_idx %>" />
+   		<input type="hidden" name="free_comment_ref_group" value="<%=free_idx %>" />
    		<!-- 원글의 작성자가 댓글의 대상자가 된다. -->
-   		<input type="hidden" name="qna_comment_target_id" value="<%=dto.getQna_writer() %>"/>
-   		<textarea name="qna_comment_content"></textarea>
+   		<input type="hidden" name="free_comment_target_id" value="<%=dto.getFree_writer() %>"/>
+   		<textarea name="free_comment_content"></textarea>
    		<button class="btn btn-secondary" type="submit">등록</button>
    </form>
    </div>
@@ -379,22 +379,22 @@
    
    <div id="one" class="comments">
    		<ul>
-   			<%for(CafeCommentDto tmp: commentList){ 
-   			System.out.println(tmp.getQna_comment_ref_group());
+   			<%for(FreeCafeCommentDto tmp: commentList){ 
+   			System.out.println(tmp.getFree_comment_ref_group());
    			System.out.println(tmp.getEndRowNum());
    			System.out.println(tmp.getStartRowNum());
    			%>
-   				<%if(tmp.getQna_comment_deleted().equals("yes")){%>
+   				<%if(tmp.getFree_comment_deleted().equals("yes")){%>
    					<li>삭제된 댓글입니다</li>
    				<%
    					// continue 아래의 코드를 수행않고 for문으로 다시 실행순서 보내기 
    				 	continue;
    			  }%>
 
-   				<%if(tmp.getQna_comment_idx()==tmp.getQna_comment_group()){ %>
-   				<li id="reli<%=tmp.getQna_comment_idx() %>">
+   				<%if(tmp.getFree_comment_idx()==tmp.getFree_comment_group()){ %>
+   				<li id="reli<%=tmp.getFree_comment_idx() %>">
    				<%}else{ %>
-				<li id="reli<%=tmp.getQna_comment_idx()%>" style="padding-left:50px;">
+				<li id="reli<%=tmp.getFree_comment_idx()%>" style="padding-left:50px;">
 	               <svg class="reply-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
 	                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
 	               </svg>
@@ -410,18 +410,18 @@
 		                  <%}else{ %>
 		                      <img class="profile-image" src="${pageContext.request.contextPath}<%=tmp.getProfile()%>"/>
 		                  <%} %>
-		                  	<span><strong><%=UsersDao.getInstance().getData(tmp.getQna_comment_writer()).getName() %></strong></span>
-		                  <%if(tmp.getQna_comment_idx() != tmp.getQna_comment_group()){ %>
-		                  	@<i><%=UsersDao.getInstance().getData(tmp.getQna_comment_target_id()).getName() %></i>
+		                  	<span><strong><%=UsersDao.getInstance().getData(tmp.getFree_comment_writer()).getName() %></strong></span>
+		                  <%if(tmp.getFree_comment_idx() != tmp.getFree_comment_group()){ %>
+		                  	@<i><%=UsersDao.getInstance().getData(tmp.getFree_comment_target_id()).getName() %></i>
 		                  <%} %>
-		                	<%	if(email != null && tmp.getQna_comment_writer().equals(email)){ %>
-							<a data-num="<%=tmp.getQna_comment_idx() %>" class="delete-link float-end ms-3" href="javascript:">
+		                	<%	if(email != null && tmp.getFree_comment_writer().equals(email)){ %>
+							<a data-num="<%=tmp.getFree_comment_idx() %>" class="delete-link float-end ms-3" href="javascript:">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
 								  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
 								  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 								</svg>
 								</a>
-								<a data-num="<%=tmp.getQna_comment_idx() %>" class="update-link float-end ms-3" href="javascript:">
+								<a data-num="<%=tmp.getFree_comment_idx() %>" class="update-link float-end ms-3" href="javascript:">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
 								  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
 								</svg>
@@ -430,33 +430,33 @@
 	                 	</div>
 	                  </dt>
 	              <dd>
-                     <pre class="font-do" id="pre<%=tmp.getQna_comment_idx()%>"><%=tmp.getQna_comment_content() %></pre>                  
+                     <pre class="font-do" id="pre<%=tmp.getFree_comment_idx()%>"><%=tmp.getFree_comment_content() %></pre>                  
                   </dd>
                   <dd>
-                  	<span class="font-small"><%=tmp.getQna_comment_regdate () %></span>
+                  	<span class="font-small"><%=tmp.getFree_comment_regdate () %></span>
                   </dd>
                   <dd>
                   <button type="button" class="btn btn-outline-secondary">
-                  	<a data-num="<%=tmp.getQna_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
+                  	<a data-num="<%=tmp.getFree_comment_idx() %>" href="javascript:" class="reply-link">답글</a>
                   </button>
                   </dd>
 	               </dl>
-					<form id="reForm<%=tmp.getQna_comment_idx() %>" class="animate__animated comment-form re-insert-form" 
+					<form id="reForm<%=tmp.getFree_comment_idx() %>" class="animate__animated comment-form re-insert-form" 
                   action="private/comment_insert.jsp" method="post">
-                  <input type="hidden" name="qna_comment_ref_group"
-                     value="<%=dto.getQna_idx()%>"/>
-                  <input type="hidden" name="qna_comment_target_id"
-                     value="<%=tmp.getQna_comment_writer()%>"/>
-                  <input id="two" type="hidden" name="qna_comment_group"
-                     value="<%=tmp.getQna_comment_group()%>"/>
-                  <textarea name="qna_comment_content"></textarea>
+                  <input type="hidden" name="free_comment_ref_group"
+                     value="<%=dto.getFree_idx()%>"/>
+                  <input type="hidden" name="free_comment_target_id"
+                     value="<%=tmp.getFree_comment_writer()%>"/>
+                  <input id="two" type="hidden" name="free_comment_group"
+                     value="<%=tmp.getFree_comment_group()%>"/>
+                  <textarea name="free_comment_content"></textarea>
                   <button type="submit" class="btn btn-secondary">등록</button>
                </form>   
-               <%if(tmp.getQna_comment_writer().equals(email)){ %>   
-               <form id="updateForm<%=tmp.getQna_comment_idx() %>" class="comment-form update-form" 
+               <%if(tmp.getFree_comment_writer().equals(email)){ %>   
+               <form id="updateForm<%=tmp.getFree_comment_idx() %>" class="comment-form update-form" 
                   action="private/comment_update.jsp" method="post">
-                  <input type="hidden" name="qna_comment_idx" value="<%=tmp.getQna_comment_idx() %>" />
-                  <textarea name="qna_comment_content"><%=tmp.getQna_comment_content() %></textarea>
+                  <input type="hidden" name="free_comment_idx" value="<%=tmp.getFree_comment_idx() %>" />
+                  <textarea name="free_comment_content"><%=tmp.getFree_comment_content() %></textarea>
                   <button type="submit" class="btn btn-outline-secondary">수정</button>
                </form>
 					<%} %>						
@@ -516,7 +516,7 @@
 	            "pageNum=xxx&num=xxx" 형식으로 GET 방식 파라미터를 전달한다. 
 	         */
 	         ajaxPromise("ajax_comment_list.jsp","get",
-	               "pageNum="+currentPage+"&qna_idx="+<%=qna_idx%>)
+	               "pageNum="+currentPage+"&free_idx="+<%=free_idx%>)
 	         .then(function(response){
 	            //json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
 	            return response.text();
@@ -548,8 +548,8 @@
 	     			for(let i=0; i<updateLinks.length; i++){
 	     				updateLinks[i].addEventListener("click", function(){
 	     					//click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
-	     					const qna_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
-	     					document.querySelector("#updateForm"+qna_comment_idx).style.display="block";
+	     					const free_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
+	     					document.querySelector("#updateForm"+free_comment_idx).style.display="block";
 	     			});
 	     		}
 	      	}
@@ -559,11 +559,11 @@
 				for(let i=0; i<deleteLinks.length; i++){
 					deleteLinks[i].addEventListener("click", function(){
 						//click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
-						const qna_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
+						const free_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
 						const isDelete=confirm("댓글을 삭제 하시겠습니까?");
 						if(isDelete){
 							// gura_util.js 에 있는 함수들 이용해서 ajax 요청
-							ajaxPromise("private/comment_delete.jsp", "post", "qna_comment_idx="+qna_comment_idx)
+							ajaxPromise("private/comment_delete.jsp", "post", "free_comment_idx="+free_comment_idx)
 							.then(function(response){
 								return response.json();
 							})
@@ -571,7 +571,7 @@
 								//만일 삭제 성공이면 
 								if(data.isSuccess){
 									//댓글이 있는 곳에 삭제된 댓글입니다를 출력해 준다. 
-									document.querySelector("#reli"+qna_comment_idx).innerText="삭제된 댓글입니다.";
+									document.querySelector("#reli"+free_comment_idx).innerText="삭제된 댓글입니다.";
 								}
 							});
 						}
@@ -585,9 +585,9 @@
 				for(let i=0; i<replyLinks.length; i++){
 					replyLinks[i].addEventListener("click", function(){
 							//click 이벤트가 발생한 바로 그 요소의 data-num 속성의 value값 읽어오기
-							const qna_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
+							const free_comment_idx=this.getAttribute("data-num"); //댓글의 글번호
 							
-							const form=document.querySelector("#reForm"+qna_comment_idx);
+							const form=document.querySelector("#reForm"+free_comment_idx);
 							
 							//현재 문자열을 읽어온다 (답글 or 취소)
 							let current = this.innerText;
@@ -636,10 +636,10 @@
 			                     특정문서의 참조값.querySelector() 는 해당 문서 객체의 자손 요소 중에서
 			                     특정 요소의 참조값을 찾는 기능
 			                  */
-			                  const qna_comment_idx=form.querySelector("input[name=qna_comment_idx]").value;
-			                  const qna_comment_content=form.querySelector("textarea[name=qna_comment_content]").value;
+			                  const free_comment_idx=form.querySelector("input[name=free_comment_idx]").value;
+			                  const free_comment_content=form.querySelector("textarea[name=free_comment_content]").value;
 			                  //수정폼에 입력한 value 값을 pre 요소에도 출력하기 
-			                  document.querySelector("#pre"+qna_comment_idx).innerText=qna_comment_content;
+			                  document.querySelector("#pre"+free_comment_idx).innerText=free_comment_content;
 			                  form.style.display="none";
 			               }
 			            });

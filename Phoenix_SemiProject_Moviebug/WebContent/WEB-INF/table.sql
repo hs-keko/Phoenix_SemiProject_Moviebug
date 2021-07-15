@@ -86,3 +86,30 @@ CREATE TABLE movie_info(
 -- 영화 정보 번호를 얻어낼 시퀀스
 CREATE SEQUENCE movie_info_seq;
 
+--자유게시판 게시글을 저장할 테이블
+CREATE TABLE board_free(
+	free_idx NUMBER PRIMARY KEY,
+	free_writer VARCHAR2(100) NOT NULL,
+	free_title VARCHAR2(100) NOT NULL,
+	free_content CLOB,
+	free_file VARCHAR2(1000),
+	free_regdate DATE);
+	
+-- 자유게시판 게시글의 번호를 얻어낼 시퀀스
+CREATE SEQUENCE board_free_seq;
+	
+	
+-- 자유게시판 댓글을 저장할 테이블
+CREATE TABLE board_free_comment(
+   free_comment_idx NUMBER PRIMARY KEY, --댓글의 글번호
+   free_comment_writer VARCHAR2(100), --댓글 작성자의 아이디
+   free_comment_content VARCHAR2(2000), --댓글 내용
+   free_comment_target_id VARCHAR2(100), --댓글의 대상자 아이디
+   free_comment_ref_group NUMBER,
+   free_comment_group NUMBER,
+   free_comment_deleted CHAR(3) DEFAULT 'no',
+   free_comment_regdate DATE
+);
+
+-- 자유게시판 댓글 번호를 얻어낼 시퀀스
+CREATE SEQUENCE board_free_comment_seq;

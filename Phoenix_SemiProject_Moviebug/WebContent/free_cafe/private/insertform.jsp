@@ -19,7 +19,7 @@ String email=(String)session.getAttribute("email");
    .footer_inner a {
    		color:white;
     }
-	#qna_content{
+	#free_content{
 		height: 500px;
 	}
 	html, body {
@@ -57,18 +57,18 @@ String email=(String)session.getAttribute("email");
 	<br>
 	<form action="insert.jsp" method="post">
 		<div class="mb-3">
-			<label class="form-label" for="qna_title">제목</label>
-			<input class="form-control" type="text" name="qna_title" id="qna_title"
+			<label class="form-label" for="free_title">제목</label>
+			<input class="form-control" type="text" name="free_title" id="free_title"
 				onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)"/>
 		</div>	
 		<div>
-	         <label class="form-label" for="qna_file">첨부파일</label>
-	         <input class="form-control" type="file" name="qna_file" id="qna_file"/>
+	         <label class="form-label" for="free_file">첨부파일</label>
+	         <input class="form-control" type="file" name="free_file" id="free_file"/>
         </div>
         <br>
 		<div class="mb-3">
-			<label class="form-label" for="qna_content">내용</label>
-			<textarea class="form-control" name="qna_content" id="qna_content"></textarea>
+			<label class="form-label" for="free_content">내용</label>
+			<textarea class="form-control" name="free_content" id="free_content"></textarea>
 		</div>
 		<div class="w-100 clearfix">
 			<button class="btn btn-outline-secondary float-end ms-2" type="submit" onclick="submitContents(this);">등록</button>
@@ -88,7 +88,7 @@ String email=(String)session.getAttribute("email");
    
    nhn.husky.EZCreator.createInIFrame({
       oAppRef: oEditors,
-      elPlaceHolder: "qna_content",
+      elPlaceHolder: "free_content",
       sSkinURI: "${pageContext.request.contextPath}/SmartEditor/SmartEditor2Skin.html",   
       htParams : {
          bUseToolbar : true,            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
@@ -108,16 +108,16 @@ String email=(String)session.getAttribute("email");
    
    function pasteHTML() {
       var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
-      oEditors.getById["qna_content"].exec("PASTE_HTML", [sHTML]);
+      oEditors.getById["free_content"].exec("PASTE_HTML", [sHTML]);
    }
    
    function showHTML() {
-      var sHTML = oEditors.getById["qna_content"].getIR();
+      var sHTML = oEditors.getById["free_content"].getIR();
       alert(sHTML);
    }
       
    function submitContents(elClickedObj) {
-      oEditors.getById["qna_content"].exec("UPDATE_CONTENTS_FIELD", []);   // 에디터의 내용이 textarea에 적용됩니다.
+      oEditors.getById["free_content"].exec("UPDATE_CONTENTS_FIELD", []);   // 에디터의 내용이 textarea에 적용됩니다.
       
       // 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
       
@@ -129,7 +129,7 @@ String email=(String)session.getAttribute("email");
    function setDefaultFont() {
       var sDefaultFont = '궁서';
       var nFontSize = 24;
-      oEditors.getById["qna_content"].setDefaultFont(sDefaultFont, nFontSize);
+      oEditors.getById["free_content"].setDefaultFont(sDefaultFont, nFontSize);
    }
    
    function noSpaceForm(obj) 

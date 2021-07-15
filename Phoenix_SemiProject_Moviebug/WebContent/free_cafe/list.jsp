@@ -1,7 +1,7 @@
 <%@page import="moviebug.users.dao.UsersDao"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="test.cafe.dao.CafeDao"%>
-<%@page import="test.cafe.dto.CafeDto"%>
+<%@page import="test.free_cafe.dao.FreeCafeDao"%>
+<%@page import="test.free_cafe.dto.FreeCafeDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -36,39 +36,39 @@
    //특수기호를 인코딩한 키워드
    String encodedK=URLEncoder.encode(keyword);
    
-   //CafeDto 객체에 startRowNum 과 endRowNum 을 담는다.
-   CafeDto dto=new CafeDto();
+   //FreeCafeDto 객체에 startRowNum 과 endRowNum 을 담는다.
+   FreeCafeDto dto=new FreeCafeDto();
    dto.setStartRowNum(startRowNum);
    dto.setEndRowNum(endRowNum);
 	 //ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
-	   List<CafeDto> list=null;
+	   List<FreeCafeDto> list=null;
 	   //전체 row 의 갯수를 담을 지역변수를 미리 만든다.
 	   int totalRow=0;
 	   //만일 검색 키워드가 넘어온다면 
 	   if(!keyword.equals("")){
 	      //검색 조건이 무엇이냐에 따라 분기 하기
-	      if(condition.equals("qna_title_content")){//제목 + 내용 검색인 경우
-	         //검색 키워드를 CafeDto 에 담아서 전달한다.
-	         dto.setQna_title(keyword);
-	         dto.setQna_content(keyword);
+	      if(condition.equals("free_title_content")){//제목 + 내용 검색인 경우
+	         //검색 키워드를 FreeCafeDto 에 담아서 전달한다.
+	         dto.setFree_title(keyword);
+	         dto.setFree_content(keyword);
 	         //제목+내용 검색일때 호출하는 메소드를 이용해서 목록 얻어오기 
-	         list=CafeDao.getInstance().getListTC(dto);
+	         list=FreeCafeDao.getInstance().getListTC(dto);
 	         //제목+내용 검색일때 호출하는 메소드를 이용해서 row  의 갯수 얻어오기
-	         totalRow=CafeDao.getInstance().getCountTC(dto);
-	      }else if(condition.equals("qna_title")){ //제목 검색인 경우
-	         dto.setQna_title(keyword);
-	         list=CafeDao.getInstance().getListT(dto);
-	         totalRow=CafeDao.getInstance().getCountT(dto);
-	      }else if(condition.equals("qna_writer")){ //작성자 검색인 경우
-	         dto.setQna_writer(keyword);
-	         list=CafeDao.getInstance().getListW(dto);
-	         totalRow=CafeDao.getInstance().getCountW(dto);
+	         totalRow=FreeCafeDao.getInstance().getCountTC(dto);
+	      }else if(condition.equals("free_title")){ //제목 검색인 경우
+	         dto.setFree_title(keyword);
+	         list=FreeCafeDao.getInstance().getListT(dto);
+	         totalRow=FreeCafeDao.getInstance().getCountT(dto);
+	      }else if(condition.equals("free_writer")){ //작성자 검색인 경우
+	         dto.setFree_writer(keyword);
+	         list=FreeCafeDao.getInstance().getListW(dto);
+	         totalRow=FreeCafeDao.getInstance().getCountW(dto);
 	      } // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다.
 	   }else{//검색 키워드가 넘어오지 않는다면
 	      //키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다. 
-	      list=CafeDao.getInstance().getList(dto);
+	      list=FreeCafeDao.getInstance().getList(dto);
 	      //키워드가 없을때 호출하는 메소드를 이용해서 전제 row 의 갯수를 얻어온다.
-	      totalRow=CafeDao.getInstance().getCount();
+	      totalRow=FreeCafeDao.getInstance().getCount();
 	   }
    
    //하단 시작 페이지 번호 
@@ -101,8 +101,10 @@
 <link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
 	
 	html, body {
     width: 100%;
@@ -114,7 +116,7 @@
 	   	font-family: 'Nanum Gothic', sans-serif;
 	}
 	.font-qa {
-		font-family: 'Dancing Script', cursive;
+		font-family: 'Yeon Sung', cursive;
 	}
 	html, body {
     width: 100%;
@@ -196,7 +198,7 @@
 </jsp:include>
 
 <div class="container cafe_list_content">
-	<h1 id="one"><a class= "font-qa link-dark" href="<%=request.getContextPath() %>/cafe/list.jsp"> Q&A </a></h1>
+	<h1 id="one"><a class= "font-qa link-dark" href="<%=request.getContextPath() %>/free_cafe/list.jsp"> 자유게시판 </a></h1>
 	<div id="two">
 		<button type="button" class="btn btn-secondary">
 			<a class="link-light" href="private/insertform.jsp">새글 작성하기</a>
@@ -212,21 +214,21 @@
 			</tr>
 		</thead>
 		<tbody>
-		<%for(CafeDto tmp:list) {%>
+		<%for(FreeCafeDto tmp:list) {%>
 			<tr>
-				<td><%=tmp.getQna_idx() %></td>
-				<td><%if(tmp.getQna_file() != null){ %>
+				<td><%=tmp.getFree_idx() %></td>
+				<td><%if(tmp.getFree_file() != null){ %>
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-arrow-up" viewBox="0 0 16 16">
 					  <path d="M8 11a.5.5 0 0 0 .5-.5V6.707l1.146 1.147a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L7.5 6.707V10.5a.5.5 0 0 0 .5.5z"/>
 					  <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 					</svg>
-					<a class="font-do link-dark" href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+					<a class="font-do link-dark" href="detail.jsp?num=<%=tmp.getFree_idx()%>"><%=tmp.getFree_title() %></a>
 				<%}else{ %>
-					<a class="font-do link-dark" href="detail.jsp?num=<%=tmp.getQna_idx()%>"><%=tmp.getQna_title() %></a>
+					<a class="font-do link-dark" href="detail.jsp?num=<%=tmp.getFree_idx()%>"><%=tmp.getFree_title() %></a>
 				<%} %>
 				</td>
-				<td><%=tmp.getQna_writer() %></td>
-				<td class="font-gray"><%=tmp.getQna_regdate() %></td>
+				<td><%=tmp.getFree_writer() %></td>
+				<td class="font-gray"><%=tmp.getFree_regdate() %></td>
 			</tr>
 		<%} %>
 		</tbody>
@@ -259,9 +261,9 @@
          <form action="list.jsp" method="get">
          	<label for="condition">검색 조건</label>
          	<select class="font-do" name="condition" id="condition">
-    			 <option value="qna_title_content" <%=condition.equals("qna_title_content") ? "selected" : ""%>>제목+내용</option>
-		         <option value="qna_title" <%=condition.equals("qna_title") ? "selected" : ""%>>제목</option>
-		         <option value="qna_writer" <%=condition.equals("qna_writer") ? "selected" : ""%>>작성자</option>
+    			 <option value="free_title_content" <%=condition.equals("free_title_content") ? "selected" : ""%>>제목+내용</option>
+		         <option value="free_title" <%=condition.equals("free_title") ? "selected" : ""%>>제목</option>
+		         <option value="free_writer" <%=condition.equals("free_writer") ? "selected" : ""%>>작성자</option>
     		</select>
     		<input type="text" name="keyword" placeholder="검색어를 입력하세요..." value="<%=keyword%>"/>
     		<button type="submit" class="btn btn-outline-dark">검색</button>
