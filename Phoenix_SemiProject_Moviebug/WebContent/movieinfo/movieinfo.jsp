@@ -616,7 +616,7 @@
                      value="<%=tmp.getComment_writer()%>"/>
                   <input id="two" type="hidden" name="comment_group"
                      value="<%=tmp.getComment_group()%>"/>
-                  <textarea name="qna_comment_content"></textarea>
+                  <textarea name="comment_content"></textarea>
                   <button type="submit" class="btn btn-secondary">등록</button>
                </form>   
                <%if(tmp.getComment_writer().equals(email)){ %>   
