@@ -216,8 +216,9 @@
 			 <div class="my_qna_comment row">
   			 	<div class="my_qna_comment_wrapper col-2">
 					<div class="list-group" id="list-tab" role="tablist">
-					    <a class="list-group-item list-group-item-action active" id="list-qna-list" data-bs-toggle="list" href="#list-qna" role="tab" aria-controls="list-qna">내 게시물</a>
+					    <a class="list-group-item list-group-item-action active" id="list-qna-list" data-bs-toggle="list" href="#list-qna" role="tab" aria-controls="list-qna">내 QNA 게시물</a>
 					    <a class="list-group-item list-group-item-action" id="list-comment-list" data-bs-toggle="list" href="#list-comment" role="tab" aria-controls="list-comment">내 댓글</a>
+					    <a class="list-group-item list-group-item-action" id="list-free-list" data-bs-toggle="list" href="#list-free" role="tab" aria-controls="list-free">내 자유게시물</a>
 					</div>
 				</div>
 				<div class="col-10">
@@ -275,10 +276,13 @@
 				         			<%} %>
 				      			</ul>
 							</div>
-					   </div>
-					   <div class="tab-pane fade list-comment-users" id="list-comment" role="tabpanel" aria-labelledby="list-comment-list">		   
+					    </div>
+					    <div class="tab-pane fade list-comment-users" id="list-comment" role="tabpanel" aria-labelledby="list-comment-list">		   
 							
-						</div>						
+						</div>
+						<div class="tab-pane fade list-free-users" id="list-free" role="tabpanel" aria-labelledby="list-free-list">		   
+							
+						</div>					
 					</div>	
 				</div>				
       		</div>
@@ -322,7 +326,27 @@
 		}, {once : true});
 	
 	
-
+		document.querySelector("#list-free-list").addEventListener("click", function(){
+		
+		/*
+		해당 페이지의 내용을 ajax 요청을 통해서 받아온다.
+		"pageNum=xxx&num=xxx" 형식으로 GET 방식 파라미터를 전달한다. 
+		*/
+		ajaxPromise("ajax_userFree_list.jsp","get",
+		   "freePageNum="+currentPage)
+		.then(function(response){
+		//json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
+		return response.text();
+		})
+		.then(function(data){
+			//data 는 html 형식의 문자열이다. 
+			console.log(data);
+			// beforebegin | afterbegin | beforeend | afterend
+			document.querySelector(".list-free-users")
+			   .insertAdjacentHTML("beforeend", data);
+			});
+		
+		}, {once : true});
 </script>
 </body>
 </html>
