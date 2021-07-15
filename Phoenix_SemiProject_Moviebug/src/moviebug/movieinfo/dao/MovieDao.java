@@ -121,7 +121,7 @@ public class MovieDao {
          // 실행할 sql 문 작성
    
          String sql = "SELECT * FROM (select result1.* , rownum as rnum" + 
-               " from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
+               " from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,substr(movie_story,1,120) movie_story," + 
                " movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
                " from movie_info " + 
                " where movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%' order by movie_num desc) result1) " + 
@@ -465,7 +465,9 @@ public class MovieDao {
 			String sql = "SELECT NVL(MAX(ROWNUM), 0) AS count "
 					+ " FROM movie_info"
 					+ " where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')"
-					+ "order by rownum asc";
+					+ " order by movie_num desc,"
+	                + " rownum asc";
+
 			//PreparedStatement 객체의 참조값 얻어오기
 			pstmt = conn.prepareStatement(sql);
 			//? 에 바인딩할 내용이 있으면 여기서 바인딩
@@ -572,7 +574,7 @@ public class MovieDao {
 					"		        (SELECT movie_num,movie_title_kr ,movie_title_eng ,substr(movie_story,1,120) movie_story,movie_character,movie_year,movie_genre,movie_company,movie_image,movie_trailer,movie_time,movie_rating,movie_nation,movie_director" + 
 					"		        FROM movie_info"+ 
 					"			    where (movie_genre like '%액션%' or movie_genre like '%공포%' or movie_genre like '%스릴러%' or movie_genre like '%미스터리%')"+					
-					"		         ) result1)" + 
+					"		         order by movie_num desc) result1)" + 
 					"			WHERE rnum BETWEEN ? AND ?"+
 					"		order by rownum asc";
             //PreparedStatement 객체의 참조값 얻어오기
