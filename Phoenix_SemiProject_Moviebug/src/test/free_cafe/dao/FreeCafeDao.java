@@ -20,7 +20,7 @@ public class FreeCafeDao {
       return dao;
    }
    
- //글 목록을 리턴하는 메소드
+   //글 목록을 리턴하는 메소드
    public List<FreeCafeDto> userGetList(FreeCafeDto dto){
       List<FreeCafeDto> list=new ArrayList<FreeCafeDto>();
       Connection conn = null;

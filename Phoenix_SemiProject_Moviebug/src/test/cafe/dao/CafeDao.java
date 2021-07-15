@@ -20,7 +20,7 @@ public class CafeDao {
       return dao;
    }
    
- //글 목록을 리턴하는 메소드
+   //글 목록을 리턴하는 메소드
    public List<CafeDto> userGetList(CafeDto dto){
       List<CafeDto> list=new ArrayList<CafeDto>();
       Connection conn = null;

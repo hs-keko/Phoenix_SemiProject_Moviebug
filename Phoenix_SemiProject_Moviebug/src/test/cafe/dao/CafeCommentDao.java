@@ -41,11 +41,10 @@ public class CafeCommentDao {
 	         //select 문 작성
 	         String sql = "SELECT NVL(MAX(ROWNUM), 0) AS qna_comment_idx "
 	               + " FROM board_qna_comment"
-	               + " WHERE qna_comment_ref_group = ? AND qna_comment_writer = ?";
+	               + " WHERE qna_comment_writer = ?";
 	         pstmt = conn.prepareStatement(sql);
 	         // ? 에 바인딩 할게 있으면 여기서 바인딩한다.
-	         pstmt.setInt(1, dto.getQna_comment_ref_group());
-	         pstmt.setString(2, dto.getQna_comment_writer());
+	         pstmt.setString(1, dto.getQna_comment_writer());
 	         //select 문 수행하고 ResultSet 받아오기
 	         rs = pstmt.executeQuery();
 	         //while문 혹은 if문에서 ResultSet 으로 부터 data 추출
