@@ -183,7 +183,7 @@ pageEncoding="UTF-8"%>
 						    <a class="nav-link fs-2 fw-bold" href="<%=request.getContextPath() %>/search/more.jsp?category=classic">여름 추천 영화</a>
 						  </li>
 						  <li class="nav-item">
-						    <a class="nav-link fs-2 fw-bold" href="<%=request.getContextPath() %>/free-cafe/list.jsp">자유 게시판</a>
+						    <a class="nav-link fs-2 fw-bold" href="<%=request.getContextPath() %>/free_cafe/list.jsp">자유 게시판</a>
 						  </li>
 						  <li class="nav-item">
 						    <a class="nav-link fs-2 fw-bold" href="<%=request.getContextPath() %>/cafe/list.jsp">문의 게시판</a>
