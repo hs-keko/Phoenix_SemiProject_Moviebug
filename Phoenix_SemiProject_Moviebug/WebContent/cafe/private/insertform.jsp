@@ -14,12 +14,7 @@ String email=(String)session.getAttribute("email");
     <!-- import css -->
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/footer.css" />
     
-    <!-- tap icon -->
-    <link rel="icon" 
-	href="${pageContext.request.contextPath}/images/dy_cat.png" 
-	type="image/x-icon" />
-	<!-- Custom styles for this template -->
-<link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
+    
 <style>
    .footer_inner a {
    		color:white;
