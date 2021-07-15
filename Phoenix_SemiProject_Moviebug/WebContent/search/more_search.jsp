@@ -103,7 +103,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>검색결과</title>
+<title>검색 결과</title>
    <!-- more css -->
    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/more.css" />
 
