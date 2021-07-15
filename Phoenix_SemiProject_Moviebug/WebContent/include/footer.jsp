@@ -11,19 +11,29 @@ pageEncoding="UTF-8"%>
 				<div class="col">
 					<div class="row row-cols-3">
 						<div class="col mt-1 mb-1 overflow-hidden">
+						<a href="https://github.com/hs-keko">
 							고현석 | github.com/hs-keko
+							</a>
 						</div>
 						<div class="col mt-1 mb-1 overflow-hidden">
+						<a href="https://github.com/dy0712">
 							김다연 | github.com/dy0712
+						</a>
 						</div>
 						<div class="col mt-1 mb-1 overflow-hidden">
-							석우현 | github.com/seok97
+							<a href="https://github.com/seok97">
+								석우현 | github.com/seok97
+							</a>
 						</div>
 						<div class="col mt-1 mb-1 overflow-hidden">
+						<a href="https://github.com/dayoung1227">
 							이다영 | github.com/dayoung1227
+						</a>
 						</div>
 						<div class="col mt-1 mb-1 overflow-hidden">
+						<a href="https://github.com/LCG1997">
 							이충근 | github.com/LCG1997
+						</a>
 						</div>
 		
 					</div>

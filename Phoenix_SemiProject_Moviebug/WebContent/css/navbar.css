@@ -43,6 +43,19 @@ nav .container{
 	height: 100%;
 }
 
+.nav_w_menu svg{
+	    color: #6d6d6d;
+}
+
+.header_nav_offcanvas_body a{
+	color: black;
+}
+
+.header_nav_offcanvas_body a:hover{
+	color: black;
+	text-decoration: none;
+}
+
 .nav_w_brand{
 	font-family: 'Major Mono Display', monospace;
 	font-size: 35px;
@@ -82,7 +95,7 @@ nav button, .search_form_btn{
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    position: relative;
+    position: absolute;
     height: 100%;
     max-height: 70px;
 }

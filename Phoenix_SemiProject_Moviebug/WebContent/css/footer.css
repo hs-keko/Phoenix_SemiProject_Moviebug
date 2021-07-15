@@ -7,6 +7,15 @@ footer{
 	padding: 20px;
 }
 
+.footer_inner a{
+	color: rgb(191 191 191 / 67%);
+	text-decoration: none;
+}
+
+.footer_inner a:hover{
+	text-decoration: none;
+}
+
 .footer_brand{
 	font-family: 'Major Mono Display', monospace;
 	font-size: 35px;
