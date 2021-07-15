@@ -121,7 +121,7 @@ public class MovieDao {
          // 실행할 sql 문 작성
    
          String sql = "SELECT * FROM (select result1.* , rownum as rnum" + 
-               " from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,movie_story," + 
+               " from (select movie_num,movie_title_kr, movie_genre, movie_year,movie_title_eng,substr(movie_story,1,120) movie_story," + 
                " movie_company,movie_image,movie_trailer, movie_time, movie_rating, movie_nation, movie_director,movie_writer" + 
                " from movie_info " + 
                " where movie_title_eng like '%'||?||'%' or movie_title_kr like '%'||?||'%' or movie_director like '%'||?||'%' order by movie_num desc) result1) " + 

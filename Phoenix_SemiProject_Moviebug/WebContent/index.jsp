@@ -249,7 +249,7 @@ List<MovieDto> NewHAmovies = MovieDao.getInstance().getNewHAList();
 
 	</div>
 	<script>
-		window.open("<%=request.getContextPath()%>/free_cafe/detail.jsp?num=1","공지사항","width=800,height=500,top=100,left=100"); 
+		window.open("<%=request.getContextPath()%>/free_cafe/detail.jsp?num=1","공지사항","width=800,height=500,top=100,left=100");
 	</script>
 	<script src="<%=request.getContextPath()%>/js/index.js"></script>
 
