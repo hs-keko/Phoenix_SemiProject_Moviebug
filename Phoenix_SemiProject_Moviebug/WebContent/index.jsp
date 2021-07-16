@@ -53,7 +53,7 @@ List<MovieDto> NewHAmovies = MovieDao.getInstance().getNewHAList();
 					MovieDto dto = NewMovieList.get(i);
 				%>
 				<div class="carousel-item  border-0 <%=i == 0 ? "active" : ""%>"
-					data-bs-interval="10000">
+					data-bs-inteㅇrval="10000">
 					<div class="card border-0">
 						<img
 							src="<%=dto.getMovie_image() != null ? dto.getMovie_image() : "images/bigdata.jpg"%>"
@@ -61,10 +61,7 @@ List<MovieDto> NewHAmovies = MovieDao.getInstance().getNewHAList();
 						<div class="carousel-caption d-none d-md-block">
 							<button type="button"
 								class="btn btn-white rounded-pill index_carousel_btn">
-								<a
-									href="<%=request.getContextPath()%>/movieinfo//movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>">
-									<a
-									href="<%=request.getContextPath()%>/movieinfo/movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>">
+								<a href="<%=request.getContextPath()%>/movieinfo//movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>">
 										<h5><%=dto.getMovie_title_kr()%></h5>
 										<p>정보보기</p>
 								</a>
