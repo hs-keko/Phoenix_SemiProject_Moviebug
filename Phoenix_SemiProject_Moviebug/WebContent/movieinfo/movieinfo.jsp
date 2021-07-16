@@ -502,9 +502,7 @@
 		
 		<!-- 트레일러 -->
 		<div class="row movie_trailer">
-			<video autoplay muted controls width="100%" height="100%" style="padding:0;">
-				<source src="../trailer/<%=movie_num%>.mp4" type="video/mp4">
-			</video>
+			<iframe style="padding:0;" width="100%" height="100%" src="<%=dto.getMovie_trailer() %>?autoplay=1&mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
 		
 		<!-- 영화 상세 정보 -->
