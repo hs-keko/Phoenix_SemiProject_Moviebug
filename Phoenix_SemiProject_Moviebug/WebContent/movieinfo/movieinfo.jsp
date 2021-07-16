@@ -303,7 +303,7 @@
 	
 	.movie_secondary_info_detail_wrapper{
 		width: 100%;
-		height: 350px;
+		height: 400px;
 		padding: 20px;
 	}
 	
@@ -501,8 +501,7 @@
 		</div>
 		<!-- 트레일러 -->
 		<div class="row movie_trailer">
-			<iframe width="500" height="400" src="<%=dto.getMovie_trailer() %>?autoplay=1&mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	
+			<iframe style="padding:0;" width="100%" height="100%" src="<%=dto.getMovie_trailer() %>?autoplay=1&mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
 		
 		<!-- 영화 상세 정보 -->
