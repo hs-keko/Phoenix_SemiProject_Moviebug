@@ -286,6 +286,7 @@ public class MovieDao {
                " from movie_info where sysdate-30 <= movie_year order by movie_year desc) result01" + 
                " where rownum < 5" + 
                " order by movie_rating desc";
+         System.out.println(sql);
          pstmt = conn.prepareStatement(sql);
          rs = pstmt.executeQuery();
          while(rs.next()) {
