@@ -19,8 +19,6 @@
 
 	MovieDto dto=MovieDao.getInstance().getData(movie_num);
 	
-	
-	
 	/*
     [ 댓글 페이징 처리에 관련된 로직 ]
  	*/
@@ -616,7 +614,7 @@
                      value="<%=tmp.getComment_writer()%>"/>
                   <input id="two" type="hidden" name="comment_group"
                      value="<%=tmp.getComment_group()%>"/>
-                  <textarea name="qna_comment_content"></textarea>
+                  <textarea name="comment_content"></textarea>
                   <button type="submit" class="btn btn-secondary">등록</button>
                </form>   
                <%if(tmp.getComment_writer().equals(email)){ %>   
