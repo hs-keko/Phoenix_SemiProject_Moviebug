@@ -16,7 +16,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Thread.sleep(3000);
+	Thread.sleep(1000);
 	//로그인된 아이디
 	String email = (String)session.getAttribute("email");
 	//ajax 요청 파라미터로 넘어오는 댓글의 페이지 번호를 읽어낸다
