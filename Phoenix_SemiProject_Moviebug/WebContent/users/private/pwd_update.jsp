@@ -42,7 +42,12 @@
       </p>
    <%} %>
 </div>
+<script>
+   location.href = "../loginform.jsp";
+   alert("비밀번호가 변경되었습니다. 다시 로그인해주세요!");
+</script>
 </body>
+
 </html>
 
 
