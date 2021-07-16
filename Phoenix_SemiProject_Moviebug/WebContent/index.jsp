@@ -61,10 +61,8 @@ List<MovieDto> NewHAmovies = MovieDao.getInstance().getNewHAList();
 						<div class="carousel-caption d-none d-md-block">
 							<button type="button"
 								class="btn btn-white rounded-pill index_carousel_btn">
-								<a
-									href="<%=request.getContextPath()%>/movieinfo//movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>">
-									<a
-									href="<%=request.getContextPath()%>/movieinfo/movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>">
+								<a href="<%=request.getContextPath()%>/movieinfo//movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>">
+									<a href="<%=request.getContextPath()%>/movieinfo/movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>">
 										<h5><%=dto.getMovie_title_kr()%></h5>
 										<p>정보보기</p>
 								</a>
@@ -203,11 +201,8 @@ List<MovieDto> NewHAmovies = MovieDao.getInstance().getNewHAList();
 						%>
 						<div class="col-6 col-lg-3 movie_list">
 
-							<a
-								href="<%=request.getContextPath()%>/movieinfo//movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>"
-								class="poster_link"> <a
-								href="<%=request.getContextPath()%>/movieinfo/movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>"
-								class="poster_link">
+							<a href="<%=request.getContextPath()%>/movieinfo//movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>" class="poster_link"> 
+							<a href="<%=request.getContextPath()%>/movieinfo/movieinfo.jsp?movie_num=<%=dto.getMovie_num()%>" class="poster_link">
 
 									<div class="card border-0">
 										<div class="card-body poster_info">
