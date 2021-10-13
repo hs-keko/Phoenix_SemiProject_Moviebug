@@ -29,19 +29,10 @@
 <title>/users/private/pwd_update.jsp</title>
 </head>
 <body>
-<div class="container">
-   <%if(isValid){ %>
-      <p>
-         <strong><%=dto.getName() %></strong> 님 비밀번호를 수정하고 로그 아웃되었습니다.
-         <a href="<%=request.getContextPath()%>/users/loginform.jsp">다시 로그인 하러 가기</a>
-      </p>
-   <%}else{ %>
-      <p>
-         이전 비밀번호가 일치하지 않습니다.
-         <a href="update_form.jsp">다시 시도</a>
-      </p>
-   <%} %>
-</div>
+<script>
+	location.href = "../loginform.jsp";
+	alert("비밀번호가 변경되었습니다. 다시 로그인해주세요!");
+</script>
 </body>
 </html>
 
