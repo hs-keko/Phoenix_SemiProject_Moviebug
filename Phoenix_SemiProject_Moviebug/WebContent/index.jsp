@@ -249,6 +249,6 @@ List<MovieDto> NewHAmovies = MovieDao.getInstance().getNewHAList();
    <script src="<%=request.getContextPath()%>/js/navbar.js"></script>
 
    <!-- import footer.jsp -->
-   <jsp:include page="include/footer.jsp"></jsp:include>
+    <jsp:include page="include/footer.jsp"></jsp:include>
 </body>
 </html>
